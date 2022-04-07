@@ -1,41 +1,50 @@
-import { StyleSheet, View, Text } from "react-native";
-import yelp from "../api/yelp";
+import { StyleSheet, View, Text, ActivityIndicator, FlatList } from "react-native";
+import useRestaurants from "../hooks/useRestaurants";
+import {useEffect} from 'react';
 
-export default function Restaurants(){
 
+export default function Restaurants({term}){
+  
+  const [{data, loading, error}, searchRestaurants] = useRestaurants();
 
-    const searchRestaurants = async () => {
-        const response = await yelp.get('/search', {
-            params: {
-                limit:1,
-                term: 'Dessert',
-                location: "Toronto"
-            },
-        });
+  useEffect(() => {
+    searchRestaurants(term);
+  }, [term]);//will run function again if [term] is changed
 
-        console.log(response);
-    };
+  console.log({data, loading, error})
 
-    searchRestaurants();
+  if(loading) return <ActivityIndicator size = "large" marginVertical={30}/>
 
-    return(
-        <View style={styles.container}>
-            <Text style={styles.header}>Top Restaurants</Text>
-        </View>
+  if(error) return(
+    <View style={styles.container}>
+      <Text style={styles.header}>{error}</Text>
+    </View>
+    );
+
+  return(
+    <View style={styles.container}>
+      <Text style={styles.header}>Top Restaurants</Text>
+      <FlatList
+        date={data}
+        keyExtractor={(restaurant) => restaurant.id}
+        renderItem={({item}) => <RestaurantItem restaurant={item}/>}
+
+        />
+    </View>
     );
 }
 
+
+
 const styles = StyleSheet.create({
-    container: {
-        marginHorizontal: 25,
-        marginVertical: 25,
-        flex: 1,
-    },
-    header: {
-        fontWeight: "bold",
-        fontSize: 20,
-        paddingBottom: 10,
-        height: 100
-    }
+  container: {
+    marginHorizontal: 25,
+    marginVertical: 25,
+  },
+  header: {
+    fontWeight: "bold",
+    fontSize: 20,
+    paddingBottom: 10,
+  }
 
 })
