@@ -12,7 +12,7 @@ export default function RestaurantScreen({navigation}){
     const imageHeight = Math.round((dimensions.width * 9)/16);
 
     useEffect(() => {
-        searchRestaurant(id);
+        searchRestaurant(id+"/reviews");
     }, []);
 
     console.log(data);
@@ -23,22 +23,12 @@ export default function RestaurantScreen({navigation}){
     return (
         <View>
             {data && (
-                <View>
-                    <RestaurantInfo data = {data}/>
-                    <FlatList
-                        data={data.photos}
-                        keyExtractor={(photo) => photo.id}
-                        renderItem={({ item }) => (
-                            <Image 
-                                source={{uri: item}} 
-                                style={{height: imageHeight, width: imageWidth}}
-                            />
-                        )} 
-                    />
-                    
-                    
-                   
-                </View>
+                <FlatList
+                    data={data.reviews}
+                    keyExtractor={(comment) => comment.id}
+                    renderItem={({item}) => <Text style = {{padding: 15}}>{item.text}</Text> }
+
+                />
             )}    
         </View>
     );

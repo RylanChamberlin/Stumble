@@ -21,6 +21,8 @@ export default function Restaurants({term}){
     </View>
     );
 
+    console.log(data)
+
   return(
     <View style={styles.container}>
       <Text style={styles.header}>Top Restaurants</Text>
