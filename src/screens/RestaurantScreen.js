@@ -1,13 +1,14 @@
-import { View, Text, FlatList, Dimensions } from "react-native";
+import { useEffect } from "react";
+import { View, Text, FlatList, Dimensions, Image, StyleSheet } from "react-native";
 import useRestaurant from "../hooks/useRestaurant";
 
 export default function RestaurantScreen({navigation}){
-    contst [{data, loading, error}, searchRestaurant] = useRestaurant
-    const id = navigation.getParam("id")
+    const [{data, loading, error}, searchRestaurant] = useRestaurant();
+    const id = navigation.getParam("id");
 
-    const dimensions = Dimensions.get("window")
-    const imageWidth = dimensions.width
-    const imageHeight = Math.round((dimensions.width * 9)/16)
+    const dimensions = Dimensions.get("window");
+    const imageWidth = dimensions.width;
+    const imageHeight = Math.round((dimensions.width * 9)/16);
 
     useEffect(() => {
         searchRestaurant(id);

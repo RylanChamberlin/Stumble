@@ -21,7 +21,7 @@ export default () => {
                 params : {
                 limit: 15,
                 term,
-                location: "Toronto"
+                location: "Columbia, Mo"
                 },
               });
               setResults({
@@ -29,12 +29,14 @@ export default () => {
                 loading: false,
                 error: null
             })
+
         }catch(error){
             setResults({
                 data: null,
                 loading: false,
-                error: "Something went wrong"
+                error: "error"
             });
+            
         }
        
     };

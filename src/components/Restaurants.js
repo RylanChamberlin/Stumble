@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text, ActivityIndicator, FlatList } from "react-native";
 import useRestaurants from "../hooks/useRestaurants";
 import {useEffect} from 'react';
+import RestaurantItem from "./RestaurantItem";
 
 
 export default function Restaurants({term}){
@@ -11,7 +12,6 @@ export default function Restaurants({term}){
     searchRestaurants(term);
   }, [term]);//will run function again if [term] is changed
 
-  console.log({data, loading, error})
 
   if(loading) return <ActivityIndicator size = "large" marginVertical={30}/>
 
@@ -25,7 +25,7 @@ export default function Restaurants({term}){
     <View style={styles.container}>
       <Text style={styles.header}>Top Restaurants</Text>
       <FlatList
-        date={data}
+        data={data}
         keyExtractor={(restaurant) => restaurant.id}
         renderItem={({item}) => <RestaurantItem restaurant={item}/>}
 
