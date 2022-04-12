@@ -1,7 +1,8 @@
 
-import { SafeAreaView, ScrollView, StyleSheet, Text, View, ImageBackground} from "react-native";
+import { SafeAreaView, StyleSheet, View, ImageBackground} from "react-native";
 import Header from "../components/SearchScreen/Header";
 import Search from "../components/SearchScreen/Search";
+import Choices from "../components/SearchScreen/Choices";
 export default function MainScreen(){
 
     const image = require('../../src/assets/images/kel.png');
@@ -12,6 +13,7 @@ export default function MainScreen(){
             <SafeAreaView>
                 <Header/>
                 <Search/>
+                {/* <Choices/> */}
             </SafeAreaView>
             </ImageBackground>
         </View>
@@ -25,7 +27,6 @@ const styles = StyleSheet.create({
       },
       backgroundImage:{
         flex: 1,
-        //justifyContent: "center",
     },
 })
 

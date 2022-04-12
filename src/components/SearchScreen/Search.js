@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {View, TextInput, Text, StyleSheet, TouchableOpacity} from "react-native";
 import {elevation} from "../../common/styles";
-import { FontAwesome } from "@expo/vector-icons";
+import Button from "./Button";
 
 export default function Search(){
 
@@ -11,7 +11,6 @@ export default function Search(){
         if(!input) return
         setInput("")
     }
-
     return(
         <View>
             <View style = {[styles.container, styles.elevation]}>
@@ -21,27 +20,25 @@ export default function Search(){
                     value={input} 
                     onChangeText={(text) => {setInput(text);
                     }}
-                onEndEditing={handleEndEditing} 
-                    />
+                    onEndEditing={handleEndEditing} 
+                />
             </View>
 
             <View style = {styles.textContainer}>
                 <Text style = {styles.text}>OR</Text>
             </View>
 
-            <TouchableOpacity onPress={() => console.warn(`Advanced Search Click`)}>
-                <View style = {[styles.container, styles.elevation]}>
-                    <Text style = {styles.input}>ADVANCED SEARCH</Text> 
-                </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity style = {styles.buttonContainer} onPress={() => console.warn(`Search Click`)}>
-                <View style = {[styles.button, styles.elevation]}>
-                    <Text style = {styles.buttonInput}>SEARCH</Text> 
-                </View>
-            </TouchableOpacity>
-
-
+            <Button 
+                name="ADVANCED SEARCH" 
+                buttonStyle = {[styles.container, styles.elevation]} 
+                buttonTextStyle={styles.AdvancedText}   
+            />
+            <Button 
+                name="SEARCH" 
+                buttonStyle = {[styles.button, styles.elevation]} 
+                buttonTextStyle={styles.buttonText}
+                buttonContainerStyle={styles.buttonContainer}
+            />
         </View>
     );
 }
@@ -51,7 +48,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     container: {
-        flexDirection: "row", // Makes view in a row
         marginTop: 5,
         marginHorizontal: 25,
         backgroundColor: "white",
@@ -59,10 +55,10 @@ const styles = StyleSheet.create({
         borderRadius: 40,
     },
     elevation,
-    input: {
+    AdvancedText: {
         fontSize: 15,
     },
-    buttonInput: {
+    buttonText: {
         fontSize: 12,
     },
     text: {
@@ -83,6 +79,5 @@ const styles = StyleSheet.create({
     buttonContainer:{
         marginTop: 5,
         marginLeft: 220
-        //backgroundColor: "white",
     }
 })
