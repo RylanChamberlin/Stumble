@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {Text, View, StyleSheet, TouchableHighlight, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 
 export default function CheckBox({name}){
@@ -16,8 +16,6 @@ export default function CheckBox({name}){
                 <Text style = {[styles.text]}>{name}</Text>
             </View>
         </TouchableOpacity>
-
-       
     );
 }
 

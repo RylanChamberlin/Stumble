@@ -1,6 +1,5 @@
 import {Text, TouchableOpacity, View } from "react-native";
 
-
 export default function Button({name, buttonStyle, buttonTextStyle, buttonContainerStyle}){
 
     return(

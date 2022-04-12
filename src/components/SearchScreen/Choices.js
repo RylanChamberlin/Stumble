@@ -1,28 +1,10 @@
-import { useState } from 'react';
-import {Text, View, StyleSheet, TouchableHighlight} from 'react-native';
-import { AntDesign } from '@expo/vector-icons'; 
+import {Text, View, StyleSheet} from 'react-native';
 import CheckBox from './CheckBox';
 import Button from './Button';
 import {elevation} from "../../common/styles";
 
 export default function Choices(){
 
-    const fruits = ['Apples', 'Oranges', 'Pears']
-    // --- OR ---
-    // const fruits = [
-    //   { label: 'Apples', value: 'appls' },
-    //   { label: 'Oranges', value: 'orngs' },
-    //   { label: 'Pears', value: 'pears' }
-    // ]
-
-    const [toggleCheckBox, setToggleCheckBox] = useState(false)
-
-    // state = { selectedFruits: [] }
-
-    // onSelectionsChange = (selectedFruits) => {
-    //     // selectedFruits is array of { label, value }
-    //     this.setState({ selectedFruits })
-    //   }
 
     return(
         <View style={styles.container}>

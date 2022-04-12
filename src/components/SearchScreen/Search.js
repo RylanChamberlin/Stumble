@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {View, TextInput, Text, StyleSheet, TouchableOpacity} from "react-native";
+import {View, TextInput, Text, StyleSheet} from "react-native";
 import {elevation} from "../../common/styles";
 import Button from "./Button";
 

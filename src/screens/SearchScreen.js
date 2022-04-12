@@ -13,7 +13,7 @@ export default function MainScreen(){
             <SafeAreaView>
                 <Header/>
                 <Search/>
-                {/* <Choices/> */}
+                <Choices/>
             </SafeAreaView>
             </ImageBackground>
         </View>
