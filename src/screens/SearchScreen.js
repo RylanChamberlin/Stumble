@@ -1,8 +1,7 @@
 
 import { SafeAreaView, ScrollView, StyleSheet, Text, View, ImageBackground} from "react-native";
-import Header from "../components/MainScreen/Header";
-import Results from "../components/MainScreen/Results";
-
+import Header from "../components/SearchScreen/Header";
+import Search from "../components/SearchScreen/Search";
 export default function MainScreen(){
 
     const image = require('../../src/assets/images/kel.png');
@@ -12,16 +11,7 @@ export default function MainScreen(){
             <ImageBackground style= { styles.backgroundImage } source={image} resizeMode='cover'>
             <SafeAreaView>
                 <Header/>
-                <ScrollView>
-                <Results title='Top Rated Overall'/>
-                <Results title='Top Rated Atmosphere'/> 
-                <Results title='Best Value'/> 
-                <Results title='Family Friendly'/> 
-                <Text></Text>
-                <Text></Text>
-                <Text></Text>
-                <Text></Text>
-                </ScrollView>
+                <Search/>
             </SafeAreaView>
             </ImageBackground>
         </View>
@@ -35,7 +25,7 @@ const styles = StyleSheet.create({
       },
       backgroundImage:{
         flex: 1,
-       // justifyContent: "center",
+        //justifyContent: "center",
     },
 })
 

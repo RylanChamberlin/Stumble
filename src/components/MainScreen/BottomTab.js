@@ -3,18 +3,7 @@ import { Text, View, ImageBackground, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons, AntDesign, Entypo, MaterialIcons } from '@expo/vector-icons';
 import MainScreen from "../../../src/screens/MainScreen";
-
-
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
-
-
+import SearchScreen from "../../../src/screens/SearchScreen";
 
 function Profile() {
   const image = require('../../../src/assets/images/kel.png')
@@ -43,7 +32,7 @@ const Tab = createBottomTabNavigator();
 export default function BottomTab() {
   return (
     <Tab.Navigator 
-      initialRouteName="Home"
+      initialRouteName="Search"
       screenOptions={{
       headerShown: false,
       tabBarActiveTintColor: '#e91e63',
@@ -61,8 +50,8 @@ export default function BottomTab() {
 
       />
       <Tab.Screen 
-        name="Settings" 
-        component={SettingsScreen} 
+        name="Search" 
+        component={SearchScreen} 
         options={{
           tabBarLabel: 'Search',
           tabBarIcon: ({ color, size }) => (
