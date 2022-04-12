@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import {elevation} from "../common/styles"
+import {elevation} from "../../common/styles"
 
 export default function CategoryItem({name, imageUrl, index, active, handlePress}){
     return (

@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, ActivityIndicator, FlatList } from "react-native";
-import useRestaurants from "../hooks/useRestaurants";
+import useRestaurants from "../../hooks/useRestaurants";
 import {useEffect} from 'react';
 import RestaurantItem from "./RestaurantItem";
 

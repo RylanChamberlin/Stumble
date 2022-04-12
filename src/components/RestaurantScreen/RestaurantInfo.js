@@ -1,6 +1,6 @@
 import { View,Text, StyleSheet, TouchableOpacity } from "react-native";
 import { withNavigation } from "react-navigation";
-import {elevation} from "../common/styles"
+import {elevation} from "../../common/styles"
 
 function RestaurantInfo({data, navigation}){
 

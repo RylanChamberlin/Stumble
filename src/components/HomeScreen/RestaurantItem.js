@@ -1,6 +1,6 @@
 import { Image, Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import { withNavigation } from "react-navigation";
-import {elevation} from "../common/styles"
+import {elevation} from "../../common/styles"
 
 function RestaurantItem({restaurant, navigation}) {
     return(

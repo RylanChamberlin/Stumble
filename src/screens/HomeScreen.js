@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import Categories from "../components/Categories";
-import Header from "../components/Header";
-import Restaurants from "../components/Restaurants";
-import Search from "../components/Search";
+import Categories from "../components/HomeScreen/Categories";
+import Header from "../components/HomeScreen/Header";
+import Restaurants from "../components/HomeScreen/Restaurants";
+import Search from "../components/HomeScreen/Search";
 
 export default function HomeScreen(){
 

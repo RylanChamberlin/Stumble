@@ -1,10 +1,10 @@
-// import { createAppContainer } from "react-navigation";
-// import { createStackNavigator } from "react-navigation-stack";
-// import HomeScreen from "./src/screens/HomeScreen";
-// import RestaurantScreen from "./src/screens/RestaurantScreen";
-// import ReviewScreen from "./src/screens/ReviewScreen";
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+import HomeScreen from "./src/screens/HomeScreen";
+import RestaurantScreen from "./src/screens/RestaurantScreen";
+import ReviewScreen from "./src/screens/ReviewScreen";
 import { NavigationContainer } from "@react-navigation/native";
-import BottomTab from "./src/components/MainScreen/BottomTab";
+import BottomTab from "./src/components/BottomTab";
 
 
 // const navigator = createStackNavigator(
@@ -12,10 +12,10 @@ import BottomTab from "./src/components/MainScreen/BottomTab";
 //   Home: HomeScreen,
 //   Restaurant: RestaurantScreen,
 //   Review: ReviewScreen,
-//   Main: MainScreen,
+//   //Main: MainScreen,
 //   }, 
 //   {
-//     initialRouteName: "Main",
+//     initialRouteName: "Home",
 //     defaultNavigationOptions: {
       
 //       headerShown: false,

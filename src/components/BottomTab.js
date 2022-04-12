@@ -2,11 +2,11 @@ import * as React from 'react';
 import { Text, View, ImageBackground, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons, AntDesign, Entypo, MaterialIcons } from '@expo/vector-icons';
-import MainScreen from "../../../src/screens/MainScreen";
-import SearchScreen from "../../../src/screens/SearchScreen";
+import MainScreen from "../screens/MainScreen";
+import SearchScreen from "../screens/SearchScreen";
 
 function Profile() {
-  const image = require('../../../src/assets/images/kel.png')
+  const image = require('../../src/assets/images/kel.png')
   return (
     
     <View style={styles.container}>

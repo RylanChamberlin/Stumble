@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { View, Text, FlatList, Dimensions, Image, StyleSheet, ScrollView } from "react-native";
-import RestaurantInfo from "../components/RestaurantInfo";
+import RestaurantInfo from "../components/RestaurantScreen/RestaurantInfo";
 import useRestaurant from "../hooks/useRestaurant";
 
 export default function RestaurantScreen({navigation}){
