@@ -9,19 +9,19 @@ export default function Results({title}){
 
 const [{data, loading, error}, searchRestaurants] = useRestaurants();
 
-  useEffect(() => {
-    searchRestaurants(title);
-  }, [title]);//will run function again if [term] is changed
+    useEffect(() => {
+        searchRestaurants(title);
+    }, [title]);//will run function again if [term] is changed
 
 
-  if(loading) return <ActivityIndicator size = "large" marginVertical={30}/>
+    if(loading) return <ActivityIndicator size = "large" marginVertical={30}/>
 
-  if(error) return(
-    <View style={styles.container}>
-      <Text style={styles.header}>{error}</Text>
-    </View>
-    );
-
+    if(error) return(
+        <View style={styles.container}>
+        <Text style={styles.header}>{error}</Text>
+        </View>
+        );
+        
     return(
         <View style={styles.container}>
             <Text style={styles.title}>{title}</Text>

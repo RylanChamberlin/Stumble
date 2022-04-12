@@ -2,12 +2,15 @@ import { Text, View, StyleSheet, Image, TouchableOpacity, ActivityIndicator } fr
 import {elevation} from "../../common/styles"
 
 export default function ResultItem({name, loading, imageUrl, handlePress}){
+    // : <ActivityIndicator size = "large" marginVertical={30}/>}
+
+
 
     return (
         <TouchableOpacity onPress={handlePress}>
         <View style={styles.outsideContainer}>
-            <View style={[styles.container, styles.elevation]}>
-                {!loading || imageUrl ?  <Image style = {styles.image} source={{uri: imageUrl}}/> : <ActivityIndicator size = "large" marginVertical={30}/>}
+            <View style={[styles.container, styles.elevation]}>               
+                <Image style = {styles.image} source={imageUrl ? {uri: imageUrl} : null}/>
             </View>
             <Text style = {styles.name}>{name}</Text>  
         </View>
