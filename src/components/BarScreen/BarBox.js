@@ -1,18 +1,15 @@
-import { SafeAreaView, StyleSheet, View, ImageBackground, Text, TextInput, TouchableOpacity, Image, Button, Pressable} from "react-native";
+import {StyleSheet, View, Text, TouchableOpacity, Image} from "react-native";
 import StarButton from './StarButton';
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useState } from 'react';
+
 import { Dimensions } from 'react-native';
 import {elevation} from "../../common/styles";
-import ShowMore from 'react-native-show-more-button';
+import LikeButton from "./LikeButton";
 
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 export default function BarBox(){
-
-    const [liked, setLiked] = useState(false);
 
     return (
         <View style = {styles.infoBox}>
@@ -40,27 +37,16 @@ export default function BarBox(){
                 <TouchableOpacity onPress={() => console.warn('More Button pressed')}>
                     <View style = {styles.moreContainer}>
                         <Text style={styles.moreText}>more </Text>
-                        
                         <Text style={styles.moreArrow}>ˇ</Text>
                     </View>
                 </TouchableOpacity>
-
-                
-                
-
             </View>
-            
+
             <View style={styles.infoBoxRight}>
-                <Pressable onPress={() => setLiked((isLiked) => !isLiked)}>
-                    <MaterialCommunityIcons
-                        name={liked ? "heart" : "heart-outline"}
-                        size={32}
-                        color={liked ? "red" : "black"}
-                    />
-                </Pressable>
+                <LikeButton/>
                 <Image style = {styles.image} source={require('../../assets/images/willies.jpeg')}/>
                 <TouchableOpacity onPress={() => console.warn('Simple Button pressed')}>
-                    <View style={styles.buttonStyle}>
+                    <View style={[styles.buttonStyle, styles.elevation]}>
                         <Text style={styles.buttonTextStyle}>RESERVE</Text>
                     </View>
                 </TouchableOpacity>
@@ -71,35 +57,20 @@ export default function BarBox(){
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-      },
-      backgroundImage:{
-        flex: 1,
-    },
-    logo: {
-        alignItems: 'center',
-    },
-    elevation,
-    searchBar: {
-        marginTop: 5,
-        marginHorizontal: 25,
-        backgroundColor: "white",
-        padding: 15,
-        borderRadius: 40,
-    },
-    resultHeader: {
+    infoBox: {
+        marginTop: 12,
+        marginHorizontal: 15,
+        borderRadius: 8,
+        backgroundColor: "rgb(249,249,249)",
         flexDirection: "row",
-        marginTop: 25,
-        marginHorizontal: 25
+        width: windowWidth-30,
+        height: windowHeight/4
+
     },
-    resultText: {
-        fontWeight: "bold",
-        marginRight: 75
-        
-    },
-    filterByText: {
-        marginLeft: 135,
+    infoBoxRight: {
+        flexDirection: "column",
+        marginLeft: 3,
+        alignItems: 'flex-end',
     },
     title: {
         fontWeight: "bold",
@@ -140,18 +111,7 @@ const styles = StyleSheet.create({
     eventText: {
 
     },
-    infoBox: {
-        marginTop: 12,
-        marginHorizontal: 15,
-        borderRadius: 8,
-        backgroundColor: "rgb(249,249,249)",
-        flexDirection: "row",
-        //borderWidth: 1
-        width: windowWidth-30,
-        height: windowHeight/4
-
-    },
-
+    
     moreContainer: {
         flexDirection: "row",
         marginLeft: 10,
@@ -169,11 +129,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
 
-    infoBoxRight: {
-        flexDirection: "column",
-        marginLeft: 3,
-        alignItems: 'flex-end',
-    },
+    
 
     image: {
         width: 155,
@@ -194,6 +150,6 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 16
     },
-
+    elevation,
 
 })
