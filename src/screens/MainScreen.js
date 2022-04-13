@@ -13,7 +13,7 @@ export default function MainScreen(){
             <SafeAreaView>
                 <Header/>
                 <ScrollView>
-                <Results title='Top Rated Overall'/>
+                <Results title='Campus Bar'/>
                 <Results title='Top Rated Atmosphere'/> 
                 <Results title='Best Value'/> 
                 <Results title='Family Friendly'/> 
