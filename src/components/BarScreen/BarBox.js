@@ -9,29 +9,32 @@ import LikeButton from "./LikeButton";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default function BarBox(){
+export default function BarBox({name, review_count, specials, events, imageUrl}){
+
+
+    
 
     return (
         <View style = {styles.infoBox}>
-            <View>
-                <Text style = {styles.title}>Willie's / FieldHouse</Text>
+            <View style = {styles.infoBoxLeft}>
+                <Text style = {styles.title}>{name}</Text>
                 <View style = {styles.reviews}>
                     <StarButton/>
                     <StarButton/>
                     <StarButton/>
                     <StarButton/>
                     <StarButton/>
-                    <Text style = {styles.reviewNumber}>1,294</Text>
+                    <Text style = {styles.reviewNumber}>{review_count}</Text>
                 </View>
 
                 <View style = {styles.specialsContainer}>
                     <Text style={styles.specialsTitle}>TODAY'S SPECIALS:</Text>
-                    <Text style={styles.specialsText}>$2 Tuesday</Text>
+                    <Text style={styles.specialsText}>{specials}</Text>
                 </View>
 
                 <View style = {styles.eventContainer}>
                     <Text style={styles.eventTitle}>TODAY'S EVENTS:</Text>
-                    <Text style={styles.eventText}>Neon Party</Text>
+                    <Text style={styles.eventText}>{events}</Text>
                 </View>
 
                 <TouchableOpacity onPress={() => console.warn('More Button pressed')}>
@@ -43,18 +46,28 @@ export default function BarBox(){
             </View>
 
             <View style={styles.infoBoxRight}>
-                <LikeButton/>
-                <Image style = {styles.image} source={require('../../assets/images/willies.jpeg')}/>
-                <TouchableOpacity onPress={() => console.warn('Simple Button pressed')}>
-                    <View style={[styles.buttonStyle, styles.elevation]}>
-                        <Text style={styles.buttonTextStyle}>RESERVE</Text>
-                    </View>
-                </TouchableOpacity>
+                <View style={styles.likeButton}>
+                    <LikeButton/>
+                </View>
+                <Image style = {styles.image} source={imageUrl}/>
+
+                <View>
+                    <TouchableOpacity onPress={() => console.warn('Simple Button pressed')}>
+                        <View style={[styles.buttonStyle, styles.elevation]}>
+                            <Text style={styles.buttonTextStyle}>RESERVE</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
+
+            
         </View>
     );
 
 }
+
+const infoBoxWidth = windowWidth-30;
+const infoBoxHeight = windowHeight/4;
 
 const styles = StyleSheet.create({
     infoBox: {
@@ -63,23 +76,28 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         backgroundColor: "rgb(249,249,249)",
         flexDirection: "row",
-        width: windowWidth-30,
-        height: windowHeight/4
-
-    },
+        width: infoBoxWidth,
+        },
     infoBoxRight: {
         flexDirection: "column",
-        marginLeft: 3,
+        width: infoBoxWidth/2,
         alignItems: 'flex-end',
+        justifyContent: "space-between",
+        paddingRight: 5
+    },
+    infoBoxLeft: {
+        width: infoBoxWidth/2,
+        
+
     },
     title: {
         fontWeight: "bold",
         fontSize: 20,
-        padding: 5
+        paddingLeft: 5,
+        paddingTop: 5,
         
     },
     reviews: {
-        marginTop: -4,
         flexDirection: "row",
         paddingLeft: 5,
 
@@ -128,17 +146,20 @@ const styles = StyleSheet.create({
         marginTop: 4,
         fontWeight: "bold",
     },
-
-    
-
+    likeButton: {
+       marginTop: 5,
+       marginRight: 5
+    },
     image: {
-        width: 155,
-        height: 115,
-        marginVertical: 7,
+        width: infoBoxWidth/2 - 10,
+        height: (infoBoxWidth/2 - 10)/1.3,
+        //marginVertical: 7,
         borderRadius: 5
     },
     buttonStyle: {
-        marginTop: 15,
+        //marginTop: 15,
+        marginBottom: 5,
+       // marginRight: 5,
         paddingHorizontal: 10,
         paddingVertical: 4,
         borderRadius: 20,
