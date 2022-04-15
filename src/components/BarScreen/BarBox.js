@@ -12,7 +12,7 @@ const windowHeight = Dimensions.get('window').height;
 
 
 
-export default function BarBox({name, review_count, specials, events, imageUrl}){
+export default function BarBox({name, review_count, specials, events, imageUrl, milesAway, moreInfo, rentals }){
 
     const [more, setMore] = useState(true);
     
@@ -65,7 +65,7 @@ export default function BarBox({name, review_count, specials, events, imageUrl})
             </View>
 
                 <View>
-                    {!more ? moreText(() => setMore((isMore) => !isMore)) : null} 
+                    {!more ? moreText( () => setMore((isMore) => !isMore),  milesAway, moreInfo, rentals, imageUrl) : null} 
                 </View>
                
         </View>
@@ -91,18 +91,24 @@ function lessButton(){
     );
 }
 
-function moreText(onClick){
+function moreText(onClick, milesAway, moreInfo, rentals, image){
     return(
         <View>
 
             <View style = {styles.moreTextContainer}>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                
+                <Text>{milesAway}</Text>
+                <Text>{moreInfo}</Text>
+
+                <ScrollView horizontal={true}>
+                    <Image style = {styles.infoImage} source={image}/>
+                    <Image style = {styles.infoImage} source={image}/>
+                    <Image style = {styles.infoImage} source={image}/>
+                    <Image style = {styles.infoImage} source={image}/>
+                    <Image style = {styles.infoImage} source={image}/>
+                </ScrollView>
+
+                <Text>{rentals}</Text>   
+
             </View>
             <TouchableOpacity onPress={onClick}>
                 {lessButton(onClick)}
@@ -213,6 +219,13 @@ const styles = StyleSheet.create({
         width: infoBoxWidth/2 - 10,
         height: (infoBoxWidth/2 - 10)/1.3,
         //marginVertical: 7,
+        borderRadius: 5
+    },
+    infoImage: {
+        width: infoBoxWidth/2 - 10,
+        height: (infoBoxWidth/2 - 10)/1.3,
+        marginVertical: 7,
+        marginHorizontal: 10,
         borderRadius: 5
     },
     buttonStyle: {
