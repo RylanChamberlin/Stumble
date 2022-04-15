@@ -1,4 +1,4 @@
-import {StyleSheet, View, Text, TouchableOpacity, Image} from "react-native";
+import {StyleSheet, View, Text, TouchableOpacity, Image, ScrollView, Modal} from "react-native";
 import StarButton from './StarButton';
 
 import { Dimensions } from 'react-native';
@@ -15,8 +15,10 @@ const windowHeight = Dimensions.get('window').height;
 export default function BarBox({name, review_count, specials, events, imageUrl}){
 
     const [more, setMore] = useState(true);
+    
 
     return (
+        <ScrollView horizontal={true}>
         <View style={styles.container}>
             <View style = {styles.infoBox}>
                 <View style = {styles.infoBoxLeft}>
@@ -67,6 +69,7 @@ export default function BarBox({name, review_count, specials, events, imageUrl})
                 </View>
                
         </View>
+        </ScrollView>
     );
 
 }

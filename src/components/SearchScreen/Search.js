@@ -1,7 +1,8 @@
 import { useState } from "react";
 import {View, TextInput, Text, StyleSheet} from "react-native";
 import {elevation} from "../../common/styles";
-import Button from "./Button";
+import Button from "../Button";
+
 
 export default function Search(){
 
@@ -28,7 +29,7 @@ export default function Search(){
                 <Text style = {styles.text}>OR</Text>
             </View>
 
-            <Button 
+            <Button
                 name="ADVANCED SEARCH" 
                 buttonStyle = {[styles.container, styles.elevation]} 
                 buttonTextStyle={styles.AdvancedText}   
