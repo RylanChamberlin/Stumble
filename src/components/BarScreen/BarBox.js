@@ -2,7 +2,7 @@ import {StyleSheet, View, Text, TouchableOpacity, Image, ScrollView, Modal} from
 import StarButton from './StarButton';
 
 import { Dimensions } from 'react-native';
-import {elevation} from "../../common/styles";
+import {elevation, bold} from "../../common/styles";
 import LikeButton from "./LikeButton";
 import { useState } from "react";
 
@@ -22,24 +22,15 @@ export default function BarBox({name, review_count, specials, events, imageUrl, 
         <View style={styles.container}>
             <View style = {styles.infoBox}>
                 <View style = {styles.infoBoxLeft}>
-                    <Text style = {styles.title}>{name}</Text>
-                    <View style = {styles.reviews}>
-                        <StarButton/>
-                        <StarButton/>
-                        <StarButton/>
-                        <StarButton/>
-                        <StarButton/>
-                        <Text style = {styles.reviewNumber}>{review_count}</Text>
-                    </View>
+                    <Text style = {[styles.title, bold]}>{name}</Text>
 
+                    <View>
+                        <Text>16 new Comments</Text>
+                    </View>
+                    
                     <View style = {styles.specialsContainer}>
-                        <Text style={styles.specialsTitle}>TODAY'S SPECIALS:</Text>
-                        <Text style={styles.specialsText}>{specials}</Text>
-                    </View>
-
-                    <View style = {styles.eventContainer}>
-                        <Text style={styles.eventTitle}>TODAY'S EVENTS:</Text>
-                        <Text style={styles.eventText}>{events}</Text>
+                        <Text style={[styles.specialsTitle, bold]}>TODAY'S SPECIALS:</Text>
+                        <Text>{specials}</Text>
                     </View>
 
                     <TouchableOpacity onPress={() => setMore((isMore) => !isMore)}>
@@ -49,18 +40,11 @@ export default function BarBox({name, review_count, specials, events, imageUrl, 
                 </View>
 
                 <View style={styles.infoBoxRight}>
-                    <View style={styles.likeButton}>
+                    <View>
                         <LikeButton/>
                     </View>
                     <Image style = {styles.image} source={imageUrl}/>
 
-                    <View>
-                        <TouchableOpacity onPress={() => console.warn('Reserve Button pressed')}>
-                            <View style={[styles.buttonStyle, styles.elevation]}>
-                                <Text style={styles.buttonTextStyle}>RESERVE</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
                 </View>
             </View>
 
@@ -77,7 +61,7 @@ export default function BarBox({name, review_count, specials, events, imageUrl, 
 function moreButton(){
     return( 
         <View style = {styles.moreContainer}>
-            <Text style={styles.moreText}>more </Text>
+            <Text style={[styles.moreText, bold]}>more </Text>
             <Text style={styles.moreArrow}>ˇ</Text>
         </View> 
     );
@@ -100,11 +84,11 @@ function moreText(onClick, milesAway, moreInfo, rentals, image){
                 <Text>{moreInfo}</Text>
 
                 <ScrollView horizontal={true}>
-                    <Image style = {styles.infoImage} source={image}/>
-                    <Image style = {styles.infoImage} source={image}/>
-                    <Image style = {styles.infoImage} source={image}/>
-                    <Image style = {styles.infoImage} source={image}/>
-                    <Image style = {styles.infoImage} source={image}/>
+                    <Image style = {styles.image} source={image}/>
+                    <Image style = {styles.image} source={image}/>
+                    <Image style = {styles.image} source={image}/>
+                    <Image style = {styles.image} source={image}/>
+                    <Image style = {styles.image} source={image}/>
                 </ScrollView>
 
                 <Text>{rentals}</Text>   
@@ -130,119 +114,47 @@ const styles = StyleSheet.create({
         width: infoBoxWidth,
         
     },
-    moreTextContainer:{
-        marginHorizontal: 15,
-        //marginTop: 40
-    },
+   
     infoBox: {
-        //marginTop: 12,
-        //marginHorizontal: 15,
         borderRadius: 8,
         backgroundColor: "rgb(249,249,249)",
         flexDirection: "row",
         width: infoBoxWidth,
+
         },
     infoBoxRight: {
         flexDirection: "column",
         width: infoBoxWidth/2,
         alignItems: 'flex-end',
         justifyContent: "space-between",
-        paddingRight: 5
+        paddingRight: 5,
     },
     infoBoxLeft: {
         width: infoBoxWidth/2,
-        
-
+        justifyContent: "space-between",
+        marginLeft: 5
     },
     title: {
-        fontWeight: "bold",
         fontSize: 20,
-        paddingLeft: 5,
-        paddingTop: 5,
-        
-    },
-    reviews: {
-        flexDirection: "row",
-        paddingLeft: 5,
-
-    },
-    reviewNumber: {
-        padding: 2
-    },
-
-    specialsContainer: {
-        padding: 5,
-        marginLeft: 5,
-        marginTop: 20
-    },
-
-    specialsTitle: {
-        fontWeight: "bold",
-    },
-    specialsText: {
-
-    },
-    eventContainer: {
-        marginLeft: 5,
-        padding: 5,
-        marginTop: 20
-    },
-    eventTitle: {
-        fontWeight: "bold",
-    },
-    eventText: {
-
     },
     
     moreContainer: {
         flexDirection: "row",
-        marginLeft: 10,
-        marginTop: 15,
-        //backgroundColor: "green"
-        
     },
 
     moreText: {
         fontSize: 12,
-        fontWeight: "bold",
     },
 
     moreArrow: {
-        marginTop: 4,
-        fontWeight: "bold",
-    },
-    likeButton: {
-       marginTop: 5,
-       marginRight: 5
+        paddingTop: 4,
     },
     image: {
         width: infoBoxWidth/2 - 10,
         height: (infoBoxWidth/2 - 10)/1.3,
-        //marginVertical: 7,
         borderRadius: 5
-    },
-    infoImage: {
-        width: infoBoxWidth/2 - 10,
-        height: (infoBoxWidth/2 - 10)/1.3,
-        marginVertical: 7,
-        marginHorizontal: 10,
-        borderRadius: 5
-    },
-    buttonStyle: {
-        //marginTop: 15,
-        marginBottom: 5,
-       // marginRight: 5,
-        paddingHorizontal: 10,
-        paddingVertical: 4,
-        borderRadius: 20,
-        borderWidth:1,
-        backgroundColor: "white",
-        
-    },
-    buttonTextStyle: {
-        fontWeight: "bold",
-        fontSize: 16
     },
     elevation,
+    bold,
 
 })

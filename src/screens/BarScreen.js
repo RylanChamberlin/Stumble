@@ -14,7 +14,7 @@ export default function BarScreen(){
         { 
             name: "Willie's / FieldHouse",
             review_count: "432",
-            specials: "$2 Tuesday",
+            specials: "$2 Tuesday ",
             events: "neon party",
             imageUrl: require('../assets/images/willies.jpeg'),
             milesAway: "2.4 miles away",
