@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { Text, View, ImageBackground, StyleSheet, Modal, Pressable } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MaterialCommunityIcons, AntDesign, Entypo, MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons, AntDesign, Entypo, FontAwesome5, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 
 import MainScreen from "../screens/MainScreen";
-import SearchScreen from "../screens/SearchScreen";
 import BarScreen from "../screens/BarScreen";
 import Search from './BarScreen/Search';
+import MapScreen from '../screens/MapScreen';
+import PostScreen from '../screens/PostScreen';
 
 function Profile() {
   const image = require('../../src/assets/images/kel.png')
@@ -72,32 +73,23 @@ export default function BottomTab() {
 
       />
       <Tab.Screen 
-        name="Account" 
-        component={SearchScreen} 
+        name="Posts" 
+        component={PostScreen} 
         options={{
-          tabBarLabel: 'Account',
+          tabBarLabel: 'Posts',
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="account-box" size={size} color={color} />
+            <MaterialIcons name="forum" size={size} color={color} />
           ),
         }}
       />
       <Tab.Screen 
-        name="Wallet" 
-        component={MainScreen} 
+        name="Friends" 
+        component={MapScreen} 
         options={{
-          tabBarLabel: 'Wallet',
+          tabBarLabel: 'Friends',
           tabBarIcon: ({ color, size }) => (
-            <Entypo name="wallet" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen 
-        name="ShoppingCart" 
-        component={Profile} 
-        options={{
-          tabBarLabel: 'Shopping Cart',
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="shopping-cart" size={size} color={color} />
+            <FontAwesome5 name="user-friends" size={size} color={color} />
+            
           ),
         }}
       />
