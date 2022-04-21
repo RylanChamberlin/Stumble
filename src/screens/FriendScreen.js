@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ButtonSwitch from "../components/ButtonSwitch";
+import FriendBox from "../components/FriendBox";
 import PostBox from "../components/PostBox";
 
 
 
-export default function PostScreen(){
+export default function FriendScreen(){
 
     const image = require('../../src/assets/images/yeet.jpeg');
+    
 
     return(
         <ImageBackground style= { styles.backgroundImage } source={image} resizeMode='cover'>
@@ -15,27 +17,28 @@ export default function PostScreen(){
 
             <View style={styles.header}>
                 <View style={{alignItems: "center",}}>
-                    <Text style={styles.title}>Posts</Text>
+                    <Text style={styles.title}>FRIENDS</Text>
                 </View>
 
-                <ButtonSwitch button1 = "RECENT" button2 = "POPULAR"/>
-                
-                <TouchableOpacity style={styles.newPost}>
-                    <Text style={{fontSize:20, fontWeight: "bold"}}>CREATE NEW POST</Text>
-                </TouchableOpacity>
+               <ButtonSwitch button1 = "RECENT" button2 = "SEARCH"/>
+    
             </View>
 
-        <ScrollView>
-            <PostBox/>
-            <PostBox/>
-            <PostBox/>
-            <PostBox/>
-            <PostBox/>
-            <PostBox/>
-            <PostBox/>
-            <PostBox/>
-        </ScrollView>   
-            
+            <ScrollView>
+                <FriendBox/>
+                <FriendBox/>
+                <FriendBox/>
+                <FriendBox/>
+                <FriendBox/>
+                <FriendBox/>
+                <FriendBox/>
+                <FriendBox/>
+                <FriendBox/>
+                <FriendBox/>
+                <FriendBox/>
+                <FriendBox/>
+            </ScrollView>
+
         </SafeAreaView>
         </ImageBackground>
     );
@@ -49,7 +52,7 @@ const styles = StyleSheet.create({
        
     },
     header:{
-        height: "15%",
+        height: "10%",
         justifyContent: "space-between",
         marginBottom: 10
         //backgroundColor: 'green',
@@ -61,7 +64,6 @@ const styles = StyleSheet.create({
       backgroundImage:{
         flex: 1,
     },
-
     newPost:{
 
         alignItems: "center", 

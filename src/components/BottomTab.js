@@ -5,6 +5,7 @@ import { MaterialCommunityIcons, FontAwesome5, MaterialIcons } from '@expo/vecto
 import BarScreen from "../screens/BarScreen";
 import MapScreen from '../screens/MapScreen';
 import PostScreen from '../screens/PostScreen';
+import FriendScreen from '../screens/FriendScreen';
 
 
 
@@ -42,7 +43,7 @@ export default function BottomTab() {
       />
       <Tab.Screen 
         name="Friends" 
-        component={MapScreen} 
+        component={FriendScreen} 
         options={{
           tabBarLabel: 'Friends',
           tabBarIcon: ({ color, size }) => (
