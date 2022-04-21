@@ -73,7 +73,7 @@ export default function BarScreen(){
         }
     ];
 
-    const image = require('../assets/images/kel.png');
+    const image = require('../assets/images/yeet.jpeg');
 
         return (
         <View style={styles.container}>

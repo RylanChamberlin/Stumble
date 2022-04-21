@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ImageBackground, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import PostBox from "../components/PostBox";
 
 
 
@@ -12,24 +13,34 @@ export default function PostScreen(){
         <ImageBackground style= { styles.backgroundImage } source={image} resizeMode='cover'>
         <SafeAreaView style={styles.container}>
 
-            <View style={{alignItems: "center",}}>
-                <Text style={styles.title}>Posts</Text>
-            </View>
+            <View style={styles.header}>
+                <View style={{alignItems: "center",}}>
+                    <Text style={styles.title}>Posts</Text>
+                </View>
 
-            <View style={styles.buttonContainer}>
+                <View style={styles.buttonContainer}>
 
-                <TouchableOpacity style={[styles.recentButton,recent ? {backgroundColor: 'white'} : {backgroundColor: 'black'}]} onPress = {() => {setRecent(!recent)}}>
-                    <Text style= {[styles.buttonText,recent ? {color: 'black'} : {color: 'white'}]}>RECENT</Text>
+                    <TouchableOpacity style={[styles.recentButton,recent ? {backgroundColor: 'white'} : {backgroundColor: 'black'}]} onPress = {() => {setRecent(false)}}>
+                        <Text style= {[styles.buttonText,recent ? {color: 'black'} : {color: 'white'}]}>RECENT</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={[styles.recentButton,!recent ? {backgroundColor: 'white'} : {backgroundColor: 'black'}]} onPress = {() => {setRecent(true)}}>
+                        <Text style= {[styles.buttonText,!recent ? {color: 'black'} : {color: 'white'}]}>POPULAR</Text>
+                    </TouchableOpacity>
+                </View>
+
+                
+                <TouchableOpacity style={styles.newPost}>
+                    <Text style={styles.buttonText}>CREATE NEW POST</Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity style={[styles.recentButton,!recent ? {backgroundColor: 'white'} : {backgroundColor: 'black'}]} onPress = {() => {setRecent(!recent)}}>
-                <Text style= {[styles.buttonText,!recent ? {color: 'black'} : {color: 'white'}]}>POPULAR</Text>
-                </TouchableOpacity>
             </View>
 
-            <View>
-                <Text>CREATE NEW POST</Text>
-            </View>
+            <PostBox/>
+            <PostBox/>
+            <PostBox/>
+            <PostBox/>
+            
+            
         </SafeAreaView>
         </ImageBackground>
     );
@@ -39,7 +50,14 @@ export default function PostScreen(){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        //
+        marginHorizontal: 15,
+       
+    },
+    header:{
+        height: "15%",
+        justifyContent: "space-between",
+        marginBottom: 10
+        //backgroundColor: 'green',
     },
     title:{
         color: 'white',
@@ -52,7 +70,6 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
-        marginHorizontal: 15,
     },
     recentButton: {
         
@@ -63,6 +80,12 @@ const styles = StyleSheet.create({
     },
     buttonText:{
         fontSize:20, fontWeight: "bold",
+    },
+    newPost:{
+
+        alignItems: "center", 
+        backgroundColor: 'white',
+        borderRadius: 10
     }
 
 })
