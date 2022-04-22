@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ImageBackground, Modal, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import GestureRecognizer from "react-native-swipe-gestures";
 import ButtonSwitch from "../components/ButtonSwitch";
+import NewPost from "../components/NewPost";
 import PostBox from "../components/PostBox";
 
 
@@ -8,6 +10,8 @@ import PostBox from "../components/PostBox";
 export default function PostScreen(){
 
     const image = require('../../src/assets/images/yeet.jpeg');
+    
+    const [post, setPost] = useState(false)
 
     return(
         <ImageBackground style= { styles.backgroundImage } source={image} resizeMode='cover'>
@@ -15,15 +19,22 @@ export default function PostScreen(){
 
             <View style={styles.header}>
                 <View style={{alignItems: "center",}}>
+
+                
                     <Text style={styles.title}>Posts</Text>
                 </View>
 
                 <ButtonSwitch button1 = "RECENT" button2 = "POPULAR"/>
                 
-                <TouchableOpacity style={styles.newPost}>
+                <TouchableOpacity style={styles.newPost} onPress={() => setPost(!post)}>
                     <Text style={{fontSize:20, fontWeight: "bold"}}>CREATE NEW POST</Text>
                 </TouchableOpacity>
             </View>
+
+
+            <NewPost post = {post} setPost={setPost}/>
+            
+
 
         <ScrollView>
             <PostBox/>
@@ -70,3 +81,4 @@ const styles = StyleSheet.create({
     }
 
 })
+
