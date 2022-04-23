@@ -1,13 +1,26 @@
-import { SafeAreaView, StyleSheet, View, ImageBackground, Text, ScrollView, FlatList} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView, StyleSheet, View, ImageBackground, Text, ScrollView, FlatList, TouchableOpacity} from "react-native";
 import { Dimensions } from 'react-native';
 import BarBox from "../components/BarScreen/BarBox";
 import Search from "../components/BarScreen/Search";
+import { auth } from "../firebase";
 
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 export default function BarScreen(){
+
+    const navigation = useNavigation()
+
+    const handleSignOut = () => {
+        auth
+        .signOut()
+        .then(() => {
+            navigation.replace("Login")
+        })
+        .catch(error => alert(error.message))
+    }
 
 
     const commonCategories = [
@@ -81,7 +94,9 @@ export default function BarScreen(){
             <SafeAreaView>
 
                 <View style={styles.logo}>
-                    <Text>Logo</Text>
+                    <TouchableOpacity onPress={handleSignOut}>
+                        <Text>{auth.currentUser?.email}</Text>
+                    </TouchableOpacity>
                 </View>
 
                 <Search/>
@@ -107,7 +122,10 @@ export default function BarScreen(){
                 }}
                 vertical
                 keyExtractor={(bar) => bar.name}
-        />
+                />
+
+
+                
             
             </SafeAreaView>
             </ImageBackground>

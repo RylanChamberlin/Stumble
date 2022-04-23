@@ -6,6 +6,7 @@ import BarScreen from "../screens/BarScreen";
 import MapScreen from '../screens/MapScreen';
 import PostScreen from '../screens/PostScreen';
 import FriendScreen from '../screens/FriendScreen';
+import StartScreen from '../screens/StartScreen';
 
 
 
@@ -46,6 +47,17 @@ export default function BottomTab() {
         component={FriendScreen} 
         options={{
           tabBarLabel: 'Friends',
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="user-friends" size={size} color={color} />
+            
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name="StartScreen" 
+        component={StartScreen} 
+        options={{
+          tabBarLabel: 'StartScreen',
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="user-friends" size={size} color={color} />
             

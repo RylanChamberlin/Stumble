@@ -3,8 +3,14 @@ import { createStackNavigator } from "react-navigation-stack";
 import HomeScreen from "./src/screens/HomeScreen";
 import RestaurantScreen from "./src/screens/RestaurantScreen";
 import ReviewScreen from "./src/screens/ReviewScreen";
+
 import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+
 import BottomTab from "./src/components/BottomTab";
+import LoginScreen from "./src/screens/LoginScreen";
+
+const Stack = createNativeStackNavigator();
 
 
 // const navigator = createStackNavigator(
@@ -31,7 +37,11 @@ import BottomTab from "./src/components/BottomTab";
 export default function App() {
   return (
     <NavigationContainer>
-      <BottomTab/>
+
+    <Stack.Navigator>
+      <Stack.Screen name="Login" component={LoginScreen}  options={{ headerShown: false }}/>
+      <Stack.Screen name="BottomTab" component={BottomTab}  options={{ headerShown: false }}/>
+    </Stack.Navigator>
     </NavigationContainer>
   );
 }

@@ -1,17 +1,65 @@
-import { useState } from "react";
-import { ImageBackground, Modal, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, ImageBackground, Modal, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import ButtonSwitch from "../components/ButtonSwitch";
 import NewPost from "../components/NewPost";
 import PostBox from "../components/PostBox";
+import { auth, db } from "../firebase";
 
 
 
 export default function PostScreen(){
 
-    const image = require('../../src/assets/images/yeet.jpeg');
+
+    const [loading, setLoading] = useState(true); // Set loading to true on component mount
+    const [users, setUsers] = useState([]); // Initial empty array of users
     
-    const [post, setPost] = useState(false)
+    
+    
+    const [formValue, setFormValue] = useState('');
+    const [post, setPost] = useState(false);
+    const messageClass = users?.uid === auth.currentUser.uid ? 'sent' : 'received';
+
+    const messagesRef = db.collection('messages');
+
+    const sendMessage = async() => {
+        const {uid, photoURL} = auth.currentUser;
+        await messagesRef.add({
+        text: formValue,
+        createdAt: new Date(),
+        uid,
+        photoURL
+        });
+    }
+    useEffect(() => {
+        const subscriber = db
+        .collection('messages')
+        .orderBy('createdAt')
+        .onSnapshot(querySnapshot => {
+            const users = [];
+    
+            querySnapshot.forEach(documentSnapshot => {
+            users.push({
+                ...documentSnapshot.data(),
+                key: documentSnapshot.id,
+            });
+            });
+    
+            setUsers(users);
+            setLoading(false);
+        });
+    
+        // Unsubscribe from events when no longer in use
+        return () => subscriber();
+    }, []);
+
+    const image = require('../../src/assets/images/yeet.jpeg');    
+    
+
+
+    if (loading) {
+        return <ActivityIndicator />;
+        }
 
     return(
         <ImageBackground style= { styles.backgroundImage } source={image} resizeMode='cover'>
@@ -33,21 +81,25 @@ export default function PostScreen(){
 
 
             <NewPost post = {post} setPost={setPost}/>
-            
 
+    
+            <FlatList
 
-        <ScrollView>
-            <PostBox/>
-            <PostBox/>
-            <PostBox/>
-            <PostBox/>
-            <PostBox/>
-            <PostBox/>
-            <PostBox/>
-            <PostBox/>
-        </ScrollView>   
-            
+                contentContainerStyle={{marginBottom: 300}}
+                data={users}
+                
+                renderItem={({ item }) => (
+                    <PostBox item = {item}/>
+                )}
+            />  
+           
+           
+    
+        
         </SafeAreaView>
+
+        
+
         </ImageBackground>
     );
 
@@ -62,8 +114,7 @@ const styles = StyleSheet.create({
     header:{
         height: "15%",
         justifyContent: "space-between",
-        marginBottom: 10
-        //backgroundColor: 'green',
+        marginBottom: 10,
     },
     title:{
         color: 'white',
