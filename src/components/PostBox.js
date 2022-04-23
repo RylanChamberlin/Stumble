@@ -2,6 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { Entypo } from '@expo/vector-icons'; 
 import { useState } from "react";
+import { database, db, FieldValue } from "../firebase";
 
 export default function PostBox({item}){
 
@@ -11,24 +12,48 @@ export default function PostBox({item}){
         return time;
     }
     
-    const [count, setCount] = useState(0);
+    const [vote, setVote] = useState(null);
+
+    
+
+    const incrementVote = async() => { 
+
+        const userRef = db.collection('messages').doc(item.key);
+        const increment = FieldValue.increment(1); 
+        userRef.update({ votes: increment });
+    }
+
+    const decrementVote = async() => { 
+        const userRef = db.collection('messages').doc(item.key);
+        const decrement = FieldValue.increment(-1); 
+        userRef.update({ votes: decrement });
+    }
 
     return(
         <View style={styles.container}>
             <View style={styles.textContainer}>
                 <Text style={{paddingBottom: 15, fontSize: 20}}>{item.text}</Text>
-                <Text style = {{fontWeight: 'bold'}}>At b12 {getTime(item.createdAt?.seconds)}</Text>
+                <Text style = {{fontWeight: 'bold'}}>At {item.bar} {getTime(item.createdAt?.seconds)}</Text>
             </View>
 
             <View style={styles.likeContainer}>
-                <TouchableOpacity onPress={() => setCount(count+1)}>
-                    <Entypo name="plus" size={24} color="black" />
+                <TouchableOpacity onPress={incrementVote}>
+                    <Entypo 
+                        name="plus" 
+                        size={24} 
+                        color={vote ? "red" : "black"}
+                    />
                 </TouchableOpacity>
 
-                <Text style = {{marginTop: 5}}>{count}</Text>
+                <Text style = {{marginTop: 5}}>{item.votes}</Text>
 
-                <TouchableOpacity onPress={() => setCount(count-1)}>
-                    <Entypo name="minus" size={24} color="black" />
+                <TouchableOpacity onPress={decrementVote}>
+                    <Entypo 
+                        name="minus" 
+                        size={24} 
+                        color="black" 
+                        color={!vote ? "red" : "black"}
+                    />
                 </TouchableOpacity>
                 
             </View>

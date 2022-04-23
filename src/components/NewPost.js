@@ -3,11 +3,38 @@ import { Button, ImageBackground, Modal, SafeAreaView, StyleSheet, Text, TextInp
 import GestureRecognizer from "react-native-swipe-gestures";
 import { Feather } from '@expo/vector-icons'; 
 import {elevation} from "../common/styles"
+import { auth, db } from "../firebase";
 
 
 export default function NewPost({post, setPost}){
 
     const image = require('../../src/assets/images/yeet.jpeg');
+
+    const [barInput, setBarInput] = useState("")
+    const [input, setInput] = useState("")
+
+    const handleEndEditing = () => {
+        if(!input && !barInput) return
+        setBarInput("")
+        setInput("")
+    }
+
+    const messagesRef = db.collection('messages');
+
+    const sendMessage = async() => {
+        const {uid, photoURL} = auth.currentUser;
+        await messagesRef.add({
+        bar: barInput,
+        text: input,
+        votes: 0,
+        createdAt: new Date(),
+        uid,
+        photoURL
+        });
+
+        handleEndEditing();
+        setPost(!post);
+    }
 
     return(
 
@@ -20,7 +47,7 @@ export default function NewPost({post, setPost}){
                     animationType="slide"
                     transparent={true}
                     visible={post}
-                    //onRequestClose={() => setFilterBy(!filterBy)}
+                    onRequestClose={() => setPost(!post)}
                 >
         
                 <ImageBackground style= { styles.backgroundImage } source={image} resizeMode='cover'>
@@ -34,11 +61,25 @@ export default function NewPost({post, setPost}){
                         </View>
 
                         <View style={styles.inputBox}>
-                            <TextInput placeholder='@ bar location' style = {styles.barInput}/>
-                            <TextInput placeholder='Type SOMETHING........' style = {styles.textInput} multiline={true} numberOfLines={10}/>
+                            <TextInput 
+                                placeholder='@ bar location' 
+                                style = {styles.barInput}
+                                value={barInput} 
+                                onChangeText={(text) => {setBarInput(text);
+                                }}
+                                />
+                            <TextInput 
+                                placeholder='Type SOMETHING........' 
+                                style = {styles.textInput} 
+                                multiline={true} 
+                                numberOfLines={10}
+                                value={input} 
+                                onChangeText={(text) => {setInput(text);
+                                }}
+                            />
                         </View>
 
-                        <TouchableOpacity style={[styles.button, styles.elevation]}>
+                        <TouchableOpacity style={[styles.button, styles.elevation]} onPress={sendMessage}>
                             <Text style={styles.buttonText}>POST</Text>
                         </TouchableOpacity>
                     </SafeAreaView>

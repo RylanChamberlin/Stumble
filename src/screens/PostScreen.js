@@ -5,58 +5,25 @@ import ButtonSwitch from "../components/ButtonSwitch";
 import NewPost from "../components/NewPost";
 import PostBox from "../components/PostBox";
 import { auth, db } from "../firebase";
+import useMessages from "../hooks/useMessages";
 
 
 
 export default function PostScreen(){
 
 
-    const [loading, setLoading] = useState(true); // Set loading to true on component mount
-    const [users, setUsers] = useState([]); // Initial empty array of users
-    
-    
-    
-    const [formValue, setFormValue] = useState('');
-    const [post, setPost] = useState(false);
-    const messageClass = users?.uid === auth.currentUser.uid ? 'sent' : 'received';
+    const [{data, loading, error}, getMessages] = useMessages();
 
-    const messagesRef = db.collection('messages');
-
-    const sendMessage = async() => {
-        const {uid, photoURL} = auth.currentUser;
-        await messagesRef.add({
-        text: formValue,
-        createdAt: new Date(),
-        uid,
-        photoURL
-        });
-    }
     useEffect(() => {
-        const subscriber = db
-        .collection('messages')
-        .orderBy('createdAt')
-        .onSnapshot(querySnapshot => {
-            const users = [];
-    
-            querySnapshot.forEach(documentSnapshot => {
-            users.push({
-                ...documentSnapshot.data(),
-                key: documentSnapshot.id,
-            });
-            });
-    
-            setUsers(users);
-            setLoading(false);
-        });
-    
-        // Unsubscribe from events when no longer in use
-        return () => subscriber();
-    }, []);
+        getMessages();
+    }, []);// [] could be which bar?
+
+    const messageClass = data?.uid === auth.currentUser.uid ? 'sent' : 'received';
+    const [post, setPost] = useState(false);
+   
 
     const image = require('../../src/assets/images/yeet.jpeg');    
-    
-
-
+  
     if (loading) {
         return <ActivityIndicator />;
         }
@@ -82,24 +49,20 @@ export default function PostScreen(){
 
             <NewPost post = {post} setPost={setPost}/>
 
-    
+           
             <FlatList
 
                 contentContainerStyle={{marginBottom: 300}}
-                data={users}
+                data={data}
                 
                 renderItem={({ item }) => (
                     <PostBox item = {item}/>
                 )}
+                keyExtractor={(item) => item.key}
             />  
            
-           
-    
         
         </SafeAreaView>
-
-        
-
         </ImageBackground>
     );
 
@@ -125,7 +88,6 @@ const styles = StyleSheet.create({
     },
 
     newPost:{
-
         alignItems: "center", 
         backgroundColor: 'white',
         borderRadius: 10

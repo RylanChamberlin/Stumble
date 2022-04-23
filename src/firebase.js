@@ -25,5 +25,7 @@ if (firebase.apps.length === 0) {
 
 const auth = firebase.auth();
 const db = firebase.firestore();
+const database = firebase.database()
+const FieldValue = firebase.firestore.FieldValue;
 
-export { auth, db};
+export { auth, db, database, FieldValue};
