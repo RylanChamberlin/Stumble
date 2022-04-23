@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, ImageBackground, Modal, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
+import AppView from "../components/AppView";
 import ButtonSwitch from "../components/ButtonSwitch";
 import NewPost from "../components/NewPost";
 import PostBox from "../components/PostBox";
@@ -11,7 +12,6 @@ import useMessages from "../hooks/useMessages";
 
 export default function PostScreen(){
 
-
     const [{data, loading, error}, getMessages] = useMessages();
 
     useEffect(() => {
@@ -21,21 +21,15 @@ export default function PostScreen(){
     const messageClass = data?.uid === auth.currentUser.uid ? 'sent' : 'received';
     const [post, setPost] = useState(false);
    
-
-    const image = require('../../src/assets/images/yeet.jpeg');    
-  
     if (loading) {
         return <ActivityIndicator />;
-        }
+    }
 
     return(
-        <ImageBackground style= { styles.backgroundImage } source={image} resizeMode='cover'>
-        <SafeAreaView style={styles.container}>
-
+       
+        <AppView>
             <View style={styles.header}>
                 <View style={{alignItems: "center",}}>
-
-                
                     <Text style={styles.title}>Posts</Text>
                 </View>
 
@@ -60,20 +54,14 @@ export default function PostScreen(){
                 )}
                 keyExtractor={(item) => item.key}
             />  
-           
-        
-        </SafeAreaView>
-        </ImageBackground>
+        </AppView>
+       
     );
 
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginHorizontal: 15,
-       
-    },
+   
     header:{
         height: "15%",
         justifyContent: "space-between",
@@ -83,10 +71,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 35,
     },
-      backgroundImage:{
-        flex: 1,
-    },
-
     newPost:{
         alignItems: "center", 
         backgroundColor: 'white',

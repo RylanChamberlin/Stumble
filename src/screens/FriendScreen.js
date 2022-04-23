@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import AppView from "../components/AppView";
 import ButtonSwitch from "../components/ButtonSwitch";
 import FriendBox from "../components/FriendBox";
 import PostBox from "../components/PostBox";
@@ -12,8 +13,8 @@ export default function FriendScreen(){
     
 
     return(
-        <ImageBackground style= { styles.backgroundImage } source={image} resizeMode='cover'>
-        <SafeAreaView style={styles.container}>
+       
+        <AppView>
 
             <View style={styles.header}>
                 <View style={{alignItems: "center",}}>
@@ -39,18 +40,13 @@ export default function FriendScreen(){
                 <FriendBox/>
             </ScrollView>
 
-        </SafeAreaView>
-        </ImageBackground>
+        </AppView>
     );
 
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginHorizontal: 15,
-       
-    },
+
     header:{
         height: "10%",
         justifyContent: "space-between",
@@ -60,9 +56,6 @@ const styles = StyleSheet.create({
     title:{
         color: 'white',
         fontSize: 35,
-    },
-      backgroundImage:{
-        flex: 1,
     },
     newPost:{
 

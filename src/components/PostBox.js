@@ -6,18 +6,12 @@ import { database, db, FieldValue } from "../firebase";
 
 export default function PostBox({item}){
 
-
     const getTime = (seconds) => {
         let time = new Date(seconds*1000).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
         return time;
     }
     
-    const [vote, setVote] = useState(null);
-
-    
-
-    const incrementVote = async() => { 
-
+    const incrementVote = async() => {
         const userRef = db.collection('messages').doc(item.key);
         const increment = FieldValue.increment(1); 
         userRef.update({ votes: increment });
@@ -41,7 +35,7 @@ export default function PostBox({item}){
                     <Entypo 
                         name="plus" 
                         size={24} 
-                        color={vote ? "red" : "black"}
+                        color="black"
                     />
                 </TouchableOpacity>
 
@@ -52,7 +46,6 @@ export default function PostBox({item}){
                         name="minus" 
                         size={24} 
                         color="black" 
-                        color={!vote ? "red" : "black"}
                     />
                 </TouchableOpacity>
                 

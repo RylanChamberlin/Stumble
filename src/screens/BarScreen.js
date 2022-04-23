@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, StyleSheet, View, ImageBackground, Text, ScrollView, FlatList, TouchableOpacity} from "react-native";
 import { Dimensions } from 'react-native';
+import AppView from "../components/AppView";
 import BarBox from "../components/BarScreen/BarBox";
 import Search from "../components/BarScreen/Search";
 import { auth } from "../firebase";
@@ -89,10 +90,7 @@ export default function BarScreen(){
     const image = require('../assets/images/yeet.jpeg');
 
         return (
-        <View style={styles.container}>
-            <ImageBackground style= { styles.backgroundImage } source={image} resizeMode='cover'>
-            <SafeAreaView>
-
+            <AppView>
                 <View style={styles.logo}>
                     <TouchableOpacity onPress={handleSignOut}>
                         <Text>{auth.currentUser?.email}</Text>
@@ -106,7 +104,6 @@ export default function BarScreen(){
                     renderItem={({ item, index }) => {
                     return (
                         <BarBox
-                        
                             name={item.name} 
                             review_count={item.review_count}
                             specials = {item.specials}
@@ -124,22 +121,11 @@ export default function BarScreen(){
                 keyExtractor={(bar) => bar.name}
                 />
 
-
-                
-            
-            </SafeAreaView>
-            </ImageBackground>
-        </View>
+        </AppView>
         
     );
 }
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-      },
-      backgroundImage:{
-        flex: 1,
-    },
     logo: {
         alignItems: 'center',
     },

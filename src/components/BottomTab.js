@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 
 import BarScreen from "../screens/BarScreen";
-import MapScreen from '../screens/MapScreen';
 import PostScreen from '../screens/PostScreen';
 import FriendScreen from '../screens/FriendScreen';
 

@@ -10,13 +10,10 @@ import { useState } from "react";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-
-
 export default function BarBox({name, review_count, specials, events, imageUrl, milesAway, moreInfo, rentals }){
 
     const [more, setMore] = useState(true);
     
-
     return (
         <ScrollView horizontal={true}>
         <View style={styles.container}>
@@ -109,7 +106,6 @@ const styles = StyleSheet.create({
     container: {
         borderRadius: 8,
         marginTop: 12,
-        marginHorizontal: 15,
         backgroundColor: "rgb(249,249,249)",
         width: infoBoxWidth,
         
