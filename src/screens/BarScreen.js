@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, StyleSheet, View, ImageBackground, Text, ScrollView, FlatList, TouchableOpacity} from "react-native";
 import { Dimensions } from 'react-native';
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import AppView from "../components/AppView";
 import BarBox from "../components/BarScreen/BarBox";
 import Search from "../components/BarScreen/Search";
@@ -11,6 +12,32 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 export default function BarScreen(){
+
+
+
+
+    // var axios = require('axios');
+    // const api = 'AIzaSyCEjcZKWdGQlDnw5Pp5eNKnY5jN6RO0h5A';
+    // var config = {
+    // method: 'get',
+    // url:    `https://maps.googleapis.com/maps/api/place/nearbysearch/json
+    //         ?location=-33.8670522,151.1957362
+    //         &radius=500
+    //         &types=food
+    //         &name=harbour
+    //         &key=${api}`,
+    // headers: { }
+    // };
+
+    // axios(config)
+    // .then(function (response) {
+    // console.log(JSON.stringify(response.data));
+    // })
+    // .catch(function (error) {
+    // console.log(error);
+    // });
+
+
 
     const navigation = useNavigation()
 
@@ -91,6 +118,9 @@ export default function BarScreen(){
 
         return (
             <AppView>
+
+
+                
                 <View style={styles.logo}>
                     <TouchableOpacity onPress={handleSignOut}>
                         <Text>{auth.currentUser?.email}</Text>
@@ -120,6 +150,9 @@ export default function BarScreen(){
                 vertical
                 keyExtractor={(bar) => bar.name}
                 />
+
+
+               
 
         </AppView>
         

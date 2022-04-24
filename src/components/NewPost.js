@@ -4,6 +4,7 @@ import GestureRecognizer from "react-native-swipe-gestures";
 import { Feather } from '@expo/vector-icons'; 
 import {elevation} from "../common/styles"
 import { auth, db } from "../firebase";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 
 export default function NewPost({post, setPost}){
@@ -12,6 +13,7 @@ export default function NewPost({post, setPost}){
 
     const [barInput, setBarInput] = useState("")
     const [input, setInput] = useState("")
+    const [placeID, setPlaceID] = useState("")
 
     const handleEndEditing = () => {
         if(!input && !barInput) return
@@ -19,21 +21,50 @@ export default function NewPost({post, setPost}){
         setInput("")
     }
 
-    const messagesRef = db.collection('messages');
+    
+    const writeMessage = async() => {
 
-    const sendMessage = async() => {
+        const messagesRef = db.collection('messages');
         const {uid, photoURL} = auth.currentUser;
         await messagesRef.add({
+        placeID: placeID,
         bar: barInput,
         text: input,
         votes: 0,
         createdAt: new Date(),
         uid,
-        photoURL
+        });
+
+    }
+
+    const addNewBarWithMessage = async() => {
+        db.collection('bars').doc(placeID).set({
+            name: barInput,
+        });
+
+        writeMessage();
+        
+        console.log("Making new document!");
+    }
+
+    const sendMessage = () => {
+
+        setPost(!post);
+
+        const docRef = db.collection("bars").doc(placeID);
+
+        docRef.get().then((doc) => {
+            if (doc.exists) {
+                writeMessage();
+            } else {
+                addNewBarWithMessage();
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
         });
 
         handleEndEditing();
-        setPost(!post);
+        
     }
 
     return(
@@ -61,13 +92,50 @@ export default function NewPost({post, setPost}){
                         </View>
 
                         <View style={styles.inputBox}>
-                            <TextInput 
+
+                            
+                            <GooglePlacesAutocomplete
+                    
+                                placeholder="Search"
+                                fetchDetails={true}
+                                GooglePlacesSearchQuery={{
+                                    rankby: "distance"
+                                }}
+                                onPress={(data, details = null) => {
+                                    // 'details' is provided when fetchDetails = true
+                                    console.log(data, details);
+                                    console.log(data.structured_formatting.main_text);
+                                    console.log(data.place_id);
+                                    setBarInput(data.structured_formatting.main_text);
+                                    setPlaceID(data.place_id);
+                                }}
+                                query={{
+                                    key: "AIzaSyCEjcZKWdGQlDnw5Pp5eNKnY5jN6RO0h5A",
+                                    language: "en",
+                                    components: "country:us",
+                                    fields: ["name"],
+                                    types: "bar",
+                                    radius: 100,
+                                    location: `38.951561, -92.328636`
+                                }}
+                                styles={{
+                                    container: { 
+                                        flex: 1,
+                                        // borderRadius: 10,
+                                        //backgroundColor: "black"
+                                        },
+                                    listView: { 
+                                        backgroundColor: "white" 
+                                        }
+                                }}
+                            />
+                            {/* <TextInput 
                                 placeholder='@ bar location' 
                                 style = {styles.barInput}
                                 value={barInput} 
                                 onChangeText={(text) => {setBarInput(text);
                                 }}
-                                />
+                                /> */}
                             <TextInput 
                                 placeholder='Type SOMETHING........' 
                                 style = {styles.textInput} 
@@ -120,10 +188,9 @@ const styles = StyleSheet.create({
     },
 
     textInput: {
-     
         padding: 10,
         fontSize: 20,
-        height: "85%",
+        height: "75%",
         borderRadius: 10,
         textAlignVertical: "top",
         backgroundColor: 'white'

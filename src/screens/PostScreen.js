@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, ImageBackground, Modal, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import GestureRecognizer from "react-native-swipe-gestures";
 import AppView from "../components/AppView";
 import ButtonSwitch from "../components/ButtonSwitch";
@@ -15,6 +16,7 @@ export default function PostScreen(){
     const [{data, loading, error}, getMessages] = useMessages();
 
     useEffect(() => {
+        //getMessages('ChIJdb9tqsO33IcRBaQwa-Vtku0');
         getMessages();
     }, []);// [] could be which bar?
 
@@ -28,6 +30,10 @@ export default function PostScreen(){
     return(
        
         <AppView>
+
+            
+
+
             <View style={styles.header}>
                 <View style={{alignItems: "center",}}>
                     <Text style={styles.title}>Posts</Text>
@@ -54,6 +60,8 @@ export default function PostScreen(){
                 )}
                 keyExtractor={(item) => item.key}
             />  
+
+
         </AppView>
        
     );

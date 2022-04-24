@@ -10,17 +10,26 @@ export default () => {
         error: null
     })
 
-    const getMessages = async () => {
+
+
+    const getMessages = async (placeID) => {
         setResult({
             data: null,
             loading: true,
             error: null
         })
 
+        const ref = db.collection('messages')
+        var subscriber = ref;
+
+        if(placeID != null){
+            subscriber = subscriber
+            .where('placeID', '==' , placeID)
+        }
+        
         try{
-            const subscriber = db
-                .collection('messages')
-                .orderBy('createdAt')
+                subscriber
+                //.orderBy('createdAt')
                 .onSnapshot(querySnapshot => {
                     const users = [];
 
@@ -41,7 +50,6 @@ export default () => {
                 });
 
             //return () => subscriber(); not sure what it does
-
 
        
         }catch(error){
