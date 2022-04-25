@@ -6,10 +6,53 @@ import { database, db, FieldValue } from "../firebase";
 
 export default function PostBox({item}){
 
-    const getTime = (seconds) => {
-        let time = new Date(seconds*1000).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-        return time;
-    }
+    function timeSince(seconds) {
+
+        var date = new Date(seconds*1000)
+
+        var seconds = Math.floor((new Date() - date) / 1000);
+      
+        var interval = seconds / 31536000;
+      
+        if (interval >= 2) {
+          return Math.floor(interval) + " years ago";
+        }
+        if (interval > 1) {
+            return Math.floor(interval) + " year ago";
+          }
+        interval = seconds / 2592000;
+        if (interval >= 2) {
+          return Math.floor(interval) + " months ago";
+        }
+        if (interval > 1) {
+            return Math.floor(interval) + " month ago";
+          }
+        interval = seconds / 86400;
+        if (interval >= 2) {
+          return Math.floor(interval) + " days ago";
+        }
+        if (interval > 1) {
+            return Math.floor(interval) + " day ago";
+          }
+        interval = seconds / 3600;
+        if (interval >= 2) {
+            
+          return Math.floor(interval) + " hours ago";
+        }
+        if (interval > 1) {
+            return Math.floor(interval) + " hour ago";
+          }
+        interval = seconds / 60;
+        if (interval >= 2) {
+          return Math.floor(interval) + " minutes ago";
+        }
+        if (interval > 1) {
+            
+            return Math.floor(interval) + " minute ago";
+            
+          }
+        return Math.floor(seconds) + " seconds ago";
+      }
     
     const incrementVote = async() => {
         const userRef = db.collection('messages').doc(item.key);
@@ -27,7 +70,11 @@ export default function PostBox({item}){
         <View style={styles.container}>
             <View style={styles.textContainer}>
                 <Text style={{paddingBottom: 15, fontSize: 20}}>{item.text}</Text>
-                <Text style = {{fontWeight: 'bold'}}>At {item.bar} {getTime(item.createdAt?.seconds)}</Text>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style = {{fontWeight: 'bold'}}>at {item.bar} </Text>
+                    <Text style = {{fontWeight: '200'}}>{timeSince(item.createdAt?.seconds)}</Text>
+                    
+                </View>
             </View>
 
             <View style={styles.likeContainer}>

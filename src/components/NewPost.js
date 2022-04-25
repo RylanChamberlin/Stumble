@@ -5,6 +5,7 @@ import { Feather } from '@expo/vector-icons';
 import {elevation} from "../common/styles"
 import { auth, db } from "../firebase";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import {GOOGLE_KEY} from '@env'
 
 
 export default function NewPost({post, setPost}){
@@ -115,7 +116,7 @@ export default function NewPost({post, setPost}){
                                     setPlaceID(data.place_id);
                                 }}
                                 query={{
-                                    key: "AIzaSyCEjcZKWdGQlDnw5Pp5eNKnY5jN6RO0h5A",
+                                    key: `${GOOGLE_KEY}`,
                                     language: "en",
                                     components: "country:us",
                                     fields: ["name"],

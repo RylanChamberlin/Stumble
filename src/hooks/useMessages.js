@@ -10,8 +10,6 @@ export default () => {
         error: null
     })
 
-
-
     const getMessages = async (placeID) => {
         setResult({
             data: null,

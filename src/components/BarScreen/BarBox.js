@@ -5,12 +5,13 @@ import { Dimensions } from 'react-native';
 import {elevation, bold} from "../../common/styles";
 import LikeButton from "./LikeButton";
 import { useState } from "react";
+import {GOOGLE_KEY} from '@env'
 
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default function BarBox({item}){
+export default function BarBox({item, numComment}){
 
     const [more, setMore] = useState(true);
     
@@ -22,11 +23,14 @@ export default function BarBox({item}){
                     <Text style = {[styles.title, bold]}>{item.name}</Text>
 
                     <View>
-                        <Text>16 new Comments</Text>
+                        {numComment == 1 ? 
+                        <Text>{numComment} new post</Text> : 
+                        <Text>{numComment ??= 0} new posts</Text>
+                        }
                     </View>
                     
                     <View style = {styles.specialsContainer}>
-                        <Text style={[styles.specialsTitle, bold]}>TODAY'S SPECIALS:</Text>
+                        <Text style={[styles.specialsTitle, bold]}>TODAY'S DEALS:</Text>
                         <Text>{}</Text>
                     </View>
 
@@ -40,7 +44,7 @@ export default function BarBox({item}){
                     <View>
                         <LikeButton/>
                     </View>
-                    <Image style = {styles.image} source={{uri:`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${item.photoID}&key=AIzaSyCEjcZKWdGQlDnw5Pp5eNKnY5jN6RO0h5A`}}/>
+                    <Image style = {styles.image} source={{uri:`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${item.photoID}&key=${GOOGLE_KEY}`}}/>
 
                 </View>
             </View>
