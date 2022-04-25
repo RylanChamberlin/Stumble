@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
 import { SafeAreaView, StyleSheet, View, ImageBackground, Text, ScrollView, FlatList, TouchableOpacity} from "react-native";
 import { Dimensions } from 'react-native';
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
@@ -6,6 +7,7 @@ import AppView from "../components/AppView";
 import BarBox from "../components/BarScreen/BarBox";
 import Search from "../components/BarScreen/Search";
 import { auth } from "../firebase";
+import useBars from "../hooks/useBars";
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -116,6 +118,13 @@ export default function BarScreen(){
 
     const image = require('../assets/images/yeet.jpeg');
 
+
+        const [{data, loading, error}, getBars] = useBars();
+
+        useEffect(() => {
+            getBars();
+        }, []);
+
         return (
             <AppView>
 
@@ -130,20 +139,11 @@ export default function BarScreen(){
                 <Search/>
 
                 <FlatList 
-                    data={commonCategories} 
+                    data={data} 
                     renderItem={({ item, index }) => {
                     return (
                         <BarBox
-                            name={item.name} 
-                            review_count={item.review_count}
-                            specials = {item.specials}
-                            events = {item.events}
-                            imageUrl={item.imageUrl} 
-                            milesAway={item.milesAway}
-                            moreInfo={item.moreInfo}
-                            rentals= {item.rentals}
-                            //index = {index} 
-                            //active={item.name === term} 
+                           item={item}
                         />
                     );
                 }}

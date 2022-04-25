@@ -14,6 +14,8 @@ export default function NewPost({post, setPost}){
     const [barInput, setBarInput] = useState("")
     const [input, setInput] = useState("")
     const [placeID, setPlaceID] = useState("")
+    const [photoID, setPhotoID] = useState("")
+
 
     const handleEndEditing = () => {
         if(!input && !barInput) return
@@ -27,7 +29,7 @@ export default function NewPost({post, setPost}){
         const messagesRef = db.collection('messages');
         const {uid, photoURL} = auth.currentUser;
         await messagesRef.add({
-        placeID: placeID,
+        placeID: placeID, 
         bar: barInput,
         text: input,
         votes: 0,
@@ -40,6 +42,7 @@ export default function NewPost({post, setPost}){
     const addNewBarWithMessage = async() => {
         db.collection('bars').doc(placeID).set({
             name: barInput,
+            photoID: photoID
         });
 
         writeMessage();
@@ -103,9 +106,11 @@ export default function NewPost({post, setPost}){
                                 }}
                                 onPress={(data, details = null) => {
                                     // 'details' is provided when fetchDetails = true
-                                    console.log(data, details);
-                                    console.log(data.structured_formatting.main_text);
+                                    //console.log(data, details);
+                                    //console.log(data.structured_formatting.main_text);
                                     console.log(data.place_id);
+                                    
+                                    setPhotoID(details.photos[0]?.photo_reference);
                                     setBarInput(data.structured_formatting.main_text);
                                     setPlaceID(data.place_id);
                                 }}

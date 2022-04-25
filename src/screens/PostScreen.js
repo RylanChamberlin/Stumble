@@ -30,10 +30,6 @@ export default function PostScreen(){
     return(
        
         <AppView>
-
-            
-
-
             <View style={styles.header}>
                 <View style={{alignItems: "center",}}>
                     <Text style={styles.title}>Posts</Text>

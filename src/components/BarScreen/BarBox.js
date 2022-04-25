@@ -10,7 +10,7 @@ import { useState } from "react";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default function BarBox({name, review_count, specials, events, imageUrl, milesAway, moreInfo, rentals }){
+export default function BarBox({item}){
 
     const [more, setMore] = useState(true);
     
@@ -19,7 +19,7 @@ export default function BarBox({name, review_count, specials, events, imageUrl, 
         <View style={styles.container}>
             <View style = {styles.infoBox}>
                 <View style = {styles.infoBoxLeft}>
-                    <Text style = {[styles.title, bold]}>{name}</Text>
+                    <Text style = {[styles.title, bold]}>{item.name}</Text>
 
                     <View>
                         <Text>16 new Comments</Text>
@@ -27,7 +27,7 @@ export default function BarBox({name, review_count, specials, events, imageUrl, 
                     
                     <View style = {styles.specialsContainer}>
                         <Text style={[styles.specialsTitle, bold]}>TODAY'S SPECIALS:</Text>
-                        <Text>{specials}</Text>
+                        <Text>{}</Text>
                     </View>
 
                     <TouchableOpacity onPress={() => setMore((isMore) => !isMore)}>
@@ -40,13 +40,13 @@ export default function BarBox({name, review_count, specials, events, imageUrl, 
                     <View>
                         <LikeButton/>
                     </View>
-                    <Image style = {styles.image} source={imageUrl}/>
+                    <Image style = {styles.image} source={{uri:`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${item.photoID}&key=AIzaSyCEjcZKWdGQlDnw5Pp5eNKnY5jN6RO0h5A`}}/>
 
                 </View>
             </View>
 
                 <View>
-                    {!more ? moreText( () => setMore((isMore) => !isMore),  milesAway, moreInfo, rentals, imageUrl) : null} 
+                    {!more ? moreText( () => setMore((isMore) => !isMore),  ) : null} 
                 </View>
                
         </View>
@@ -72,23 +72,23 @@ function lessButton(){
     );
 }
 
-function moreText(onClick, milesAway, moreInfo, rentals, image){
+function moreText(onClick){
     return(
         <View>
 
             <View style = {styles.moreTextContainer}>
-                <Text>{milesAway}</Text>
-                <Text>{moreInfo}</Text>
+                <Text>{}</Text>
+                <Text>{}</Text>
 
-                <ScrollView horizontal={true}>
+                {/* <ScrollView horizontal={true}>
                     <Image style = {styles.image} source={image}/>
                     <Image style = {styles.image} source={image}/>
                     <Image style = {styles.image} source={image}/>
                     <Image style = {styles.image} source={image}/>
                     <Image style = {styles.image} source={image}/>
-                </ScrollView>
+                </ScrollView> */}
 
-                <Text>{rentals}</Text>   
+                <Text>{}</Text>   
 
             </View>
             <TouchableOpacity onPress={onClick}>
