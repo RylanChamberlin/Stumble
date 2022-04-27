@@ -1,7 +1,7 @@
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 
-import {elevation} from "../../common/styles";
-import CheckBox from '../CheckBox';
+import {elevation} from "../../../common/styles";
+import CheckBox from '../../general/CheckBox';
 
 export default function Choices({onClose}){
 

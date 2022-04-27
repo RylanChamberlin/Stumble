@@ -3,7 +3,7 @@ import { ImageBackground, SafeAreaView, StyleSheet, View} from 'react-native';
 
 const AppView = props => {
 
-    const image = require('../../src/assets/images/yeet.jpeg');
+    const image = require('../../../../src/assets/images/yeet.jpeg');
 
     return (
 

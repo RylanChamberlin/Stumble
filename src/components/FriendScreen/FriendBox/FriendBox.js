@@ -1,10 +1,7 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import LikeButton from "./BarScreen/LikeButton";
+import { StyleSheet, Text, View } from "react-native";
+import LikeButton from "../../general/LikeButton";
 
 export default function FriendBox(){
-
-
-    const image = require('../../src/assets/images/yeet.jpeg');
 
     return(
         <View style={styles.container}>  

@@ -1,7 +1,7 @@
-import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { Modal, StyleSheet, Text, View } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
-import {elevation} from "../../common/styles";
-import Choices from "./Choices";
+import {elevation} from "../../../common/styles";
+import Choices from "../Choices";
 
 
 

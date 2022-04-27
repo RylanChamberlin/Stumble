@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { SafeAreaView, StyleSheet, View, ImageBackground, Text, ScrollView, FlatList, TouchableOpacity} from "react-native";
 import { Dimensions } from 'react-native';
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import AppView from "../components/AppView";
+import AppView from "../components/general/AppView";
 import BarBox from "../components/BarScreen/BarBox";
 import Search from "../components/BarScreen/Search";
 import { auth } from "../firebase";

@@ -1,9 +1,7 @@
 import {StyleSheet, View, Text, TouchableOpacity, Image, ScrollView, Modal} from "react-native";
-import StarButton from './StarButton';
-
 import { Dimensions } from 'react-native';
-import {elevation, bold} from "../../common/styles";
-import LikeButton from "./LikeButton";
+import {elevation, bold} from "../../../common/styles";
+import LikeButton from "../../general/LikeButton";
 import { useState } from "react";
 import {GOOGLE_KEY} from '@env'
 

@@ -1,16 +1,13 @@
 import { useState } from "react";
 import { ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import AppView from "../components/AppView";
-import ButtonSwitch from "../components/ButtonSwitch";
-import FriendBox from "../components/FriendBox";
-import PostBox from "../components/PostBox";
+import AppView from "../components/general/AppView";
+import ButtonSwitch from "../components/general/ButtonSwitch";
+import FriendBox from "../components/FriendScreen/FriendBox";
 
 
 
 export default function FriendScreen(){
-
-    const image = require('../../src/assets/images/yeet.jpeg');
-    
+       
 
     return(
        

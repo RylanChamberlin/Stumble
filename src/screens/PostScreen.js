@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, ImageBackground, Modal, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import GestureRecognizer from "react-native-swipe-gestures";
-import AppView from "../components/AppView";
-import ButtonSwitch from "../components/ButtonSwitch";
-import NewPost from "../components/NewPost";
-import PostBox from "../components/PostBox";
+import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import AppView from "../components/general/AppView";
+import ButtonSwitch from "../components/general/ButtonSwitch";
+import NewPost from "../components/PostScreen/NewPost";
+import PostBox from "../components/PostScreen/PostBox";
 import { auth, db } from "../firebase";
 import useMessages from "../hooks/useMessages";
 

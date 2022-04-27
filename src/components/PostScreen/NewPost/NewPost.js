@@ -2,15 +2,15 @@ import { useState } from "react";
 import { Button, ImageBackground, Modal, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import { Feather } from '@expo/vector-icons'; 
-import {elevation} from "../common/styles"
-import { auth, db } from "../firebase";
+import {elevation} from "../../../common/styles"
+import { auth, db } from "../../../firebase";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import {GOOGLE_KEY} from '@env'
 
 
 export default function NewPost({post, setPost}){
 
-    const image = require('../../src/assets/images/yeet.jpeg');
+    //const image = require('../../src/assets/images/yeet.jpeg');
 
     const [barInput, setBarInput] = useState("")
     const [input, setInput] = useState("")
@@ -85,7 +85,7 @@ export default function NewPost({post, setPost}){
                     onRequestClose={() => setPost(!post)}
                 >
         
-                <ImageBackground style= { styles.backgroundImage } source={image} resizeMode='cover'>
+                {/* <ImageBackground style= { styles.backgroundImage } source={image} resizeMode='cover'> */}
 
                     <SafeAreaView style={styles.container}>
                         <View style={{alignItems: "center"}}>
@@ -158,7 +158,7 @@ export default function NewPost({post, setPost}){
                         </TouchableOpacity>
                     </SafeAreaView>
 
-                    </ImageBackground>
+                    {/* </ImageBackground> */}
                 </Modal>
         </GestureRecognizer>
 

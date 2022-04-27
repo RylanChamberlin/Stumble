@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Modal, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import {elevation} from "../../common/styles";
+import {StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {elevation} from "../../../common/styles";
 
-import FilterChoice from "./FilterChoice";
+import FilterChoice from "../FilterChoice";
 
 
 export default function Search(){

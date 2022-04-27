@@ -1,37 +1,10 @@
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import RestaurantScreen from "./src/screens/RestaurantScreen";
-import ReviewScreen from "./src/screens/ReviewScreen";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
 import BottomTab from "./src/components/BottomTab";
-import LoginScreen from "./src/screens/LoginScreen";
+import LoginScreen from "./src/screens/auth/LoginScreen";
 
 const Stack = createNativeStackNavigator();
-
-
-// const navigator = createStackNavigator(
-//   {
-//   Home: HomeScreen,
-//   Restaurant: RestaurantScreen,
-//   Review: ReviewScreen,
-//   //Main: MainScreen,
-//   }, 
-//   {
-//     initialRouteName: "Home",
-//     defaultNavigationOptions: {
-      
-//       headerShown: false,
-//       title: "BusinessSearch",
-//     },
-//   }
-// );
-
-// export default createAppContainer(navigator);
-
-
 
 export default function App() {
   return (
