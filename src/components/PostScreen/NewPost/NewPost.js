@@ -6,6 +6,7 @@ import {elevation} from "../../../common/styles"
 import { auth, db } from "../../../firebase";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import {GOOGLE_KEY} from '@env'
+import AppView from "../../general/AppView";
 
 
 export default function NewPost({post, setPost}){
@@ -85,9 +86,7 @@ export default function NewPost({post, setPost}){
                     onRequestClose={() => setPost(!post)}
                 >
         
-                {/* <ImageBackground style= { styles.backgroundImage } source={image} resizeMode='cover'> */}
-
-                    <SafeAreaView style={styles.container}>
+                <AppView>
                         <View style={{alignItems: "center"}}>
                             <Text style={styles.title}>New Post</Text>
                             <TouchableOpacity onPress= {() => setPost(!post)} style={styles.exit}>
@@ -156,9 +155,7 @@ export default function NewPost({post, setPost}){
                         <TouchableOpacity style={[styles.button, styles.elevation]} onPress={sendMessage}>
                             <Text style={styles.buttonText}>POST</Text>
                         </TouchableOpacity>
-                    </SafeAreaView>
-
-                    {/* </ImageBackground> */}
+                    </AppView>
                 </Modal>
         </GestureRecognizer>
 
