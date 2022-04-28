@@ -27,7 +27,7 @@ export default () => {
         
         try{
                 subscriber
-                //.orderBy('createdAt')
+                .orderBy("createdAt", "desc")
                 .onSnapshot(querySnapshot => {
                     const users = [];
 

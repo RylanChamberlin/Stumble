@@ -3,7 +3,7 @@ import { Button, ImageBackground, Modal, SafeAreaView, StyleSheet, Text, TextInp
 import GestureRecognizer from "react-native-swipe-gestures";
 import { Feather } from '@expo/vector-icons'; 
 import {elevation} from "../../../common/styles"
-import { auth, db } from "../../../firebase";
+import { auth, db, dbTime } from "../../../firebase";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import {GOOGLE_KEY} from '@env'
 import AppView from "../../general/AppView";
@@ -33,7 +33,7 @@ export default function NewPost({post, setPost}){
         bar: barInput,
         text: input,
         votes: 0,
-        createdAt: new Date(),
+        createdAt: dbTime,
         uid,
         });
 
