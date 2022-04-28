@@ -11,8 +11,6 @@ import AppView from "../../general/AppView";
 
 export default function NewPost({post, setPost}){
 
-    //const image = require('../../src/assets/images/yeet.jpeg');
-
     const [barInput, setBarInput] = useState("")
     const [input, setInput] = useState("")
     const [placeID, setPlaceID] = useState("")
@@ -74,7 +72,6 @@ export default function NewPost({post, setPost}){
 
     return(
 
-       
         <GestureRecognizer
                 style={{flex: 1}}
                 onSwipeDown={() => setPost(!post)}

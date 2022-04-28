@@ -26,7 +26,7 @@ export default function BarScreen(){
         .catch(error => alert(error.message))
     }
 
-        const [{data, loading, error}, comment, getBars] = useBars();
+        const [{data, loading, error}, getBars] = useBars();
 
         useEffect(() => {
             getBars();
@@ -47,12 +47,11 @@ export default function BarScreen(){
 
                 <FlatList 
                     data={data} 
-                    renderItem={({ item, index }) => {
-                    var numComment = comment?.get(item.key);            
+                    renderItem={({ item, index }) => {   
                     return (
                         <BarBox
                            item={item}
-                           numComment={numComment}
+                           numComment={1}
                         />
                     );
                 }}

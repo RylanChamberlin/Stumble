@@ -10,26 +10,25 @@ export default () => {
         error: null
     });
 
-    const [comment, setComment] = useState()
+    //const [comment, setComment] = useState()
 
-    function dayOrLess(time) {
+    // function dayOrLess(time) {
 
-        var date = new Date(time*1000)
-        var seconds = Math.floor((new Date() - date) / 1000);
+    //     var date = new Date(time*1000)
+    //     var seconds = Math.floor((new Date() - date) / 1000);
 
-        var interval = seconds / 86400;
-        if (interval > 1) {
+    //     var interval = seconds / 86400;
+    //     if (interval > 1) {
             
-            return false;
-          }else{
-              return true;
-          }
+    //         return false;
+    //       }else{
+    //           return true;
+    //       }
           
-      }
+    //   }
 
     const getBars = async () => {
 
-        setComment(null)
 
         setResult({
             data: null,
@@ -38,8 +37,6 @@ export default () => {
         })
 
         const barRef = db.collection('bars')
-        const mesRef = db.collection('messages')
-        
         
         try{
             const subscriber = barRef
@@ -61,24 +58,8 @@ export default () => {
 
                     
                 });   
-                
-                let map = new Map();
-                const comments = mesRef
-                .onSnapshot(querySnapshot => {
-                    querySnapshot.forEach(documentSnapshot => {
-                        if(dayOrLess(documentSnapshot.data().createdAt.seconds)){
-                            if(map.has(documentSnapshot.data().placeID)){
-                                map.set(documentSnapshot.data().placeID, map.get(documentSnapshot.data().placeID) + 1)    
-                            }else{
-                                map.set(documentSnapshot.data().placeID, 1)
-                            }     
-                        }       
-                    });
-
-                    setComment(map);
-
-                });                
-                //return () => subscriber(); not sure what it does
+                            
+                return () => subscriber(); 
 
        
         }catch(error){
@@ -97,7 +78,7 @@ export default () => {
 
     
 
-    return [result, comment, getBars];
+    return [result, getBars];
 
 
 };

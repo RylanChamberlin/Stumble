@@ -47,7 +47,7 @@ export default () => {
 
                 });
 
-            //return () => subscriber(); not sure what it does
+            return () => subscriber(); //??
 
        
         }catch(error){
