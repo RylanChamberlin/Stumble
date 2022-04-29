@@ -6,21 +6,31 @@ import NewPost from "../components/PostScreen/NewPost";
 import PostBox from "../components/PostScreen/PostBox";
 import { auth, db } from "../firebase";
 import useMessages from "../hooks/useMessages";
+import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
 
 
 
-export default function PostScreen(){
+export default function PostScreen(route){
 
     const [{data, loading, error}, getMessages] = useMessages();
+    const [post, setPost] = useState(false);
+    const navigation = useNavigation({navigator})
+
+    let itemId, name;
+    if(route.route.params){
+        itemId = route.route.params.itemId;
+        name = route.route.params.name
+    }
+
+    const goBack = () => {
+        navigation.navigate("BottomTab")
+    }
 
     useEffect(() => {
-        //getMessages('ChIJdb9tqsO33IcRBaQwa-Vtku0');
-        getMessages();
+        getMessages(itemId);
     }, []);// [] could be which bar?
 
-    const messageClass = data?.uid === auth.currentUser.uid ? 'sent' : 'received';
-    const [post, setPost] = useState(false);
-   
     if (loading) {
         return <ActivityIndicator />;
     }
@@ -30,7 +40,15 @@ export default function PostScreen(){
         <AppView>
             <View style={styles.header}>
                 <View style={{alignItems: "center",}}>
-                    <Text style={styles.title}>POSTS</Text>
+
+                    {name ? <View style={{alignItems: "center", flexDirection: 'row'}}>
+                                <TouchableOpacity onPress={goBack}>
+                                    <AntDesign name="arrowleft" size={34} color="black"/>
+                                </TouchableOpacity>
+                                <Text style={styles.title}>{name}</Text>
+                            </View> 
+                            : 
+                            <Text style={styles.title}>POSTS</Text>}
                 </View>
 
                 <ButtonSwitch button1 = "RECENT" button2 = "POPULAR"/>
