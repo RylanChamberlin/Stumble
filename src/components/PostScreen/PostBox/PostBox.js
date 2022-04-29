@@ -10,9 +10,7 @@ export default function PostBox({item}){
     function timeSince(seconds) {
 
         var date = new Date(seconds*1000)
-
         var seconds = Math.floor((new Date() - date) / 1000);
-      
         var interval = seconds / 31536000;
       
         if (interval >= 2) {
@@ -111,10 +109,6 @@ const styles = StyleSheet.create({
         paddingTop: 15,
         marginVertical: 5,
         borderWidth: 1,
-        // shadowColor: "black",
-        // shadowOffset: {width: 5, height: 5}, //gives shadow offset
-        // shadowOpacity: 0.4,
-        //borderWidth: StyleSheet.hairlineWidth
     },
     textContainer: {
         flexDirection: 'column',

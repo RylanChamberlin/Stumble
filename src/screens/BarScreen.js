@@ -27,6 +27,8 @@ export default function BarScreen(){
         .catch(error => alert(error.message))
     }
 
+    
+
         const [{data, loading, error}, getBars] = useBars();
 
         useEffect(() => {
@@ -64,12 +66,12 @@ export default function BarScreen(){
                     
                     renderItem={({ item, index }) => {   
                     return (
-                        <TouchableOpacity activeOpacity={.8}>
+                       
                         <BarBox
                            item={item}
                            numComment={1}
                         />
-                        </TouchableOpacity>
+                       
                     );
                 }}
                 vertical

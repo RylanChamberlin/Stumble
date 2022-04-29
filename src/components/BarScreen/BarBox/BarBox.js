@@ -1,9 +1,10 @@
-import {StyleSheet, View, Text, TouchableOpacity, Image, ScrollView, Modal, TouchableHighlight} from "react-native";
+import {StyleSheet, View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import { Dimensions } from 'react-native';
 import {elevation, bold} from "../../../common/styles";
 import LikeButton from "../../general/LikeButton";
 import { useState } from "react";
 import {GOOGLE_KEY} from '@env'
+import { useNavigation } from "@react-navigation/native";
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -11,11 +12,21 @@ const windowHeight = Dimensions.get('window').height;
 
 export default function BarBox({item, numComment}){
 
-    //const [more, setMore] = useState(true);
+
+    const navigation = useNavigation({navigator})
+
+    const clickBar = () => {
+        console.log(item)
+        //navigation.navigate('Single');
+        navigation.navigate('Single', {
+            itemId: item.key,
+            name: item.name,
+          });
+    }
     
     return (
 
-
+            <TouchableOpacity activeOpacity={.8} onPress={clickBar}>
             <ScrollView horizontal={true}  showsHorizontalScrollIndicator={false}>
             <View style={[styles.outsideContainer]}>
             <View style={styles.container}>
@@ -35,77 +46,23 @@ export default function BarBox({item, numComment}){
                             <Text>{}</Text>
                         </View>
 
-                        {/* <TouchableOpacity onPress={() => setMore((isMore) => !isMore)}>
-                            {more ? moreButton() : <View style = {styles.moreContainer}><Text style={styles.moreArrow}>More Info:</Text></View>} 
-                        </TouchableOpacity> */}
+                    
                         
                     </View>
 
                     <View style={styles.infoBoxRight}>
-                        {/* <View>
-                            <LikeButton/>
-                        </View> */}
                         <Image style = {styles.image} source={{uri:`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${item.photoID}&key=${GOOGLE_KEY}`}}/>
-
                     </View>
                 </View>
-
-                    {/* <View>
-                        {!more ? moreText( () => setMore((isMore) => !isMore),  ) : null} 
-                    </View> */}
-                
             </View>
             </View>
             </ScrollView>
+            </TouchableOpacity>
     );
 
 }
 
-// function moreButton(){
-//     return( 
-//         <View style = {styles.moreContainer}>
-//             <Text style={[styles.moreText, bold]}>more </Text>
-//             <Text style={styles.moreArrow}>ˇ</Text>
-//         </View> 
-//     );
-// }
-
-// function lessButton(){
-//     return(
-//         <View style = {styles.moreContainer}>
-//             <Text style={styles.moreArrow}>^</Text>
-//         </View>      
-//     );
-// }
-
-// function moreText(onClick){
-//     return(
-//         <View>
-
-//             <View style = {styles.moreTextContainer}>
-//                 <Text>{}</Text>
-//                 <Text>{}</Text>
-
-//                 {/* <ScrollView horizontal={true}>
-//                     <Image style = {styles.image} source={image}/>
-//                     <Image style = {styles.image} source={image}/>
-//                     <Image style = {styles.image} source={image}/>
-//                     <Image style = {styles.image} source={image}/>
-//                     <Image style = {styles.image} source={image}/>
-//                 </ScrollView> */}
-
-//                 <Text>{}</Text>   
-
-//             </View>
-//             <TouchableOpacity onPress={onClick}>
-//                 {lessButton(onClick)}
-//             </TouchableOpacity>     
-//         </View>
-//     );
-// }
-
 const infoBoxWidth = windowWidth-30;
-const infoBoxHeight = windowHeight/4;
 
 const styles = StyleSheet.create({
 

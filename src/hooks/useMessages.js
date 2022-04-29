@@ -23,11 +23,13 @@ export default () => {
         if(placeID != null){
             subscriber = subscriber
             .where('placeID', '==' , placeID)
+        }else{
+            subscriber = subscriber
+            .orderBy("createdAt", "desc")
         }
         
         try{
                 subscriber
-                .orderBy("createdAt", "desc")
                 .onSnapshot(querySnapshot => {
                     const users = [];
 
