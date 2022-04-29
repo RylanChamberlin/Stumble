@@ -61,18 +61,21 @@ export default function BarScreen(){
 
                 <FlatList 
                     data={data} 
+                    
                     renderItem={({ item, index }) => {   
                     return (
-                        //<TouchableOpacity onPress={navigation.navigate('LoginScreen')}>
+                        <TouchableOpacity activeOpacity={.8}>
                         <BarBox
                            item={item}
                            numComment={1}
                         />
-                        //</TouchableOpacity>
+                        </TouchableOpacity>
                     );
                 }}
                 vertical
+                showsVerticalScrollIndicator={false}
                 keyExtractor={(bar) => bar.name}
+               
                 />
 
 
@@ -92,11 +95,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title:{
-        fontSize: 30,
+        fontSize: 35,
         color: 'white',
+        shadowColor: "black",
+        shadowOffset: {width: 5, height: 5}, //gives shadow offset
+        shadowOpacity: .6,
     },
     locationBox:{
-        flexDirection: 'row'
+        flexDirection: 'row',
+        shadowColor: "black",
+        shadowOffset: {width: 5, height: 5}, //gives shadow offset
+        shadowOpacity: .5,
     }
 
 })

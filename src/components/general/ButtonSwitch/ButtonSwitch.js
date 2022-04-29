@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     recentButton: {
         backgroundColor: 'white',
         borderWidth: 1,
-        borderRadius: 7,
+        borderRadius: 10,
         width: '48%',
         alignItems: "center",
         //paddingHorizontal: 50,

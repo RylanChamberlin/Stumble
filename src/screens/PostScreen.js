@@ -30,7 +30,7 @@ export default function PostScreen(){
         <AppView>
             <View style={styles.header}>
                 <View style={{alignItems: "center",}}>
-                    <Text style={styles.title}>Posts</Text>
+                    <Text style={styles.title}>POSTS</Text>
                 </View>
 
                 <ButtonSwitch button1 = "RECENT" button2 = "POPULAR"/>
@@ -72,11 +72,16 @@ const styles = StyleSheet.create({
     title:{
         color: 'white',
         fontSize: 35,
+        shadowColor: "black",
+        shadowOffset: {width: 5, height: 5}, //gives shadow offset
+        shadowOpacity: .6,
     },
     newPost:{
         alignItems: "center", 
         backgroundColor: 'white',
-        borderRadius: 10
+        borderRadius: 10,
+        borderWidth: 1,
+        padding: 5
     }
 
 })

@@ -16,7 +16,8 @@ export default function BarBox({item, numComment}){
     return (
 
 
-            <ScrollView horizontal={true}>
+            <ScrollView horizontal={true}  showsHorizontalScrollIndicator={false}>
+            <View style={[styles.outsideContainer]}>
             <View style={styles.container}>
                 <View style = {styles.infoBox}>
                     <View style = {styles.infoBoxLeft}>
@@ -53,6 +54,7 @@ export default function BarBox({item, numComment}){
                         {!more ? moreText( () => setMore((isMore) => !isMore),  ) : null} 
                     </View> */}
                 
+            </View>
             </View>
             </ScrollView>
     );
@@ -107,12 +109,20 @@ const infoBoxHeight = windowHeight/4;
 
 const styles = StyleSheet.create({
 
+    outsideContainer:{
+        padding: 3,
+        shadowColor: "black",
+        shadowOffset: {width: 10, height: 30}, //gives shadow offset
+        shadowOpacity: .3,
+    },
+
     container: {
         borderRadius: 8,
         backgroundColor: "#f2f1f1",
-        marginTop: 12,
+        marginTop: 5,
         width: infoBoxWidth,
         borderWidth: 1,
+        
     },
    
     infoBox: {
@@ -124,6 +134,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
         flexDirection: "row",
         justifyContent: "space-between",
+        
 
         },
     infoBoxRight: {

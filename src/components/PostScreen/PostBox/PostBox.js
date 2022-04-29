@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { elevation } from "../../../common/styles";
 
 import { Entypo } from '@expo/vector-icons'; 
 import { useState } from "react";
@@ -67,7 +68,7 @@ export default function PostBox({item}){
     }
 
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, elevation]}>
             <View style={styles.textContainer}>
                 <Text style={{paddingBottom: 15, fontSize: 20}}>{item.text}</Text>
                 <View style={{flexDirection: 'row'}}>
@@ -108,7 +109,12 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 15,
         paddingTop: 15,
-        marginVertical: 5
+        marginVertical: 5,
+        borderWidth: 1,
+        // shadowColor: "black",
+        // shadowOffset: {width: 5, height: 5}, //gives shadow offset
+        // shadowOpacity: 0.4,
+        //borderWidth: StyleSheet.hairlineWidth
     },
     textContainer: {
         flexDirection: 'column',
@@ -119,5 +125,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: "center",
         alignItems: "center",
-    }
+    },
+    elevation
 })
