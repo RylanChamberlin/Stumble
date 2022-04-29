@@ -7,6 +7,7 @@ import AppView from "../components/general/AppView";
 import BarBox from "../components/BarScreen/BarBox";
 import Search from "../components/BarScreen/Search";
 import { auth } from "../firebase";
+import { Entypo } from '@expo/vector-icons'; 
 import useBars from "../hooks/useBars";
 
 
@@ -15,7 +16,7 @@ const windowHeight = Dimensions.get('window').height;
 
 export default function BarScreen(){
 
-    const navigation = useNavigation()
+    const navigation = useNavigation({navigator})
 
     const handleSignOut = () => {
         auth
@@ -39,20 +40,35 @@ export default function BarScreen(){
                 
                 <View style={styles.logo}>
                     <TouchableOpacity onPress={handleSignOut}>
-                        <Text>{auth.currentUser?.email}</Text>
+                        <Text style={{color: '#ffff'}}>{auth.currentUser?.email}</Text>
                     </TouchableOpacity>
                 </View>
 
-                <Search/>
+
+                <View style={styles.container}> 
+                <View>
+                    <Text style={styles.title}>DRINK DEALS</Text>
+                </View>
+                <TouchableOpacity>
+                <View style={styles.locationBox}>
+                    <Text style={{color: '#f2f1f1', marginTop: 6}}>near </Text>
+                    <Text style={{color: '#f2f1f1', marginTop: 5, textDecorationLine: 'underline', fontSize: 15}}>Columbia, MO 65201</Text>
+                    <Entypo name="location-pin" size={24} color="#f2f1f1" />
+                </View>
+                </TouchableOpacity>
+                </View>
+                {/* <Search/> */}
 
                 <FlatList 
                     data={data} 
                     renderItem={({ item, index }) => {   
                     return (
+                        //<TouchableOpacity onPress={navigation.navigate('LoginScreen')}>
                         <BarBox
                            item={item}
                            numComment={1}
                         />
+                        //</TouchableOpacity>
                     );
                 }}
                 vertical
@@ -67,8 +83,21 @@ export default function BarScreen(){
     );
 }
 const styles = StyleSheet.create({
+
     logo: {
         alignItems: 'center',
     },
+    container:{
+        marginTop: 15,
+        alignItems: 'center',
+    },
+    title:{
+        fontSize: 30,
+        color: 'white',
+    },
+    locationBox:{
+        flexDirection: 'row'
+    }
+
 })
 
