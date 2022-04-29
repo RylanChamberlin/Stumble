@@ -4,7 +4,6 @@ import AppView from "../components/general/AppView";
 import ButtonSwitch from "../components/general/ButtonSwitch";
 import NewPost from "../components/PostScreen/NewPost";
 import PostBox from "../components/PostScreen/PostBox";
-import { auth, db } from "../firebase";
 import useMessages from "../hooks/useMessages";
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";

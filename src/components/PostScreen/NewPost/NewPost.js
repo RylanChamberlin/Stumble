@@ -7,6 +7,7 @@ import { auth, db, dbTime } from "../../../firebase";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import {GOOGLE_KEY} from '@env'
 import AppView from "../../general/AppView";
+import PopupPost from "../../general/PopupPost/PopupPost";
 
 
 export default function NewPost({post, setPost}){
@@ -72,120 +73,57 @@ export default function NewPost({post, setPost}){
 
     return(
 
-        <GestureRecognizer
-                style={{flex: 1}}
-                onSwipeDown={() => setPost(!post)}
-                >
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={post}
-                    onRequestClose={() => setPost(!post)}
-                >
-        
-                <AppView>
-                        <View style={{alignItems: "center"}}>
-                            <Text style={styles.title}>New Post</Text>
-                            <TouchableOpacity onPress= {() => setPost(!post)} style={styles.exit}>
-                                <Feather name="x" size={24} color="black"/>
-                            </TouchableOpacity>
-                        </View>
-
-                        <View style={styles.inputBox}>
-
+        <PopupPost post={post} setPost={setPost} title={'NEW POST'} buttonTitle={'POST'} buttonAction={sendMessage}>
                             
-                            <GooglePlacesAutocomplete
-                    
-                                placeholder="Search"
-                                fetchDetails={true}
-                                GooglePlacesSearchQuery={{
-                                    rankby: "distance"
-                                }}
-                                onPress={(data, details = null) => {
-                                    // 'details' is provided when fetchDetails = true
-                                    //console.log(data, details);
-                                    //console.log(data.structured_formatting.main_text);
-                                    console.log(data.place_id);
-                                    
-                                    setPhotoID(details.photos[0]?.photo_reference);
-                                    setBarInput(data.structured_formatting.main_text);
-                                    setPlaceID(data.place_id);
-                                }}
-                                query={{
-                                    key: `${GOOGLE_KEY}`,
-                                    language: "en",
-                                    components: "country:us",
-                                    fields: ["name"],
-                                    types: "bar",
-                                    radius: 100,
-                                    location: `38.951561, -92.328636`
-                                }}
-                                styles={{
-                                    container: { 
-                                        flex: 1,
-                                        // borderRadius: 10,
-                                        //backgroundColor: "black"
-                                        },
-                                    listView: { 
-                                        backgroundColor: "white" 
-                                        }
-                                }}
-                            />
-                            {/* <TextInput 
-                                placeholder='@ bar location' 
-                                style = {styles.barInput}
-                                value={barInput} 
-                                onChangeText={(text) => {setBarInput(text);
-                                }}
-                                /> */}
-                            <TextInput 
-                                placeholder='Type SOMETHING........' 
-                                style = {styles.textInput} 
-                                multiline={true} 
-                                numberOfLines={10}
-                                value={input} 
-                                onChangeText={(text) => {setInput(text);
-                                }}
-                            />
-                        </View>
+        <GooglePlacesAutocomplete
 
-                        <TouchableOpacity style={[styles.button, styles.elevation]} onPress={sendMessage}>
-                            <Text style={styles.buttonText}>POST</Text>
-                        </TouchableOpacity>
-                    </AppView>
-                </Modal>
-        </GestureRecognizer>
-
-        
+            placeholder="Search"
+            fetchDetails={true}
+            GooglePlacesSearchQuery={{
+                rankby: "distance"
+            }}
+            onPress={(data, details = null) => {
+                console.log(data.place_id);
+                
+                setPhotoID(details.photos[0]?.photo_reference);
+                setBarInput(data.structured_formatting.main_text);
+                setPlaceID(data.place_id);
+            }}
+            query={{
+                key: `${GOOGLE_KEY}`,
+                language: "en",
+                components: "country:us",
+                fields: ["name"],
+                types: "bar",
+                radius: 100,
+                location: `38.951561, -92.328636`
+            }}
+            styles={{
+                container: { 
+                    flex: 1,
+                    // borderRadius: 10,
+                    //backgroundColor: "black"
+                    //borderWidth: 1
+                    },
+                listView: { 
+                    backgroundColor: "white", 
+                    }
+            }}
+        />
+        <TextInput 
+            placeholder='Type SOMETHING........' 
+            style = {styles.textInput} 
+            multiline={true} 
+            numberOfLines={10}
+            value={input} 
+            onChangeText={(text) => {setInput(text);
+            }}
+        />
+        </PopupPost> 
     );
 }
 
 const styles = StyleSheet.create({
-   
-    container: {
-        flex: 1,
-        marginHorizontal: 15,
-      },
-  
-    title:{
-        color: 'white',
-        fontSize: 35,
-    },
-   
-    inputBox: {
-        padding: 15,
-        justifyContent: 'space-between',
-        height: "50%",
-        borderRadius: 15,
-        backgroundColor: 'lightgrey',
-    },
-   
-    barInput: {
-        padding: 5,
-        fontSize: 20,
-        borderRadius: 10,
-        backgroundColor: "white"
-    },
 
     textInput: {
         padding: 10,
@@ -193,33 +131,8 @@ const styles = StyleSheet.create({
         height: "75%",
         borderRadius: 10,
         textAlignVertical: "top",
-        backgroundColor: 'white'
-    },
-
-    backgroundImage:{
-        flex: 1,
-    },
-
-    button:{
-        alignItems: "center",
-        justifyContent: 'center',
-        marginLeft: 230,
-        marginTop: 5,
         backgroundColor: 'white',
-        padding: 10,
-        borderRadius: 10,
-        
+        borderWidth: 1
     },
-    buttonText:{
-        fontSize: 20,
-        fontWeight: "bold"
-    },
-    elevation,
-
-    exit: {
-        alignSelf: 'flex-end',
-        position: 'absolute',
-        padding: 15
-    }
 
 })
