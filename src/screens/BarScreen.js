@@ -9,6 +9,8 @@ import Search from "../components/BarScreen/Search";
 import { auth } from "../firebase";
 import { Entypo } from '@expo/vector-icons'; 
 import useBars from "../hooks/useBars";
+import { LogBox } from 'react-native';
+
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -17,6 +19,8 @@ const windowHeight = Dimensions.get('window').height;
 export default function BarScreen(){
 
     const navigation = useNavigation({navigator})
+  
+
 
     const handleSignOut = () => {
         auth

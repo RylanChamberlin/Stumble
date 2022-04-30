@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { db } from "../firebase";
 
-
 export default () => {
    
     const [result, setResult] = useState({

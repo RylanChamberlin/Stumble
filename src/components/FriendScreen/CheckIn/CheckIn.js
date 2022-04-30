@@ -1,25 +1,21 @@
-import { useState } from "react";
-import { Button, ImageBackground, Modal, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import GestureRecognizer from "react-native-swipe-gestures";
-import { Feather } from '@expo/vector-icons'; 
-import {elevation} from "../../../common/styles"
-import { auth, db, dbTime } from "../../../firebase";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import {GOOGLE_KEY} from '@env'
-import AppView from "../../general/AppView";
+import { StyleSheet, Text} from "react-native";
+import { auth } from "../../../firebase";
 import PopupPost from "../../general/PopupPost/PopupPost";
 
 
 export default function CheckIn({post, setPost}){
+
+    console.log(auth.currentUser);
+
     return(
         <PopupPost post={post} setPost={setPost} title={'CHECK-IN'} buttonTitle={'CHECK-IN'}>
-            <Text>Hello</Text>
+            <Text style={{color: 'red'}}>{auth.currentUser?.email}</Text>
+            <Text style={{color: 'red'}}>{auth.currentUser?.name}</Text>
         </PopupPost>        
     );
 }
 
 const styles = StyleSheet.create({
    
-    
 
 })

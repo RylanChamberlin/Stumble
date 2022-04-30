@@ -29,7 +29,7 @@ export default function FriendScreen(){
             </View>
 
 
-            <CheckIn post = {post} setPost={setPost}/>
+            <CheckIn post={post} setPost={setPost}/>
 
             <ScrollView>
                 <FriendBox/>
