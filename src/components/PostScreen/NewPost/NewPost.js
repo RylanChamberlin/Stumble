@@ -1,12 +1,8 @@
 import { useState } from "react";
-import { Button, ImageBackground, Modal, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import GestureRecognizer from "react-native-swipe-gestures";
-import { Feather } from '@expo/vector-icons'; 
-import {elevation} from "../../../common/styles"
+import {StyleSheet, TextInput} from "react-native";
 import { auth, db, dbTime } from "../../../firebase";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import {GOOGLE_KEY} from '@env'
-import AppView from "../../general/AppView";
 import PopupPost from "../../general/PopupPost/PopupPost";
 
 
@@ -47,16 +43,13 @@ export default function NewPost({post, setPost}){
         });
 
         writeMessage();
-        
         console.log("Making new document!");
     }
 
     const sendMessage = () => {
 
         setPost(!post);
-
         const docRef = db.collection("bars").doc(placeID);
-
         docRef.get().then((doc) => {
             if (doc.exists) {
                 writeMessage();

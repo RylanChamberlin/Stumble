@@ -2,8 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { elevation } from "../../../common/styles";
 
 import { Entypo } from '@expo/vector-icons'; 
-import { useState } from "react";
-import { database, db, FieldValue } from "../../../firebase";
+import { db, FieldValue } from "../../../firebase";
 
 export default function PostBox({item}){
 

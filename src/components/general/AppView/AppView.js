@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, SafeAreaView, StyleSheet, View} from 'react-native';
+import { ImageBackground, SafeAreaView, StyleSheet} from 'react-native';
 
 const AppView = props => {
 
@@ -15,7 +15,6 @@ const AppView = props => {
     );
 };
 
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -26,6 +25,5 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 })
-
 
 export default AppView;
