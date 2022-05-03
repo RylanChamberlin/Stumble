@@ -5,7 +5,7 @@ import ButtonSwitch from '../../general/ButtonSwitch'
 import CheckIn from '../CheckIn'
 import { useState } from 'react'
 
-const Header = () => {
+const Header = ({feed, setFeed}) => {
 
 const [post, setPost] = useState(false);
 
@@ -16,7 +16,7 @@ const [post, setPost] = useState(false);
             
                 <Text style={styles.title}>FRIENDS</Text>
             </View>
-            <ButtonSwitch button1 = "RECENT" button2 = "SEARCH"/>
+            <ButtonSwitch button1 = "FEED" button2 = "MAP" left = {feed} setLeft = {setFeed}/>
 
             <CheckIn post={post} setPost={setPost}/>
             {/* Not sure the best place for this */}
