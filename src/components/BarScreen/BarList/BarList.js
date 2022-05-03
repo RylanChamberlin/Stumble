@@ -1,9 +1,8 @@
-import { FlatList } from 'react-native'
+import { ActivityIndicator, FlatList } from 'react-native'
 import React from 'react'
 import { useEffect } from 'react';
 import useBars from "../../../hooks/useBars";
-import BarBox from "../BarBox";
-
+import BarBox from "../BarBox"; 
 
 const BarList = () => {
 
@@ -12,6 +11,11 @@ const BarList = () => {
     useEffect(() => {
         getBars();
     }, []);
+
+
+    if (loading) {
+        return <ActivityIndicator />;
+    }
 
 
     return (
