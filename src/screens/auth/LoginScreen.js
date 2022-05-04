@@ -1,6 +1,6 @@
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 import { useNavigation } from '@react-navigation/native';
 
 const LoginScreen = () => {
@@ -8,6 +8,8 @@ const LoginScreen = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
+    const [name, setName] = useState('');
 
 
     const navigation = useNavigation()
@@ -22,15 +24,25 @@ const LoginScreen = () => {
         return unsubscribe
     }, [])
 
-    const handleSignUp = () => {
-        auth
+    const handleSignUp = async() => {
+        await auth
           .createUserWithEmailAndPassword(email, password)
           .then(userCredentials => {
             const user = userCredentials.user;
-            console.log('Registered with:', user.email);
+            
+            db.collection("users").doc(user.uid).set({
+              email: user.email,
+              username: username,
+              name: name
+            });
+
+            console.log('Registered with:', user.uid);
           })
           .catch(error => alert(error.message))
+
       }
+
+     
 
       const handleLogin = () => {
         auth
@@ -49,6 +61,18 @@ const LoginScreen = () => {
           behavior="padding"
         >
           <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="User Name"
+              value={username}
+              onChangeText={text => setUsername(text)}
+              style={styles.input}
+            />
+            <TextInput
+              placeholder="Name"
+              value={name}
+              onChangeText={text => setName(text)}
+              style={styles.input}
+            />
             <TextInput
               placeholder="Email"
               value={email}
