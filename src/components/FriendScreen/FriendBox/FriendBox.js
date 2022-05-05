@@ -60,10 +60,9 @@ export default function FriendBox({item}){
                 <Text>{item.name} is at</Text>
                 <Text style = {{fontWeight: "bold"}}>{item.locationName}</Text>
             </View>
-
             <View style = {styles.rightContainer}>
                 <LikeButton/>
-                <Text>{timeSince(item.checkInAt.seconds)}</Text>
+                <Text>{item.checkInAt ? timeSince(item.checkInAt.seconds) : 'Now' }</Text>
                 {/* <Text>{item.checkInAt.seconds = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Text> */}
             </View>
             
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 10,
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        alignItems: 'center',
         marginVertical: 5
 
     }, 
@@ -87,14 +86,17 @@ const styles = StyleSheet.create({
         backgroundColor: 'blue',
         borderRadius: 50/2,
         marginLeft: 10,
-        marginVertical: 5
+        marginVertical: 5,
+        
     },
     textContainer: {
+        flex:1,
         paddingVertical: 12,
+        marginHorizontal: 10,
         justifyContent: 'space-between'
     },
     rightContainer: {
-        alignItems: "center",
+        alignItems: "flex-end",
         justifyContent: 'space-between',
         paddingVertical: 5,
         paddingRight: 5

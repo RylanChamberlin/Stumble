@@ -11,8 +11,6 @@ export default function FeedList() {
   }, []);
 
 
-  
-
   if (loading) {
     return <ActivityIndicator />;
   }

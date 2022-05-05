@@ -71,7 +71,6 @@ export default function PostBox({item}){
                 <View style={{flexDirection: 'row'}}>
                     <Text style = {{fontWeight: 'bold'}}>at {item.bar} </Text>
                     <Text style = {{fontWeight: '200'}}>{timeSince(item.createdAt?.seconds)}</Text>
-                    
                 </View>
             </View>
 
