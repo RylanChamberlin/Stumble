@@ -16,6 +16,8 @@ export default function BarScreen(){
         })
         .catch(error => alert(error.message))
     }
+
+   
         
     return (
         <AppView>

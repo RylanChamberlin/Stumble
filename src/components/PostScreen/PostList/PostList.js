@@ -19,9 +19,6 @@ const PostList = ({itemId}) => {
     }
 
   return (
-
-
-
     <FlatList
 
     contentContainerStyle={{marginBottom: 300}}

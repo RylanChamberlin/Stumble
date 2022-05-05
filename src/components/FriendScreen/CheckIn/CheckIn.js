@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TextInput, View} from "react-native";
-import { auth } from "../../../firebase";
+import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import { auth, db, dbTime } from "../../../firebase";
 import useLocation from "../../../hooks/useLocation";
 import PopupPost from "../../general/PopupPost/PopupPost";
 import styles from "./styles";
@@ -13,52 +13,83 @@ import useNearby from "../../../hooks/useNearby";
 
 export default function CheckIn({post, setPost}){
 
-    const [{data, loading, error}, searchNearby] = useNearby();
+
+
+    const [nearby, setNearby] = useState({})
+    const [userDetails, setUserDetails] = useState('')
+    const [check, setCheck] = useState({})
+
     useEffect(() => {
-        searchNearby();
-    }, []);
+        fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${38.9517}%2C${-92.3249}&radius=50&type=bar&key=${GOOGLE_KEY}`)
+            .then(response => response.json())
+            .then(json => setNearby(json))
+    }, [])
 
-    
+    useEffect(() => {
+        db.collection('users').doc(auth.currentUser.uid).get()
+            .then(snapshot => setUserDetails(snapshot.data()))
+    }, [])
 
-    if(loading || !data) return (<ActivityIndicator/>)
+    const checkIn = async() => {
 
-    console.log(data?.results)
+        setPost(false);
+        const userRef = db.collection('users').doc(auth.currentUser.uid);
+        const res = await userRef.set({
+            locationID: check.id,
+            locationName: check.name,
+            checkInAt: dbTime
+            }, { merge: true });
+    }
+
+    console.log(check)
 
     return(
-        <PopupPost post={post} setPost={setPost} title={'CHECK-IN'} buttonTitle={'CHECK-IN'}>
+        <PopupPost post={post} setPost={setPost} title={'CHECK-IN'} buttonTitle={'CHECK-IN'} buttonAction={checkIn}>
 
         <View style={styles.container}>
             <View style={styles.userBox}>
                 <Image style={styles.image}/>
                 <View style={styles.nameBox}>
-                    <Text style={styles.name}>Rylan Chamberlin</Text>
-                    <Text style={styles.username}>@pretty.boy.3</Text>
+                    <Text style={styles.name}>{userDetails.name}</Text>
+                    <Text style={styles.username}>@{userDetails.username}</Text>
                 </View>
             </View>
             {/* <TextInput style={styles.input} placeholder='is at....'></TextInput> */}
+            <Text style={{color: 'red'}}>NEARBY</Text>
             <FlatList
-                data={data?.results} 
+                data={nearby.results} 
                 renderItem={({ item, index }) => {   
-                    console.log(item)
                 return (
-                    <Text style={styles.barName}>{item.name}</Text>
+                    <TouchableOpacity style={[styles1.nameBox, check.id == item.place_id ? {backgroundColor: 'blue'} : {backgroundColor: 'white'}]} onPress={() => setCheck({id: item.place_id, name: item.name})}>
+                        <Text style={styles.barName}>{item.name}</Text>
+                    </TouchableOpacity>
                 );
                 }}
                 vertical
                 showsVerticalScrollIndicator={false}
-                keyExtractor={(index) => index}
+                keyExtractor={(item) => item.place_id}
             />
             
-            <Text style={{color: 'red'}}>NEARBY</Text>
-            <View style={styles.barnameBox}>
+            
+            {/* <View style={styles.barnameBox}>
                 <Text style={styles.barName}>Harpo's </Text>
                 <Text style={styles.cityName}>Columbia, MO</Text>
             </View>
             <View style={styles.barnameBox}>
                 <Text style={styles.barName}>The Shot Bar </Text>
                 <Text style={styles.cityName}>Columbia, MO</Text>
-            </View>
+            </View> */}
         </View>
         </PopupPost>        
     );
 }
+
+
+const styles1 = StyleSheet.create({
+    nameBox: {
+        padding: 10, 
+        margin: 5,
+        borderWidth: 1,
+        borderRadius: 15
+    }
+})
