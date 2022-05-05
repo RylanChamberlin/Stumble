@@ -6,9 +6,9 @@ export default function FeedList() {
   return (
     <View>
        <ScrollView>
-                    <FriendBox/>
-                    <FriendBox/>
-                    <FriendBox/>
+          <FriendBox/>
+          <FriendBox/>
+          <FriendBox/>
         </ScrollView>
     </View>
   )

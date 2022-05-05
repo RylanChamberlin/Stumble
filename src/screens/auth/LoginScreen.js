@@ -18,7 +18,7 @@ const LoginScreen = () => {
         const unsubscribe = auth.onAuthStateChanged(user => {
         if (user) {
             navigation.replace("BottomTab")
-        }
+          }
         })
 
         return unsubscribe
@@ -34,6 +34,7 @@ const LoginScreen = () => {
               email: user.email,
               username: username,
               name: name
+
             });
 
             console.log('Registered with:', user.uid);
