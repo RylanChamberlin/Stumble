@@ -18,9 +18,7 @@ export default function MapBox() {
         getLocation();
     }, []);
 
-   
-
-    if(loading) return (<ActivityIndicator/>)
+    if(loading || !data) return (<ActivityIndicator/>)
 
     const region = {
         latitude: data?.coords.latitude,

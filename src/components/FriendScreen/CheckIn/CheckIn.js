@@ -7,41 +7,22 @@ import PopupPost from "../../general/PopupPost/PopupPost";
 import styles from "./styles";
 
 import {GOOGLE_KEY} from '@env'
+import useNearby from "../../../hooks/useNearby";
 
 
 
 export default function CheckIn({post, setPost}){
 
-    const [{data, loading, error}, getLocation] = useLocation();
+    const [{data, loading, error}, searchNearby] = useNearby();
     useEffect(() => {
-        getLocation();
+        searchNearby();
     }, []);
 
-    //console.log(data?.coords.latitude)
-
-    var axios = require('axios');
-    var config = {
-    method: 'get',
-    url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${data?.coords.latitude}%2C${data?.coords.longitude}&radius=50&type=bar&key=${GOOGLE_KEY}`,
-    headers: { }
-    };
-
-    let barNames;
-    axios(config)
-    .then(function (response) {
-        barNames = response.data.results;
-        response.data.results.forEach(function(data) {
-        //console.log(data.name);
-    });
-
-    console.log(barNames[0])
     
-    })
-    .catch(function (error) {
-    console.log(error);
-    });
 
-    if(loading) return (<ActivityIndicator/>)
+    if(loading || !data) return (<ActivityIndicator/>)
+
+    console.log(data?.results)
 
     return(
         <PopupPost post={post} setPost={setPost} title={'CHECK-IN'} buttonTitle={'CHECK-IN'}>
@@ -56,7 +37,7 @@ export default function CheckIn({post, setPost}){
             </View>
             {/* <TextInput style={styles.input} placeholder='is at....'></TextInput> */}
             <FlatList
-                data={barNames} 
+                data={data?.results} 
                 renderItem={({ item, index }) => {   
                     console.log(item)
                 return (
@@ -65,7 +46,7 @@ export default function CheckIn({post, setPost}){
                 }}
                 vertical
                 showsVerticalScrollIndicator={false}
-                //keyExtractor={(bar) => bar.name}
+                keyExtractor={(index) => index}
             />
             
             <Text style={{color: 'red'}}>NEARBY</Text>
