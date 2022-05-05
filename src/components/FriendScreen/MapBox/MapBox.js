@@ -18,14 +18,16 @@ export default function MapBox() {
         getLocation();
     }, []);
 
+   
+
+    if(loading) return (<ActivityIndicator/>)
+
     const region = {
         latitude: data?.coords.latitude,
         longitude: data?.coords.longitude,
         latitudeDelta: 0.00922,
         longitudeDelta: 0.00421,
     }
-
-    if(loading) return (<ActivityIndicator/>)
 
   return (
     <View style={styles.container}>
