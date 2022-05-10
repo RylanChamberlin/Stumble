@@ -5,10 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import styles from './styles'
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { useState } from 'react';
-import { useEffect } from 'react';
+import { BlurView } from 'expo-blur';
 
-import useLocation from '../../../hooks/useLocation';
-import useCheckIns from '../../../hooks/useCheckIns';
 import { useContext } from 'react';
 import { AppContext } from '../Context';
 
@@ -34,11 +32,9 @@ export default function MapBox() {
 
     //gets a list of people that are at the same bar
     const showPeopleList = ({locationID, locationName}) => {
-        // console.log(locationID, locationName)
-        // console.log(userCheckIns.data)
+       
         const people = userCheckIns.data.filter(item => item.checkIn.locationID == locationID)
         setPeopleList(people)
-        console.log(peopleList)
         setPeeps(!showPeeps)
     } 
    
@@ -80,23 +76,26 @@ export default function MapBox() {
                 visible={showPeeps}
                 onRequestClose={() => setPeeps(!showPeeps)}
             >
-            <View style={{marginTop: 200, padding: 100}}>
+            
+             <BlurView intensity={5} style={{flex: 1, paddingTop: 200}}>
                 <FlatList
                     data={peopleList}
-                    
-                    
                     renderItem={({ item }) => (
-                        
                             <View style={styles.box}>
-                                <Text>{item.name}</Text>
+                                <Image style={styles.image} />
+                                <Text style={{fontSize: 30, flex:1, marginLeft: 10}}>{item.name}</Text>
+                                <View style={{flexDirection: 'column', alignItems: "flex-end", padding: 5}}>
+                                    <TouchableOpacity>
+                                        <Ionicons name="person-add-sharp" size={24} color="black" style={{marginBottom: 15}}/>
+                                    </TouchableOpacity>
+                                    <Text>{new Date(item.checkIn.checkInTime.seconds *1000).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Text>
+                                </View>
                             </View>
-                    
                     )}
                     keyExtractor={(item) => item.key}
                     showsVerticalScrollIndicator={false}
-                />  
-            </View>
-            
+                /> 
+            </BlurView> 
             </Modal>
         </GestureRecognizer>
 

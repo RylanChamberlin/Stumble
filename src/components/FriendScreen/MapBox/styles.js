@@ -23,11 +23,13 @@ export default StyleSheet.create({
   },
 
     box:{
-        alignItems: "center", 
-        justifyContent: 'center',
-        marginHorizontal: 15,
-        width: '90%',
-        padding: 15,
+
+        flexDirection: "row",
+        alignItems: "center",
+        // justifyContent: 'space-between', 
+        marginHorizontal: 30,
+        marginBottom: 10,
+        //padding: 15,
         backgroundColor: '#f2f1f1',
         borderWidth: 1,
         borderRadius: 10
