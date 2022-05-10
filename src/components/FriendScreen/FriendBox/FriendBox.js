@@ -58,11 +58,11 @@ export default function FriendBox({item}){
             <View style={styles.image}></View>   
             <View style = {styles.textContainer}>
                 <Text>{item.name} is at</Text>
-                <Text style = {{fontWeight: "bold"}}>{item.locationName}</Text>
+                <Text style = {{fontWeight: "bold"}}>{item.checkIn?.locationName}</Text>
             </View>
             <View style = {styles.rightContainer}>
                 <LikeButton/>
-                <Text>{item.checkInAt ? timeSince(item.checkInAt.seconds) : 'Now' }</Text>
+                <Text>{item.checkIn.checkInTime ? timeSince(item.checkIn?.checkInTime.seconds) : 'Now' }</Text>
                 {/* <Text>{item.checkInAt.seconds = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Text> */}
             </View>
             

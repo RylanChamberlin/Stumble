@@ -2,22 +2,21 @@ import { View, Text, ScrollView, FlatList, ActivityIndicator } from 'react-nativ
 import React, { useEffect } from 'react'
 import FriendBox from '../FriendBox'
 import useCheckIns from '../../../hooks/useCheckIns';
+import { AppContext } from '../Context';
+import { useContext } from 'react';
 
 export default function FeedList() {
 
-  const [{data, loading, error}, getCheckIns] = useCheckIns();
-  useEffect(() => {
-      getCheckIns();
-  }, []);
+  
+  const {userCheckIns} = useContext(AppContext);
 
-
-  if (loading) {
+  if (userCheckIns.loading) {
     return <ActivityIndicator />;
   }
 
   return (
     <FlatList
-      data={data}
+      data={userCheckIns.data}
 
       renderItem={({ item }) => (
         <FriendBox item = {item}/>

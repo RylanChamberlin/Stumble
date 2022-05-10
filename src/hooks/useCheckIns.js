@@ -22,7 +22,7 @@ export default () => {
         
         try{
             const subscriber = barRef
-                .orderBy("checkInAt", "desc")
+                .orderBy("checkIn.checkInTime", "desc")
                 .onSnapshot(querySnapshot => {
                     const users = [];
                     querySnapshot.forEach(documentSnapshot => {

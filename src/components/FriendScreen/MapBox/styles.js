@@ -23,10 +23,21 @@ export default StyleSheet.create({
   },
 
     box:{
-        width: '85%',
+        alignItems: "center", 
+        justifyContent: 'center',
+        marginHorizontal: 15,
+        width: '90%',
         padding: 15,
         backgroundColor: '#f2f1f1',
         borderWidth: 1,
         borderRadius: 10
     },
+
+    image: {
+      width: 25, 
+      height: 25, 
+      borderWidth: 1, 
+      borderRadius: 50,
+      backgroundColor: 'blue',
+  },
 })
