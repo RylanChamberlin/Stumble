@@ -10,13 +10,13 @@ export default function PopupPost(props){
 
         <GestureRecognizer
                 style={{flex: 1}}
-                onSwipeDown={() => setPost(!props.post)}
+                // onSwipeDown={() => props.setPost(!props.post)}
                 >
                 <Modal
                     animationType="slide"
                     transparent={true}
                     visible={props.post}
-                    onRequestClose={() => setPost(!props.post)}
+                    onRequestClose={() => props.setPost(!props.post)}
                 >
         
                 <AppView>
