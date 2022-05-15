@@ -8,20 +8,22 @@ import FeedList from "../components/FriendScreen/FeedList/FeedList";
 import { AppProvider } from "../components/FriendScreen/Provider";
 
 
-export default function FriendScreen(){
+
+
+const FriendScreen = () => {
 
     const [feed, setFeed] = useState(true);
 
     return(
        
-        <AppView>
-           
+        <AppView>    
             <AppProvider>
                 <Header feed={feed} setFeed={setFeed}/>
                 {feed ? <MapBox/> : <FeedList/>}
-            </AppProvider>
-            
+            </AppProvider> 
         </AppView>
     );
 
 }
+
+export default FriendScreen;
