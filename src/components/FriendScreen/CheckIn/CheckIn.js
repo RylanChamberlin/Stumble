@@ -6,7 +6,6 @@ import PopupPost from "../../general/PopupPost/PopupPost";
 import styles from "./styles";
 
 import {GOOGLE_KEY} from '@env'
-import useLocation from "../../../hooks/useLocation";
 import { AppContext } from "../Context";
 
 
@@ -24,7 +23,7 @@ export default function CheckIn({post, setPost}){
     }, [])
 
     useEffect(() => {
-        //if coords are there fethc data
+        //if coords are there fetch data
         if(location.data){
             const latitude = location.data.coords.latitude;
             const longitude = location.data.coords.longitude;
@@ -61,18 +60,17 @@ export default function CheckIn({post, setPost}){
         <View style={styles.container}>
             <View style={styles.userBox}>
                 <Image style={styles.image}/>
-                <View style={styles.nameBox}>
+                <View>
                     <Text style={styles.name}>{userDetails.name}</Text>
                     <Text style={styles.username}>@{userDetails.username}</Text>
                 </View>
             </View>
-            {/* <TextInput style={styles.input} placeholder='is at....'></TextInput> */}
             <Text style={{color: 'red'}}>NEARBY</Text>
             <FlatList
                 data={nearby.results} 
                 renderItem={({ item, index }) => {   
                 return (
-                    <TouchableOpacity style={[styles1.nameBox, check.id == item.place_id ? {backgroundColor: 'blue'} : {backgroundColor: 'white'}]} onPress={() => setCheck({id: item.place_id, name: item.name})}>
+                    <TouchableOpacity style={[styles.nameBox, check.id == item.place_id ? {backgroundColor: 'blue'} : {backgroundColor: 'white'}]} onPress={() => setCheck({id: item.place_id, name: item.name})}>
                         <Text style={styles.barName}>{item.name}</Text>
                     </TouchableOpacity>
                 );
@@ -81,27 +79,7 @@ export default function CheckIn({post, setPost}){
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item.place_id}
             />
-            
-            
-            {/* <View style={styles.barnameBox}>
-                <Text style={styles.barName}>Harpo's </Text>
-                <Text style={styles.cityName}>Columbia, MO</Text>
-            </View>
-            <View style={styles.barnameBox}>
-                <Text style={styles.barName}>The Shot Bar </Text>
-                <Text style={styles.cityName}>Columbia, MO</Text>
-            </View> */}
         </View>
         </PopupPost>        
     );
 }
-
-
-const styles1 = StyleSheet.create({
-    nameBox: {
-        padding: 10, 
-        margin: 5,
-        borderWidth: 1,
-        borderRadius: 15
-    }
-})

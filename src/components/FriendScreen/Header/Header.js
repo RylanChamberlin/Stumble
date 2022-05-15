@@ -24,12 +24,7 @@ const [post, setPost] = useState(false);
             <TouchableOpacity style={styles.newPost} onPress={() => setPost(!post)}>
                 <Text style={{fontSize:20, fontWeight: "bold"}}>CHECK-IN</Text>
             </TouchableOpacity>
-
-        
-
         </View>
-
-
 
   )
 }

@@ -1,9 +1,8 @@
-import { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {Text, TouchableOpacity, View } from "react-native";
+import styles from "./styles";
 
 
 export default function ButtonSwitch({button1, button2, left, setLeft}){
-
 
     return(
         <View style={styles.buttonContainer}>
@@ -17,23 +16,3 @@ export default function ButtonSwitch({button1, button2, left, setLeft}){
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-  
-    buttonContainer: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-    },
-    recentButton: {
-        backgroundColor: 'white',
-        borderWidth: 1,
-        borderRadius: 10,
-        width: '48%',
-        alignItems: "center",
-        //paddingHorizontal: 50,
-    },
-    buttonText:{
-        fontSize:20, fontWeight: "bold",
-    },
-
-})

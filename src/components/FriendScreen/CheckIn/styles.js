@@ -13,8 +13,11 @@ export default StyleSheet.create({
     userBox: {
         flexDirection: 'row',        
     },
-    nameBox:{
-
+    nameBox: {
+        padding: 10, 
+        margin: 5,
+        borderWidth: 1,
+        borderRadius: 15
     },
     image: {
         width: 50,

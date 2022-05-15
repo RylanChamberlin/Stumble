@@ -6,17 +6,14 @@ import BarBox from "../BarBox";
 
 const BarList = () => {
 
-
     const [{data, loading, error}, getBars] = useBars();
     useEffect(() => {
         getBars();
     }, []);
 
-
     if (loading) {
         return <ActivityIndicator />;
     }
-
 
     return (
         <FlatList

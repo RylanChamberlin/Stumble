@@ -7,6 +7,7 @@ export default function BarBox({item, numComment}){
 
     const navigation = useNavigation({navigator})
 
+    // navigates to comments on the bar
     const clickBar = () => {
         navigation.navigate('Single', {
             itemId: item.key,

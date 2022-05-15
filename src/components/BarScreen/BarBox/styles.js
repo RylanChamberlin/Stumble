@@ -1,11 +1,8 @@
 import { Dimensions, StyleSheet } from 'react-native';
-import {elevation, bold} from "../../../common/styles";
-
+import {bold} from "../../../common/styles";
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 const infoBoxWidth = windowWidth-30;
-
 
 export default StyleSheet.create({
     outsideContainer:{
@@ -50,7 +47,6 @@ export default StyleSheet.create({
     },
     
     image: {
-
         resizeMode : 'stretch',
         width: infoBoxWidth/2.3, 
         height: infoBoxWidth/3,

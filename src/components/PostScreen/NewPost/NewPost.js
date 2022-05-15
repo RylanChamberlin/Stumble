@@ -1,22 +1,20 @@
 import { useEffect, useState } from "react";
 import {FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import { auth, db, dbTime } from "../../../firebase";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import {GOOGLE_KEY} from '@env'
 import PopupPost from "../../general/PopupPost/PopupPost";
 import useLocation from "../../../hooks/useLocation";
 import { useRef } from "react";
+import styles from "./styles";
 
 
 export default function NewPost({post, setPost}){
 
     const [barInput, setBarInput] = useState("");
-    const [bar, setBar] = useState("");
     const [input, setInput] = useState("");
     const [placeID, setPlaceID] = useState("");
     const [photoID, setPhotoID] = useState("");
     const [nearby, setNearby] = useState("");
-    // const [keyword, setKeyword]
 
     const inputRef = useRef(null);
 
@@ -25,10 +23,6 @@ export default function NewPost({post, setPost}){
     useEffect(() => {
         getLocation();
     }, [])
-
-    useEffect(() => {
-        console.log('barinput: ', barInput)
-    }, [barInput])
 
     useEffect(() => {    
         //if coords are there fethc data
@@ -43,12 +37,11 @@ export default function NewPost({post, setPost}){
     }, [barInput])
 
 
-    //
-    if(nearby){
-        nearby.results.forEach(element => console.log(element.name));
-    }
-    //console.log('\n\n')
    
+    // if(nearby){
+    //     nearby.results.forEach(element => console.log(element.name));
+    // }
+ 
     const handleEndEditing = () => {
         if(!input && !barInput) return
         setBarInput("")
@@ -155,82 +148,7 @@ export default function NewPost({post, setPost}){
             keyExtractor={(item) => item.place_id}
             showsVerticalScrollIndicator={false} 
         />
-        </View>
-                            
-        {/* <GooglePlacesAutocomplete
-
-            placeholder="Search"
-            fetchDetails={true}
-            GooglePlacesSearchQuery={{
-                rankby: "distance",
-                type: 'bar',
-                types: 'cities'
-            }}
-            onPress={(data, details = null) => {
-                console.log(data.place_id);
-                
-                setPhotoID(details.photos[0]?.photo_reference);
-                setBarInput(data.structured_formatting.main_text);
-                setPlaceID(data.place_id);
-            }}
-            query={{
-                key: `${GOOGLE_KEY}`,
-                language: "en",
-                components: "country:us",
-                fields: ["name"],
-                types: "bar",
-                radius: 100,
-                location: `38.951561, -92.328636`
-            }}
-            styles={{
-                container: { 
-                    flex: 1,
-                    // borderRadius: 10,
-                    //backgroundColor: "black"
-                    //borderWidth: 1
-                    },
-                listView: { 
-                    backgroundColor: "white", 
-                    }
-            }}
-        /> */}
-        
+        </View> 
         </PopupPost> 
     );
 }
-
-const styles = StyleSheet.create({
-
-    textInput: {
-        height: 200,
-        marginTop: 30,
-        padding: 10,
-        fontSize: 20,
-        borderRadius: 10,
-        textAlignVertical: "top",
-        backgroundColor: 'white',
-        borderWidth: 1,
-        
-    },
-
-    barInput: {
-       
-        padding: 10,
-        fontSize: 20,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        textAlignVertical: "top",
-        backgroundColor: 'white',
-        borderWidth: 1
-        
-    },
-    list: {
-        marginTop: 50,
-        marginLeft: 15,
-        width: '100%',
-        height: '100%',
-        position: "absolute",
-    }
-
-
-})

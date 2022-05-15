@@ -1,57 +1,9 @@
-import { useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import useCheckIns from "../../../hooks/useCheckIns";
+import { StyleSheet, Text, View } from "react-native";
+import timeSince from "../../../services/timeSince";
 import LikeButton from "../../general/LikeButton";
+import styles from "./styles";
 
 export default function FriendBox({item}){
-
-
-    function timeSince(seconds) {
-
-        var date = new Date(seconds*1000)
-        var seconds = Math.floor((new Date() - date) / 1000);
-        var interval = seconds / 31536000;
-      
-        if (interval >= 2) {
-          return Math.floor(interval) + " years ago";
-        }
-        if (interval > 1) {
-            return Math.floor(interval) + " year ago";
-          }
-        interval = seconds / 2592000;
-        if (interval >= 2) {
-          return Math.floor(interval) + " months ago";
-        }
-        if (interval > 1) {
-            return Math.floor(interval) + " month ago";
-          }
-        interval = seconds / 86400;
-        if (interval >= 2) {
-          return Math.floor(interval) + " days ago";
-        }
-        if (interval > 1) {
-            return Math.floor(interval) + " day ago";
-          }
-        interval = seconds / 3600;
-        if (interval >= 2) {
-            
-          return Math.floor(interval) + " hours ago";
-        }
-        if (interval > 1) {
-            return Math.floor(interval) + " hour ago";
-          }
-        interval = seconds / 60;
-        if (interval >= 2) {
-          return Math.floor(interval) + " minutes ago";
-        }
-        if (interval > 1) {
-            
-            return Math.floor(interval) + " minute ago";
-            
-          }
-        return Math.floor(seconds) + " seconds ago";
-      }
-    
 
     return(
         <View style={styles.container}>  
@@ -65,40 +17,6 @@ export default function FriendBox({item}){
                 <Text>{item.checkIn.checkInTime ? timeSince(item.checkIn?.checkInTime.seconds) : 'Now' }</Text>
                 {/* <Text>{item.checkInAt.seconds = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Text> */}
             </View>
-            
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: 'white',
-        borderRadius: 10,
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 5
-
-    }, 
-    image:{
-        //flex: 1,
-        height: 50,
-        width: 50,
-        backgroundColor: 'blue',
-        borderRadius: 50/2,
-        marginLeft: 10,
-        marginVertical: 5,
-        
-    },
-    textContainer: {
-        flex:1,
-        paddingVertical: 12,
-        marginHorizontal: 10,
-        justifyContent: 'space-between'
-    },
-    rightContainer: {
-        alignItems: "flex-end",
-        justifyContent: 'space-between',
-        paddingVertical: 5,
-        paddingRight: 5
-    }
-})

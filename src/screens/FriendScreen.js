@@ -2,11 +2,9 @@ import AppView from "../components/general/AppView";
 import Header from "../components/FriendScreen/Header";
 
 
-import { createContext, useEffect, useState } from "react";
+import {useState } from "react";
 import MapBox from "../components/FriendScreen/MapBox";
 import FeedList from "../components/FriendScreen/FeedList/FeedList";
-import useLocation from "../hooks/useLocation";
-import { ActivityIndicator } from "react-native";
 import { AppProvider } from "../components/FriendScreen/Provider";
 
 
