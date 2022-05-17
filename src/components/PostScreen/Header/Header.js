@@ -17,8 +17,8 @@ const singleBar = (title) => {
   }
 
   return(
-    <View style={{alignItems: "center", flexDirection: 'row'}}>
-      <TouchableOpacity onPress={goBack}>
+    <View style={styles.titleContainer}>
+      <TouchableOpacity onPress={goBack} style={styles.backArrow}>
         <AntDesign name="arrowleft" size={34} color="black"/>
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
@@ -38,9 +38,9 @@ const Header = ({title}) => {
   return (
 
     <View style={styles.header}>
-      <View style={{alignItems: "center",}}>
-        {title ? singleBar(title) : <Text style={styles.title}>POSTS</Text>}
-      </View>
+      
+        {title ? singleBar(title) : <View style={{alignItems: "center",}}><Text style={styles.title}>POSTS</Text></View>}
+      
 
       <ButtonSwitch button1 = "RECENT" button2 = "POPULAR" left={left} setLeft={setLeft}/>
       <NewPost post = {post} setPost={setPost}/>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Alert, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import { auth, db, dbTime } from "../../../firebase";
 import {GOOGLE_KEY} from '@env'
 import PopupPost from "../../general/PopupPost/PopupPost";
@@ -17,7 +17,6 @@ export default function NewPost({post, setPost}){
     const [nearby, setNearby] = useState("");
 
     const inputRef = useRef(null);
-
     const [location, getLocation] = useLocation();
 
     useEffect(() => {
@@ -76,6 +75,15 @@ export default function NewPost({post, setPost}){
 
     const sendMessage = () => {
 
+        if (input.trim().length < 1) {
+            Alert.alert('Error', 'Message cannot be empty');
+            return;
+        }else if(barInput.trim().length < 1){
+            Alert.alert('Error', 'Bar input cannot be empty');
+            return;
+        }
+        else{
+    
         setPost(!post);
         const docRef = db.collection("bars").doc(placeID);
         docRef.get().then((doc) => {
@@ -89,6 +97,8 @@ export default function NewPost({post, setPost}){
         });
 
         handleEndEditing();
+
+        }
         
     }
 
@@ -110,7 +120,7 @@ export default function NewPost({post, setPost}){
         <PopupPost post={post} setPost={setPost} title={'NEW POST'} buttonTitle={'POST'} buttonAction={sendMessage}>
         
         <TextInput 
-            placeholder='Type SOMETHING........' 
+            placeholder='@ bar location' 
             style = {styles.barInput} 
             maxLength = {100}
             value={barInput} 

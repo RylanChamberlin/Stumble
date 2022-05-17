@@ -4,12 +4,22 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
     header:{
         height: "15%",
-        justifyContent: "space-between",
         marginBottom: 10,
     },
+
+    titleContainer: {
+        alignItems: "center",
+        flexDirection: 'row'
+    },
+
+    backArrow: {
+        marginRight: "auto"
+    },
+
     title:{
+        marginRight: "auto",
         color: 'white',
-        fontSize: 35,
+        fontSize: 25,
         shadowColor: "black",
         shadowOffset: {width: 5, height: 5}, //gives shadow offset
         shadowOpacity: .6,
