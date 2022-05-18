@@ -24,6 +24,13 @@ export default StyleSheet.create({
         shadowOffset: {width: 5, height: 5}, //gives shadow offset
         shadowOpacity: .6,
     },
+    postTitle:{
+        color: 'white',
+        fontSize: 25,
+        shadowColor: "black",
+        shadowOffset: {width: 5, height: 5}, //gives shadow offset
+        shadowOpacity: .6,
+    },
     newPost:{
         alignItems: "center", 
         backgroundColor: 'white',

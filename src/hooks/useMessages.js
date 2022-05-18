@@ -10,7 +10,7 @@ export default () => {
         error: null
     })
 
-    const getMessages = async (placeID) => {
+    const getMessages = async (placeID, userID) => {
         setResult({
             data: null,
             loading: true,
@@ -23,6 +23,10 @@ export default () => {
         if(placeID != null){
             subscriber = subscriber
             .where('placeID', '==' , placeID)
+            
+        }else if(userID != null){
+            subscriber = subscriber
+            .where('uid', '==' , userID)
         }else{
             subscriber = subscriber
             .orderBy("createdAt", "desc")

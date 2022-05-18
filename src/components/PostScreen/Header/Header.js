@@ -39,7 +39,7 @@ const Header = ({title}) => {
 
     <View style={styles.header}>
       
-        {title ? singleBar(title) : <View style={{alignItems: "center",}}><Text style={styles.title}>POSTS</Text></View>}
+        {title ? singleBar(title) : <View style={{alignItems: "center"}}><Text style={styles.postTitle}>POSTS</Text></View>}
       
 
       <ButtonSwitch button1 = "RECENT" button2 = "POPULAR" left={left} setLeft={setLeft}/>

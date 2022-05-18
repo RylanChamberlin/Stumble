@@ -4,13 +4,13 @@ import { useEffect } from 'react';
 import useMessages from '../../../hooks/useMessages';
 import PostBox from '../PostBox';
 
-const PostList = ({itemId}) => {
+const PostList = ({itemId = null, userId = null}) => {
 
 
     const [{data, loading, error}, getMessages] = useMessages();
 
     useEffect(() => {
-        getMessages(itemId);
+        getMessages(itemId, userId);
     }, []);// [] could be which bar?
 
 

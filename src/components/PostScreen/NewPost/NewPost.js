@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {Alert, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Alert, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View} from "react-native";
 import { auth, db, dbTime } from "../../../firebase";
 import {GOOGLE_KEY} from '@env'
 import PopupPost from "../../general/PopupPost/PopupPost";
@@ -17,6 +17,7 @@ export default function NewPost({post, setPost}){
     const [nearby, setNearby] = useState("");
 
     const inputRef = useRef(null);
+    const barInputRef = useRef(null);
     const [location, getLocation] = useLocation();
 
     useEffect(() => {
@@ -25,7 +26,7 @@ export default function NewPost({post, setPost}){
 
     useEffect(() => {    
         //if coords are there fethc data
-        if(location.data){
+        if(location.data && barInput){
             const latitude = location.data.coords.latitude;
             const longitude = location.data.coords.longitude;
             fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude}%2C${longitude}&radius=50000&type=bar&keyword=${barInput}&key=${GOOGLE_KEY}`)
@@ -104,7 +105,6 @@ export default function NewPost({post, setPost}){
 
     const clickBarName = (data) => {
         
-        
         console.log(data);  
         setPhotoID(data.photos[0]?.photo_reference);
         setBarInput(data.name)
@@ -117,47 +117,47 @@ export default function NewPost({post, setPost}){
 
     return(
 
-        <PopupPost post={post} setPost={setPost} title={'NEW POST'} buttonTitle={'POST'} buttonAction={sendMessage}>
         
+        <PopupPost post={post} setPost={setPost} title={'NEW POST'} buttonTitle={'POST'} buttonAction={sendMessage}>
         <TextInput 
+            ref={barInputRef}
             placeholder='@ bar location' 
             style = {styles.barInput} 
             maxLength = {100}
             value={barInput} 
             onPressIn={() => {setBarInput('')}}
-            onChangeText={(text) => {setBarInput(text);
-            }}
+            onChangeText={(text) => {setBarInput(text)}}
+            
         />
         <TextInput 
             placeholder='Type SOMETHING........'
             ref = {inputRef} 
             style = {styles.textInput} 
             multiline={true} 
-            maxHeight={200} 
+            maxHeight={300} 
             numberOfLines={3}
             maxLength = {256}
             value={input} 
-            
+
             onChangeText={(text) => {
                 setInput(text)    
             }}
 
-            onPressIn={() => {setSearch(true)}}
         />
         <View style={styles.list}>
         <FlatList
             data={nearby.results}
             renderItem={({ item }) => (
                 <TouchableOpacity onPress={() => clickBarName(item)}>
-                    <View style={{backgroundColor: 'white', borderWidth: 1, padding: 5,}}>
-                        <Text style={{fontSize: 20}}>{item.name}</Text>
+                    <View style={{backgroundColor: 'white', borderWidth: 1, padding: 15,}}>
+                        <Text style={{fontSize: 16, color: 'black', fontWeight: '400'}}>{item.name}</Text>
                     </View>
                 </TouchableOpacity>
             )}
             // ItemSeparatorComponent={}
             keyExtractor={(item) => item.place_id}
             showsVerticalScrollIndicator={false} 
-        />
+        /> 
         </View> 
         </PopupPost> 
     );
