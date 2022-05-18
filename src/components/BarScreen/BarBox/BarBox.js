@@ -1,12 +1,12 @@
-import {View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
+import {View, Text, TouchableOpacity, Image, ScrollView, ImageStyle } from "react-native";
 import {GOOGLE_KEY} from '@env'
 import { useNavigation } from "@react-navigation/native";
 import styles from "./styles";
 
-export default function BarBox({item, numComment}){
+const BarBox = ({item, numComment}) => {
 
-    const navigation = useNavigation({navigator})
-
+    const navigation = useNavigation({navigator});
+    // navigates to comments on the bar
     const clickBar = () => {
         navigation.navigate('Single', {
             itemId: item.key,
@@ -30,8 +30,8 @@ export default function BarBox({item, numComment}){
                                 <Text>{numComment ??= 0} new posts</Text>
                             </View>
                             
-                            <View style = {styles.specialsContainer}>
-                                <Text style={[styles.specialsTitle, styles.bold]}>TODAY'S DEALS:</Text>
+                            <View>
+                                <Text style={styles.bold}>TODAY'S DEALS:</Text>
                                 <Text>{}</Text>
                             </View>
                         </View>
@@ -47,3 +47,5 @@ export default function BarBox({item, numComment}){
     );
 
 }
+
+export default BarBox;

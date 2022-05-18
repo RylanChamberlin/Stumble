@@ -1,59 +1,46 @@
 import { useState } from "react";
 import { db } from "../firebase";
 
-
 export default () => {
    
     const [result, setResult] = useState({
         data: null,
         loading: false,
         error: null
-    })
+    });
 
-    const getMessages = async (placeID, userID) => {
+
+    const getCheckIns = async () => {
+
         setResult({
             data: null,
             loading: true,
             error: null
         })
 
-        const ref = db.collection('messages')
-        var subscriber = ref;
-
-        if(placeID != null){
-            subscriber = subscriber
-            .where('placeID', '==' , placeID)
-            
-        }else if(userID != null){
-            subscriber = subscriber
-            .where('uid', '==' , userID)
-        }else{
-            subscriber = subscriber
-            .orderBy("createdAt", "desc")
-        }
+        const barRef = db.collection('users')
         
         try{
-                subscriber
+            const subscriber = barRef
+                .orderBy("checkIn.checkInTime", "desc")
                 .onSnapshot(querySnapshot => {
                     const users = [];
-
                     querySnapshot.forEach(documentSnapshot => {
-                    users.push({
-                        ...documentSnapshot.data(),
-                        key: documentSnapshot.id,
+                        users.push({
+                            ...documentSnapshot.data(),
+                            key: documentSnapshot.id, 
+                        });                      
                     });
-                    });
-
                     setResult({
                         data: users,
                         loading: false,
                         error: null
                     })
 
-
-                });
-
-            return () => subscriber(); //??
+                    
+                });   
+                            
+                return () => subscriber(); 
 
        
         }catch(error){
@@ -68,9 +55,7 @@ export default () => {
        
     };
 
-    
-
-    return [result, getMessages];
+    return [result, getCheckIns];
 
 
 };

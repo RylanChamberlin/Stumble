@@ -1,5 +1,6 @@
 import React from 'react';
 import { ImageBackground, SafeAreaView, StyleSheet} from 'react-native';
+import styles from './styles';
 
 const AppView = props => {
 
@@ -14,16 +15,5 @@ const AppView = props => {
         </ImageBackground>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginHorizontal: 15,
-       
-    },
-    image:{
-        flex: 1,
-    },
-})
 
 export default AppView;

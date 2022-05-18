@@ -1,55 +1,22 @@
 import { StyleSheet, Text, View } from "react-native";
+import timeSince from "../../../services/timeSince";
 import LikeButton from "../../general/LikeButton";
+import styles from "./styles";
 
-export default function FriendBox(){
+export default function FriendBox({item}){
 
     return(
         <View style={styles.container}>  
-
-            <View style={styles.image}>
-
-            </View>
-                
+            <View style={styles.image}></View>   
             <View style = {styles.textContainer}>
-                <Text>Rylan Chamberlin is at</Text>
-                <Text style = {{fontWeight: "bold"}}>Harpo's</Text>
+                <Text>{item.name} is at</Text>
+                <Text style = {{fontWeight: "bold"}}>{item.checkIn?.locationName}</Text>
             </View>
-
             <View style = {styles.rightContainer}>
                 <LikeButton/>
-                <Text>7:48 pm</Text>
+                <Text>{item.checkIn.checkInTime ? timeSince(item.checkIn?.checkInTime.seconds) : 'Now' }</Text>
+                {/* <Text>{item.checkInAt.seconds = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Text> */}
             </View>
-            
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: 'white',
-        borderRadius: 10,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginVertical: 5
-
-    }, 
-    image:{
-        //flex: 1,
-        height: 50,
-        width: 50,
-        backgroundColor: 'blue',
-        borderRadius: 50/2,
-        marginLeft: 10,
-        marginVertical: 5
-    },
-    textContainer: {
-        paddingVertical: 12,
-        justifyContent: 'space-between'
-    },
-    rightContainer: {
-        alignItems: "center",
-        justifyContent: 'space-between',
-        paddingVertical: 5,
-        paddingRight: 5
-    }
-})

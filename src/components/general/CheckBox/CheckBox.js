@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
+import styles from './styles';
 
 export default function CheckBox({name}){
 
@@ -18,23 +19,3 @@ export default function CheckBox({name}){
         </TouchableOpacity>
     );
 }
-
-const styles = StyleSheet.create({
-
-    container: {
-        flexDirection: "row", // Makes view in a row
-        marginVertical: 2,
-        marginHorizontal: 10,
-    },
-    checkBoxContainer: {
-        height: 20,
-        width: 20,
-        borderWidth: 1,
-        borderRadius: 3,
-        backgroundColor: "white",
-    },
-    text: {
-        marginLeft: 5
-    }
-
-});
