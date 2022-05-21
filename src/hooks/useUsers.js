@@ -1,28 +1,17 @@
 import { useState } from "react";
 import { auth, db } from "../firebase";
 
-interface FriendObject {
-    isFriend: boolean;
-    key: string;
-    name: string;
-    username: string;
-}
 
-interface FriendData {
-    data: FriendObject | undefined | null | any; //temp fix so it would work in flatlist
-    loading: boolean;
-    error: any;
-}
 
-export default (): [FriendData, () => void] => {
+export default () => {
    
-    const [result, setResult] = useState<FriendData>({
+    const [result, setResult] = useState({
         data: null,
         loading: false,
         error: null
     })
 
-    const getFriends = async () => {
+    const getUsers = async () => {
         setResult({
             data: null,
             loading: true,
@@ -34,9 +23,6 @@ export default (): [FriendData, () => void] => {
 
         try{
                 subscriber
-                .doc(auth.currentUser.uid)
-                .collection("Friends")
-                // .where('isFriend', '==' , true)
                 .onSnapshot(querySnapshot => {
                     const users = [];
                     querySnapshot.forEach(documentSnapshot => {
@@ -72,7 +58,7 @@ export default (): [FriendData, () => void] => {
 
     
 
-    return [result, getFriends];
+    return [result, getUsers];
 
 
 };

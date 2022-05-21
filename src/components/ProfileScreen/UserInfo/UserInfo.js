@@ -1,24 +1,39 @@
 
 
 import { View, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './styles'
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../screens/RootStackPrams';
+import { auth, db } from '../../../firebase';
 
 
 
-type UserScreenProp = NativeStackNavigationProp<RootStackParamList, 'UserInfo'>;
+// type UserScreenProp = NativeStackNavigationProp<RootStackParamList, 'UserInfo'>;
 
 const UserInfo = () => {
 
-    const navigation = useNavigation<UserScreenProp>()
+    const [userData, setUserData] = useState('');
+
+    const navigation = useNavigation()
     // navigates to user friends
     const clickFriends = () => {
         navigation.navigate('UserFriends')
     }
 
+    useEffect( () => {
+        getData()
+    },[])
+
+
+    const getData = async() => {
+        const ref = db.collection('users')
+        const snapshot = await ref.doc(auth.currentUser.uid).get();
+        setUserData(snapshot.data());
+    }
+
+    console.log(userData)
 
   return (
     <View style={styles.container}>
@@ -26,8 +41,8 @@ const UserInfo = () => {
 
     <View style={styles.textContainer}>
 
-        <Text style={styles.name}>Rylan Chamberlin</Text>
-        <Text style={styles.username}>@prett.boy.3</Text>
+        <Text style={styles.name}>{userData.name}</Text>
+        <Text style={styles.username}>@{userData.username}</Text>
 
         <View style={styles.statContainer}>
 
