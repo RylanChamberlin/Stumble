@@ -18,10 +18,8 @@ const ProfileScreen = () => {
     return(
        
         <AppView>    
-            <UserInfo/>
-           
+            <UserInfo/>  
             <ButtonSwitch button1 = "MY FEED" button2 = "MY POSTS" left = {feed} setLeft = {setFeed}/>
-
             {feed ? <PostList userId={auth.currentUser?.uid}/>: <UserFeed/>}
 
         </AppView>

@@ -9,18 +9,19 @@ import { BlurView } from 'expo-blur';
 
 import { useContext } from 'react';
 import { AppContext } from '../Context';
+import { auth, db } from '../../../firebase';
 
 export default function MapBox() {
 
     const [showPeeps, setPeeps] = useState(false);
     const [peopleList, setPeopleList] = useState({})
+    const [publicLocation, setPublicLocation] = useState(false);
     const {location, userCheckIns} = useContext(AppContext);
     
 
     if(location.loading || !location.data || userCheckIns.loading || !userCheckIns.data) {
         return (<ActivityIndicator/>)
     }
-
 
     const region = {
         latitude: location.data.coords.latitude,
@@ -29,17 +30,15 @@ export default function MapBox() {
         longitudeDelta: 0.00421,
     }
 
-
     //gets a list of people that are at the same bar
     const showPeopleList = ({locationID, locationName}) => {
-       
         const people = userCheckIns.data.filter(item => item.checkIn.locationID == locationID)
         setPeopleList(people)
         setPeeps(!showPeeps)
     } 
-   
 
   return (
+  
     <View style={styles.container}>
 
 
@@ -66,6 +65,16 @@ export default function MapBox() {
 
         </MapView>
 
+
+        <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity style={[styles.Button,publicLocation ? {backgroundColor: 'white'} : {backgroundColor: 'black'}]} onPress={() => setPublicLocation(false)}>
+                    <Text style={[styles.buttonText,publicLocation ? {color: 'black'} : {color: 'white'}]}>Friends</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.Button,!publicLocation ? {backgroundColor: 'white'} : {backgroundColor: 'black'}]} onPress={() => setPublicLocation(true)}>
+                    <Text style={[styles.buttonText,!publicLocation ? {color: 'black'} : {color: 'white'}]}>Public</Text>
+                </TouchableOpacity>
+        </View>
+        
         <GestureRecognizer
             style={{}}
             onSwipeDown={() => setPeeps(!showPeeps)}
@@ -99,7 +108,16 @@ export default function MapBox() {
             </Modal>
         </GestureRecognizer>
 
+
+        
+
     </View>
+
+
+
+    
+
+    
   )
 }
 

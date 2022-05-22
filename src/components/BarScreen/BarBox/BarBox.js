@@ -27,7 +27,7 @@ const BarBox = ({item, numComment}) => {
                             <Text style = {[styles.title, styles.bold]}>{item.name}</Text>
 
                             <View>
-                                <Text>{numComment ??= 0} new posts</Text>
+                                <Text>new posts</Text>
                             </View>
                             
                             <View>

@@ -78,7 +78,7 @@ const UserFriends = () => {
 
                     </View>
                 </View>
-            <AddFriends post={post} setPost={setPost} data = {data}/>
+            <AddFriends post={post} setPost={setPost} data ={data}/>
             
         </AppView>
     )

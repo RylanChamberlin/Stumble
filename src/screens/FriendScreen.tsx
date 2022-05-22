@@ -20,6 +20,9 @@ const FriendScreen = () => {
             <AppProvider>
                 <Header feed={feed} setFeed={setFeed}/>
                 {feed ? <MapBox/> : <FeedList/>}
+
+                
+
             </AppProvider> 
         </AppView>
     );

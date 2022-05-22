@@ -17,6 +17,7 @@ const UserInfo = () => {
     const [userData, setUserData] = useState('');
 
     const navigation = useNavigation()
+    
     // navigates to user friends
     const clickFriends = () => {
         navigation.navigate('UserFriends')
@@ -26,14 +27,11 @@ const UserInfo = () => {
         getData()
     },[])
 
-
     const getData = async() => {
         const ref = db.collection('users')
         const snapshot = await ref.doc(auth.currentUser.uid).get();
         setUserData(snapshot.data());
     }
-
-    console.log(userData)
 
   return (
     <View style={styles.container}>
@@ -47,17 +45,17 @@ const UserInfo = () => {
         <View style={styles.statContainer}>
 
             <View style={styles.statCircle}>
-                <Text>12</Text>
+                <Text>{userData.checkInCount ? userData.checkInCount : 0}</Text>
                 <Text>checkins</Text>
             </View>
             <View style={styles.statCircle}>
-                <Text>245</Text>
+                <Text>{userData.upVoteTotal ? userData.upVoteTotal : 0}</Text>
                 <Text>upvotes</Text>
             </View>
 
             <TouchableOpacity onPress={() => {clickFriends()}}>
             <View style={styles.statCircle}>
-                <Text>12</Text>
+                <Text>{userData.friendTotal ? userData.friendTotal : 0}</Text>
                 <Text>friends</Text>
             </View>
             </TouchableOpacity>
