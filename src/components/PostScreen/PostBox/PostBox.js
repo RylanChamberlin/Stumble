@@ -2,7 +2,7 @@ import {Text, TouchableOpacity, View } from "react-native";
 
 
 import { Entypo } from '@expo/vector-icons'; 
-import { db, FieldValue } from "../../../firebase";
+import { auth, db, FieldValue } from "../../../firebase";
 import timeSince from "../../../services/timeSince";
 import styles from "./styles";
 
@@ -10,14 +10,19 @@ export default function PostBox({item}){
   
     const incrementVote = async() => {
         const userRef = db.collection('messages').doc(item.key);
-        const increment = FieldValue.increment(1); 
-        userRef.update({ votes: increment });
-    }
 
+        
+        const increment = FieldValue.increment(1); 
+        userRef.update({ 
+            voteCount: increment, 
+            votes: auth.currentUser.uid
+
+        }); 
+    }
     const decrementVote = async() => { 
         const userRef = db.collection('messages').doc(item.key);
         const decrement = FieldValue.increment(-1); 
-        userRef.update({ votes: decrement });
+        userRef.update({ voteCount: decrement });
     }
 
     return(
@@ -39,7 +44,7 @@ export default function PostBox({item}){
                     />
                 </TouchableOpacity>
 
-                <Text style = {{marginTop: 5}}>{item.votes}</Text>
+                <Text style = {{marginTop: 5}}>{item.voteCount}</Text>
 
                 <TouchableOpacity onPress={decrementVote}>
                     <Entypo 
