@@ -32,7 +32,7 @@ export default function NewPost({post, setPost}){
             fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude}%2C${longitude}&radius=50000&type=bar&keyword=${barInput}&key=${GOOGLE_KEY}`)
             .then(response => response.json())
             .then(json => setNearby(json)) 
-            console.log('fetching nearby list search')
+            console.log('fetching nearby list search ' + {GOOGLE_KEY})
         }
     }, [barInput])
 

@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
-import { auth, db, dbTime } from "../../../firebase";
+import { auth, db, dbTime, FieldValue } from "../../../firebase";
 import PopupPost from "../../general/PopupPost/PopupPost";
 import styles from "./styles";
 
@@ -27,10 +27,10 @@ export default function CheckIn({post, setPost}){
         if(location.data){
             const latitude = location.data.coords.latitude;
             const longitude = location.data.coords.longitude;
-            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude}%2C${longitude}&radius=50&type=bar&key=${GOOGLE_KEY}`)
+            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude}%2C${longitude}&radius=50000&type=bar&key=${GOOGLE_KEY}`)
             .then(response => response.json())
             .then(json => setNearby(json)) 
-            console.log('fetching nearby list')
+            console.log('fetching nearby list' + {GOOGLE_KEY})
         }
     }, [location])//if location changes get new nearby bar list
 
@@ -43,10 +43,15 @@ export default function CheckIn({post, setPost}){
         data.locationID = check.id
         data.locationName = check.name
         data.checkInTime = dbTime
+
+        data.coords.latitude = check.locationTemp.lat;//temp
+        data.coords.longitude = check.locationTemp.lng;//temp
+
         const userRef = db.collection('users').doc(auth.currentUser.uid);
-        const res = await userRef.set({
+        const res = await userRef.update({
             checkIn: data,
-            }, { merge: true });
+            });
+
     }
 
 
@@ -68,9 +73,10 @@ export default function CheckIn({post, setPost}){
             <Text style={{color: 'red'}}>NEARBY</Text>
             <FlatList
                 data={nearby.results} 
-                renderItem={({ item, index }) => {   
+                renderItem={({ item, index }) => {  
+                    // console.log(item.geometry.location) 
                 return (
-                    <TouchableOpacity style={[styles.nameBox, check.id == item.place_id ? {backgroundColor: 'blue'} : {backgroundColor: 'white'}]} onPress={() => setCheck({id: item.place_id, name: item.name})}>
+                    <TouchableOpacity style={[styles.nameBox, check.id == item.place_id ? {backgroundColor: 'blue'} : {backgroundColor: 'white'}]} onPress={() => setCheck({id: item.place_id, name: item.name, locationTemp: item.geometry.location})}>
                         <Text style={styles.barName}>{item.name}</Text>
                     </TouchableOpacity>
                 );

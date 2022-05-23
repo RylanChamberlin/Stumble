@@ -17,6 +17,7 @@ const BarBox = ({item, numComment}) => {
     return (
 
             <TouchableOpacity activeOpacity={.8} onPress={clickBar}>
+            
             <ScrollView horizontal={true}  showsHorizontalScrollIndicator={false}>
             
             <View style={[styles.outsideContainer]}>

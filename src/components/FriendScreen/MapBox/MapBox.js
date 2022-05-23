@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, Modal, ActivityIndicator, Image, FlatList } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import { Ionicons } from '@expo/vector-icons'; 
 import styles from './styles'
@@ -17,6 +17,40 @@ export default function MapBox() {
     const [peopleList, setPeopleList] = useState({})
     const [publicLocation, setPublicLocation] = useState(false);
     const {location, userCheckIns} = useContext(AppContext);
+    const [friends, setFriends] = useState('');
+
+    useEffect(() => {
+
+        const getList = async() =>{
+            console.log('getFriendList')
+       
+
+            const userRef = db.collection('users').doc(auth.currentUser.uid).collection('Friends');
+            const snapshot = await userRef.where('isFriend', '==', true).get();
+    
+            if (snapshot.empty) {
+                console.log('No matching documents.');
+                return;
+              }  
+
+              const users = [];
+              
+            snapshot.forEach(doc => {
+                users.push(doc.id)
+                //console.log(doc.id, '=>', doc.data());
+              });
+
+              setFriends(users);
+        }
+
+       
+
+        getList();
+
+       
+       
+    },[])
+
     
 
     if(location.loading || !location.data || userCheckIns.loading || !userCheckIns.data) {
@@ -35,8 +69,18 @@ export default function MapBox() {
         const people = userCheckIns.data.filter(item => item.checkIn.locationID == locationID)
         setPeopleList(people)
         setPeeps(!showPeeps)
-    } 
+    }
 
+    
+    const friendData = (list) => {
+
+        if(!friends) return null; 
+
+        list = list.filter((item) => 
+            friends.some((id) => item.key == id))
+        return list
+    }
+    
   return (
   
     <View style={styles.container}>
@@ -52,7 +96,10 @@ export default function MapBox() {
                 </TouchableOpacity> */}
             </Marker>
 
-            {userCheckIns.data.map((marker, index) => (
+            {publicLocation ? 
+
+            userCheckIns.data.map((marker, index) => (
+
                 <Marker
                     key={marker.key}
                     coordinate={{latitude: marker.checkIn.coords.latitude,longitude: marker.checkIn.coords.longitude}}
@@ -61,13 +108,26 @@ export default function MapBox() {
                         <Image style={styles.image} />
                     </TouchableOpacity>
                 </Marker>
-            ))}
+            ))
+
+            : friendData(userCheckIns.data)?.map((marker, index) => (
+
+                <Marker
+                    key={marker.key}
+                    coordinate={{latitude: marker.checkIn.coords.latitude,longitude: marker.checkIn.coords.longitude}}
+                > 
+                    <TouchableOpacity onPress = {() => showPeopleList(marker.checkIn)}>
+                        <Image style={styles.image} />
+                    </TouchableOpacity>
+                </Marker>
+                ))
+            }
 
         </MapView>
 
 
         <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity style={[styles.Button,publicLocation ? {backgroundColor: 'white'} : {backgroundColor: 'black'}]} onPress={() => setPublicLocation(false)}>
+                <TouchableOpacity style={[styles.Button,publicLocation ? {backgroundColor: 'white'} : {backgroundColor: 'black'}]} onPress={() =>  setPublicLocation(false)}>
                     <Text style={[styles.buttonText,publicLocation ? {color: 'black'} : {color: 'white'}]}>Friends</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.Button,!publicLocation ? {backgroundColor: 'white'} : {backgroundColor: 'black'}]} onPress={() => setPublicLocation(true)}>

@@ -4,8 +4,6 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import styles from './styles'
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../screens/RootStackPrams';
 import { auth, db } from '../../../firebase';
 
 
@@ -17,7 +15,7 @@ const UserInfo = () => {
     const [userData, setUserData] = useState('');
 
     const navigation = useNavigation()
-    
+
     // navigates to user friends
     const clickFriends = () => {
         navigation.navigate('UserFriends')
