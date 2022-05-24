@@ -4,16 +4,15 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import styles from './styles'
 import { useNavigation } from '@react-navigation/native';
-import { auth, db } from '../../../firebase';
+import { connect } from 'react-redux';
 
 
 
 // type UserScreenProp = NativeStackNavigationProp<RootStackParamList, 'UserInfo'>;
 
-const UserInfo = () => {
+const UserInfo = (props) => {
 
-    const [userData, setUserData] = useState('');
-
+    const [user, setUser] = useState('');
     const navigation = useNavigation()
 
     // navigates to user friends
@@ -22,14 +21,16 @@ const UserInfo = () => {
     }
 
     useEffect( () => {
-        getData()
-    },[])
+        const { currentUser } = props;
+        setUser(currentUser)
 
-    const getData = async() => {
-        const ref = db.collection('users')
-        const snapshot = await ref.doc(auth.currentUser.uid).get();
-        setUserData(snapshot.data());
+    },[props.currentUser])
+
+
+    if(!user){
+        return <Text>Loading</Text>
     }
+
 
   return (
     <View style={styles.container}>
@@ -37,23 +38,23 @@ const UserInfo = () => {
 
     <View style={styles.textContainer}>
 
-        <Text style={styles.name}>{userData.name}</Text>
-        <Text style={styles.username}>@{userData.username}</Text>
+        <Text style={styles.name}>{user.name}</Text>
+        <Text style={styles.username}>@{user.username}</Text>
 
         <View style={styles.statContainer}>
 
             <View style={styles.statCircle}>
-                <Text>{userData.checkInCount ? userData.checkInCount : 0}</Text>
+                <Text>{user.checkInCount ? user.checkInCount : 0}</Text>
                 <Text>checkins</Text>
             </View>
             <View style={styles.statCircle}>
-                <Text>{userData.upVoteTotal ? userData.upVoteTotal : 0}</Text>
+                <Text>{user.upVoteTotal ? user.upVoteTotal : 0}</Text>
                 <Text>upvotes</Text>
             </View>
 
             <TouchableOpacity onPress={() => {clickFriends()}}>
             <View style={styles.statCircle}>
-                <Text>{userData.friendTotal ? userData.friendTotal : 0}</Text>
+                <Text>{user.friendTotal ? user.friendTotal : 0}</Text>
                 <Text>friends</Text>
             </View>
             </TouchableOpacity>
@@ -63,4 +64,8 @@ const UserInfo = () => {
   )
 }
 
-export default UserInfo
+const mapStateToProps = (store) => ({
+    currentUser: store.userState.currentUser,
+  })
+
+export default connect(mapStateToProps)(UserInfo);

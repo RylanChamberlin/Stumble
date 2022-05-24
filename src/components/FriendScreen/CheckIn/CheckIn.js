@@ -4,75 +4,70 @@ import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TextInput, Toucha
 import { auth, db, dbTime, FieldValue } from "../../../firebase";
 import PopupPost from "../../general/PopupPost/PopupPost";
 import styles from "./styles";
+import { connect } from 'react-redux';
 
 import {GOOGLE_KEY} from '@env'
-import { AppContext } from "../Context";
 
 
-export default function CheckIn({post, setPost}){
 
-    const [nearby, setNearby] = useState({})
-    const [userDetails, setUserDetails] = useState('')
+function CheckIn(props){
+
     const [check, setCheck] = useState({})
-    const {location} = useContext(AppContext);
-    
-    //gets user info
-    useEffect(() => {
-        db.collection('users').doc(auth.currentUser.uid).get()
-            .then(snapshot => setUserDetails(snapshot.data()))
-    }, [])
+    const [bars, setBars] = useState('')
 
+    const [location, setLocation] = useState({})
+    const [user, setUser] = useState({});
+    const [loading, setLoading] = useState(true);
+
+    //gets user info and users location
     useEffect(() => {
-        //if coords are there fetch data
-        if(location.data){
-            const latitude = location.data.coords.latitude;
-            const longitude = location.data.coords.longitude;
-            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude}%2C${longitude}&radius=50000&type=bar&key=${GOOGLE_KEY}`)
+
+        const { currentUser, currentUserLocation } = props;
+        setUser(currentUser)
+        setLocation(currentUserLocation)
+
+        if(currentUserLocation){ 
+            setLoading(false)
+            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${currentUserLocation.coords.latitude}%2C${currentUserLocation.coords.longitude}&radius=50&type=bar&key=${GOOGLE_KEY}`)
             .then(response => response.json())
-            .then(json => setNearby(json)) 
-            console.log('fetching nearby list' + {GOOGLE_KEY})
+            .then(json => setBars(json)) 
+            //console.log('fetching nearby list' + {GOOGLE_KEY})
         }
-    }, [location])//if location changes get new nearby bar list
 
-   
+    }, [props.currentUser, props.currentUserLocation])
+
 
     //checks user into bar where they are at stored in firebase
     const checkIn = async() => {
-        let data = location.data
-        setPost(false);
+        let data = location
+        props.setPost(false);
         data.locationID = check.id
         data.locationName = check.name
         data.checkInTime = dbTime
-
-        data.coords.latitude = check.locationTemp.lat;//temp
-        data.coords.longitude = check.locationTemp.lng;//temp
-
         const userRef = db.collection('users').doc(auth.currentUser.uid);
         const res = await userRef.update({
             checkIn: data,
             });
-
     }
 
-
-    if(location.loading || !location.data) {
-        return (<ActivityIndicator/>)
+    if(loading || !user) {
+        return <View><ActivityIndicator /><Text>CHECKINS</Text></View>;
     }
 
     return(
-        <PopupPost post={post} setPost={setPost} title={'CHECK-IN'} buttonTitle={'CHECK-IN'} buttonAction={checkIn}>
+        <PopupPost post={props.post} setPost={props.setPost} title={'CHECK-IN'} buttonTitle={'CHECK-IN'} buttonAction={checkIn}>
 
         <View style={styles.container}>
             <View style={styles.userBox}>
                 <Image style={styles.image}/>
                 <View>
-                    <Text style={styles.name}>{userDetails.name}</Text>
-                    <Text style={styles.username}>@{userDetails.username}</Text>
+                    <Text style={styles.name}>{user.name}</Text>
+                    <Text style={styles.username}>@{user.username}</Text>
                 </View>
             </View>
             <Text style={{color: 'red'}}>NEARBY</Text>
             <FlatList
-                data={nearby.results} 
+                data={bars.results} 
                 renderItem={({ item, index }) => {  
                     // console.log(item.geometry.location) 
                 return (
@@ -89,3 +84,11 @@ export default function CheckIn({post, setPost}){
         </PopupPost>        
     );
 }
+
+
+const mapStateToProps = (store) => ({
+    currentUser: store.userState.currentUser,
+    currentUserLocation: store.userState.currentUserLocation
+  })
+
+export default connect(mapStateToProps)(CheckIn);

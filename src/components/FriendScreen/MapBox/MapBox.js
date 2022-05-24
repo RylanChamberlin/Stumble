@@ -7,79 +7,62 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import { useState } from 'react';
 import { BlurView } from 'expo-blur';
 
-import { useContext } from 'react';
-import { AppContext } from '../Context';
 import { auth, db } from '../../../firebase';
+import { connect } from 'react-redux';
 
-export default function MapBox() {
+function MapBox(props) {
 
     const [showPeeps, setPeeps] = useState(false);
     const [peopleList, setPeopleList] = useState({})
     const [publicLocation, setPublicLocation] = useState(false);
-    const {location, userCheckIns} = useContext(AppContext);
+
+    const [checkIns, setCheckIns] = useState(null);
     const [friends, setFriends] = useState('');
+    const [region, setRegion] = useState();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
 
-        const getList = async() =>{
-            console.log('getFriendList')
-       
+        console.log('UseEffect MapBox')
+        const {currentUserLocation, checkIns, currentUserFriends } = props;
 
-            const userRef = db.collection('users').doc(auth.currentUser.uid).collection('Friends');
-            const snapshot = await userRef.where('isFriend', '==', true).get();
-    
-            if (snapshot.empty) {
-                console.log('No matching documents.');
-                return;
-              }  
+        setCheckIns(checkIns);
+        setFriends(currentUserFriends);
 
-              const users = [];
-              
-            snapshot.forEach(doc => {
-                users.push(doc.id)
-                //console.log(doc.id, '=>', doc.data());
-              });
-
-              setFriends(users);
+        if(currentUserLocation){
+            console.log('settingregion')
+            setLoading(false)
+            setRegion({
+                latitude: currentUserLocation.coords.latitude,
+                longitude: currentUserLocation.coords.longitude,
+                latitudeDelta: 0.00922,
+                longitudeDelta: 0.00421,
+            }); 
         }
 
-       
+    },[props.currentUserLocation, props.checkIns])
 
-        getList();
-
-       
-       
-    },[])
-
-    
-
-    if(location.loading || !location.data || userCheckIns.loading || !userCheckIns.data) {
-        return (<ActivityIndicator/>)
-    }
-
-    const region = {
-        latitude: location.data.coords.latitude,
-        longitude: location.data.coords.longitude,
-        latitudeDelta: 0.00922,
-        longitudeDelta: 0.00421,
-    }
-
+   
     //gets a list of people that are at the same bar
     const showPeopleList = ({locationID, locationName}) => {
-        const people = userCheckIns.data.filter(item => item.checkIn.locationID == locationID)
+        const people = checkIns.filter(item => item.checkIn.locationID == locationID)
         setPeopleList(people)
         setPeeps(!showPeeps)
     }
-
     
     const friendData = (list) => {
 
         if(!friends) return null; 
-
         list = list.filter((item) => 
-            friends.some((id) => item.key == id))
+            friends.some((friend) => item.key == friend.id))
         return list
     }
+
+
+    if(loading) {
+        return <View><ActivityIndicator /><Text>MAPBOX-location</Text></View>;
+    }
+
     
   return (
   
@@ -98,7 +81,7 @@ export default function MapBox() {
 
             {publicLocation ? 
 
-            userCheckIns.data.map((marker, index) => (
+            checkIns.map((marker, index) => (
 
                 <Marker
                     key={marker.key}
@@ -110,7 +93,7 @@ export default function MapBox() {
                 </Marker>
             ))
 
-            : friendData(userCheckIns.data)?.map((marker, index) => (
+            : friendData(checkIns)?.map((marker, index) => (
 
                 <Marker
                     key={marker.key}
@@ -181,4 +164,12 @@ export default function MapBox() {
   )
 }
 
+
+const mapStateToProps = (store) => ({
+    currentUserLocation: store.userState.currentUserLocation,
+    checkIns: store.usersState.checkIns,
+    currentUserFriends: store.userState.currentUserFriends
+  })
+
+export default connect(mapStateToProps)(MapBox);
 

@@ -1,22 +1,25 @@
-import { View, Text, ScrollView, FlatList, ActivityIndicator } from 'react-native'
-import React, { useEffect } from 'react'
+import { FlatList, ActivityIndicator } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import FriendBox from '../FriendBox'
-import useCheckIns from '../../../hooks/useCheckIns';
-import { AppContext } from '../Context';
-import { useContext } from 'react';
+import { connect } from 'react-redux';
 
-export default function FeedList() {
 
+function FeedList (props) {
+
+  const [checkIns, setCheckIns] = useState({});
   
-  const {userCheckIns} = useContext(AppContext);
+  useEffect(() => {
+        setCheckIns(props.checkIns);
+  }, [props.checkIns])
 
-  if (userCheckIns.loading) {
-    return <ActivityIndicator />;
+
+  if (!checkIns) {
+    return <View><ActivityIndicator /><Text>FEEDLIST</Text></View>;
   }
 
   return (
     <FlatList
-      data={userCheckIns.data}
+      data={checkIns}
 
       renderItem={({ item }) => (
         <FriendBox item = {item}/>
@@ -24,5 +27,12 @@ export default function FeedList() {
       keyExtractor={(item) => item.key}
       showsVerticalScrollIndicator={false}
     />  
+
   )
 }
+
+const mapStateToProps = (store) => ({
+  checkIns: store.usersState.checkIns
+})
+
+export default connect(mapStateToProps)(FeedList);

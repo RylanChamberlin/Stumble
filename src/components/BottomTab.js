@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons, FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons';
 
@@ -7,10 +7,27 @@ import PostScreen from '../screens/PostScreen';
 import FriendScreen from '../screens/FriendScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchUser, fetchUserLocation, fetchUsersCheckIns, fetchUserFriends } from '../redux/actions/index';
+
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomTab() {
+function BottomTab(props) {
+
+    useEffect(() => {
+    
+      props.fetchUser();
+      props.fetchUserLocation();
+      props.fetchUsersCheckIns();
+      props.fetchUserFriends();
+      console.log('FETCHING ALL DATA')
+  
+    }, [])
+
+    
+
   return (
     <Tab.Navigator 
       initialRouteName="Friends"
@@ -65,3 +82,12 @@ export default function BottomTab() {
     </Tab.Navigator>
   );
 }
+
+const mapStateToProps = (store) => ({
+  currentUser: store.userState.currentUser,
+  currentUserLocation: store.userState.currentUserLocation
+})
+
+const mapDispatchProps = (dispatch) => bindActionCreators({ fetchUser, fetchUserLocation, fetchUsersCheckIns, fetchUserFriends }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchProps)(BottomTab);
