@@ -7,11 +7,16 @@ import styles from "./styles";
 import { FC, useEffect, useState } from "react";
 import SendRequest from "../SendRequest";
 import RequestList from "../RequestList";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { queryUsersByUsername } from '../../../redux/actions/index';
 
 const AddFriends = (props) => {
 
     const [query, setQuery] = useState('');
+    const [users, setUsers] = useState([])
 
+    
     return (
         <GestureRecognizer
             style={{flex: 1}}
@@ -34,14 +39,14 @@ const AddFriends = (props) => {
 
                 <TextInput 
                     placeholder="Search for my friend" 
+                    autoCapitalize='none'
+                    autoCorrect={false}
                     style={styles.search}
-                    value={query} 
-                    onPressIn={() => {setQuery('')}}
-                    onChangeText={(text) => {setQuery(text)}}
+                    onChangeText={(search) => props.queryUsersByUsername(search).then(setUsers)}
                     />
 
                 <View style = {styles.box}>
-                    {query ? <SendRequest query={query} data={props.data} /> : <RequestList data={props.data}/>}
+                    {users.length ? <SendRequest data={users} /> : <RequestList/>}
                 </View>
 
             </AppView>
@@ -50,5 +55,9 @@ const AddFriends = (props) => {
     )
 }
 
-export default AddFriends
+
+
+const mapDispatchProps = (dispatch) => bindActionCreators({ queryUsersByUsername }, dispatch);
+
+export default connect(null, mapDispatchProps)(AddFriends);
 

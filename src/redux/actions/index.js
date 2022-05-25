@@ -1,7 +1,7 @@
 
 import { auth, db } from '../../firebase'
 import * as Location from 'expo-location';
-import { USER_STATE_CHANGE, USER_LOCATION_STATE_CHANGE, USERS_CHECK_INS_STATE_CHANGE, USER_FRIENDS_STATE_CHANGE } from '../constants/index'
+import { USER_STATE_CHANGE, USER_LOCATION_STATE_CHANGE, USERS_CHECK_INS_STATE_CHANGE, USER_FRIENDS_STATE_CHANGE, USER_FRIEND_REQUESTS_STATE_CHANGE } from '../constants/index'
 
 let unsubscribe = [];
 
@@ -57,6 +57,25 @@ export function fetchUserFriends() {
     })
 }
 
+export function fetchUserFriendRequests() {
+    return ((dispatch) => {
+        db
+            .collection("users")
+            .doc(auth.currentUser.uid)
+            .collection('Friends')
+            .where('isFriend', '==', false)
+            .get()
+            .then((snapshot) => {
+                let friends = snapshot.docs.map(doc => {
+                    const data = doc.data();
+                    const id = doc.id;
+                    return { id, ...data }
+                })
+                dispatch({ type: USER_FRIEND_REQUESTS_STATE_CHANGE, currentUserFriendRequests: friends })
+            })
+    })
+}
+
 export function fetchUsersCheckIns() {
     return (async(dispatch) => {
 
@@ -76,6 +95,31 @@ export function fetchUsersCheckIns() {
         unsubscribe.push(listener)
     })
 }
+
+export function queryUsersByUsername(username) {
+    return ((dispatch, getState) => {
+        return new Promise((resolve, reject) => {
+
+            if (username.length == 0) {
+                resolve([])
+            }
+            db
+                .collection('users')
+                .where('username', '>=', username)
+                .limit(5)
+                .get()
+                .then((snapshot) => {
+                    let users = snapshot.docs.map(doc => {
+                        const data = doc.data();
+                        const id = doc.id;
+                        return { id, ...data }
+                    });
+                    resolve(users)
+                })
+        })
+    })
+}
+
 
 // const subscriber = barRef
 // .orderBy("checkIn.checkInTime", "desc")

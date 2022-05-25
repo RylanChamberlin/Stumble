@@ -1,25 +1,35 @@
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './styles'
 import FriendBox from '../FriendBox'
 import { Feather } from '@expo/vector-icons'; 
 import { auth, db } from '../../../firebase';
 import { acceptRequest, cancelRequest,  } from '../../../services/FriendRequestHelpers';
+import { connect } from 'react-redux';
 
 const RequestList = (props) => {
 
+    const [friendRequests, setFriendRequests] = useState({})
+
+    useEffect(() => {
+
+        setFriendRequests(props.currentUserFriendRequests)
+
+    },[props.currentUserFriendRequests])
+
     const title = 'Requests';
 
-  return (
-    <View style = {styles.innerBox}>
+    if (!friendRequests) {
+        return <ActivityIndicator />;
+    }
 
-        <Text>{title}</Text>
-        <FlatList
-            data={props.data}
-            renderItem={({ item, index }) => {
+    return (
+        <View style = {styles.innerBox}>
 
-                if (item.isFriend !== null && !item.isFriend) {
-                    return (
+            <Text>{title}</Text>
+            <FlatList
+                data={friendRequests}
+                renderItem={({ item, index }) => ( 
                     <View style={{flexDirection: "row", alignItems: "center"}}>
                         <TouchableOpacity onPress= {() => cancelRequest(item.key)}>
                             <Feather name="x" size={24} color="black"/>
@@ -29,17 +39,19 @@ const RequestList = (props) => {
                             <Text>Accept</Text>
                         </TouchableOpacity>
                     </View>
-                    )
+                    ) 
                 }
-                return null;
-            }}
-        keyExtractor={(item) => item.key}
-        showsVerticalScrollIndicator={false}
-        />
-        
-        
-    </View>
-  )
+            keyExtractor={(item) => item.id}
+            showsVerticalScrollIndicator={false}
+            />
+        </View>
+    )
 }
 
-export default RequestList
+const mapStateToProps = (store) => ({
+    currentUserFriendRequests: store.userState.currentUserFriendRequests 
+  })
+
+export default connect(mapStateToProps)(RequestList);
+
+

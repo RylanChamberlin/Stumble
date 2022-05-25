@@ -1,9 +1,10 @@
-import { USER_STATE_CHANGE, USER_LOCATION_STATE_CHANGE, USER_FRIENDS_STATE_CHANGE } from "../constants";
+import { USER_STATE_CHANGE, USER_LOCATION_STATE_CHANGE, USER_FRIENDS_STATE_CHANGE, USER_FRIEND_REQUESTS_STATE_CHANGE } from "../constants";
 
 const initialState = {
     currentUser: null,
     currentUserLocation: null,
-    currentUserFriends: []
+    currentUserFriends: [],
+    currentUserFriendRequests: []
 }
 
 export const user = (state = initialState, action) => {
@@ -22,6 +23,11 @@ export const user = (state = initialState, action) => {
             return {
                 ...state,
                 currentUserFriends: action.currentUserFriends
+            } 
+        case USER_FRIEND_REQUESTS_STATE_CHANGE:
+            return {
+                ...state,
+                currentUserFriendRequests: action.currentUserFriendRequests
             } 
         default:
             return state;

@@ -31,7 +31,6 @@ const UserInfo = (props) => {
         return <Text>Loading</Text>
     }
 
-
   return (
     <View style={styles.container}>
     <View style={styles.image}></View>

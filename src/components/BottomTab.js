@@ -9,7 +9,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchUser, fetchUserLocation, fetchUsersCheckIns, fetchUserFriends } from '../redux/actions/index';
+import { fetchUser, fetchUserLocation, fetchUsersCheckIns, fetchUserFriends, fetchUserFriendRequests } from '../redux/actions/index';
 
 
 const Tab = createBottomTabNavigator();
@@ -22,6 +22,7 @@ function BottomTab(props) {
       props.fetchUserLocation();
       props.fetchUsersCheckIns();
       props.fetchUserFriends();
+      props.fetchUserFriendRequests();
       console.log('FETCHING ALL DATA')
   
     }, [])
@@ -88,6 +89,6 @@ const mapStateToProps = (store) => ({
   currentUserLocation: store.userState.currentUserLocation
 })
 
-const mapDispatchProps = (dispatch) => bindActionCreators({ fetchUser, fetchUserLocation, fetchUsersCheckIns, fetchUserFriends }, dispatch);
+const mapDispatchProps = (dispatch) => bindActionCreators({ fetchUser, fetchUserLocation, fetchUsersCheckIns, fetchUserFriends, fetchUserFriendRequests }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchProps)(BottomTab);
