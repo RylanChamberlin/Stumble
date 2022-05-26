@@ -10,19 +10,36 @@ export default function PostBox({item}){
   
     const incrementVote = async() => {
         const userRef = db.collection('messages').doc(item.key);
-
-        
         const increment = FieldValue.increment(1); 
         userRef.update({ 
             voteCount: increment, 
             votes: auth.currentUser.uid
 
         }); 
+
+        console.log(item.key)
+        db
+            .collection("messages")
+            .doc(item.key)
+            .collection("votes")
+            .doc(auth.currentUser.uid)
+            .set({
+                upvote: true
+            })
+
     }
     const decrementVote = async() => { 
         const userRef = db.collection('messages').doc(item.key);
         const decrement = FieldValue.increment(-1); 
         userRef.update({ voteCount: decrement });
+
+        db
+        .collection("messages")
+        .doc(item.key)
+        .collection("votes")
+        .doc(auth.currentUser.uid)
+        .delete()
+
     }
 
     return(

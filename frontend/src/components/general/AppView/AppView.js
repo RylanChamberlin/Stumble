@@ -4,7 +4,7 @@ import styles from './styles';
 
 const AppView = props => {
 
-    const image = require('../../../../src/assets/images/yeet.jpeg');
+    const image = require('../../../assets/images/yeet.jpeg');
 
     return (
 

@@ -2,7 +2,7 @@ import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import { Feather } from '@expo/vector-icons'; 
 
-import AppView from "../../general/AppView";
+import AppView from "../AppView";
 import styles from "./styles";
 
 export default function PopupPost(props){

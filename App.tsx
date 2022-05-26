@@ -2,16 +2,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
 import { LogBox } from "react-native";
 
-import BottomTab from "./src/components/BottomTab";
-import UserFriends from "./src/components/ProfileScreen/UserFriends";
-import LoginScreen from "./src/screens/auth/LoginScreen";
-import PostScreen from "./src/screens/PostScreen";
-import { RootStackParamList } from "./src/screens/RootStackPrams";
+import BottomTab from "./frontend/src/components/BottomTab";
+import UserFriends from "./frontend/src/components/ProfileScreen/UserFriends";
+import LoginScreen from "./frontend/src/screens/auth/LoginScreen";
+import PostScreen from "./frontend/src/screens/PostScreen";
+import { RootStackParamList } from "./frontend/src/screens/RootStackPrams";
 
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import rootReducer from './src/redux/reducers';
+import rootReducer from './frontend/src/redux/reducers';
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
