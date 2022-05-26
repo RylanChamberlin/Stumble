@@ -9,13 +9,30 @@ import SendRequest from "../SendRequest";
 import RequestList from "../RequestList";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { queryUsersByUsername } from '../../../redux/actions/index';
+import { queryUsersByUsername, queryUsersByName } from '../../../redux/actions/index';
 
 const AddFriends = (props) => {
 
-    const [query, setQuery] = useState('');
-    const [users, setUsers] = useState([])
+    const [usernames, setUsernames] = useState([])
+    const [names, setNames] = useState([]) 
+    const [allUsers, setAllUsers] = useState([])
 
+    const searchUser = (search) => {
+
+        if(search.length == 0){
+            setAllUsers([])
+            return;
+        }
+
+        props.queryUsersByUsername(search).then(setUsernames)
+        props.queryUsersByName(search).then(setNames)
+
+        const ids = new Set(usernames.map(d => d.id));
+        const merged = [...usernames, ...names.filter(d => !ids.has(d.id))]
+
+        setAllUsers(merged)
+
+    }
     
     return (
         <GestureRecognizer
@@ -42,11 +59,11 @@ const AddFriends = (props) => {
                     autoCapitalize='none'
                     autoCorrect={false}
                     style={styles.search}
-                    onChangeText={(search) => props.queryUsersByUsername(search).then(setUsers)}
+                    onChangeText={(search) => searchUser(search)}
                     />
 
                 <View style = {styles.box}>
-                    {users.length ? <SendRequest data={users} /> : <RequestList/>}
+                    {allUsers.length ? <SendRequest data={allUsers} /> : <RequestList/>}
                 </View>
 
             </AppView>
@@ -57,7 +74,7 @@ const AddFriends = (props) => {
 
 
 
-const mapDispatchProps = (dispatch) => bindActionCreators({ queryUsersByUsername }, dispatch);
+const mapDispatchProps = (dispatch) => bindActionCreators({ queryUsersByUsername, queryUsersByName }, dispatch);
 
 export default connect(null, mapDispatchProps)(AddFriends);
 

@@ -1,7 +1,7 @@
 
 import { auth, db } from '../../firebase'
 import * as Location from 'expo-location';
-import { USER_STATE_CHANGE, USER_LOCATION_STATE_CHANGE, USERS_CHECK_INS_STATE_CHANGE, USER_FRIENDS_STATE_CHANGE, USER_FRIEND_REQUESTS_STATE_CHANGE } from '../constants/index'
+import { USER_STATE_CHANGE, USER_LOCATION_STATE_CHANGE, USERS_CHECK_INS_STATE_CHANGE, USER_FRIENDS_STATE_CHANGE, USER_FRIEND_REQUESTS_STATE_CHANGE, USER_FRIEND_REQUESTS_SENT_STATE_CHANGE } from '../constants/index'
 
 let unsubscribe = [];
 
@@ -45,8 +45,7 @@ export function fetchUserFriends() {
             .doc(auth.currentUser.uid)
             .collection('Friends')
             .where('isFriend', '==', true)
-            .get()
-            .then((snapshot) => {
+            .onSnapshot((snapshot) => {
                 let friends = snapshot.docs.map(doc => {
                     const data = doc.data();
                     const id = doc.id;
@@ -54,8 +53,10 @@ export function fetchUserFriends() {
                 })
                 dispatch({ type: USER_FRIENDS_STATE_CHANGE, currentUserFriends: friends })
             })
+        //unsubscribe.push(listener)
     })
 }
+
 
 export function fetchUserFriendRequests() {
     return ((dispatch) => {
@@ -64,8 +65,7 @@ export function fetchUserFriendRequests() {
             .doc(auth.currentUser.uid)
             .collection('Friends')
             .where('isFriend', '==', false)
-            .get()
-            .then((snapshot) => {
+            .onSnapshot((snapshot, error) => {
                 let friends = snapshot.docs.map(doc => {
                     const data = doc.data();
                     const id = doc.id;
@@ -73,6 +73,26 @@ export function fetchUserFriendRequests() {
                 })
                 dispatch({ type: USER_FRIEND_REQUESTS_STATE_CHANGE, currentUserFriendRequests: friends })
             })
+        //unsubscribe.push(listener)
+    })
+}
+
+export function fetchUserFriendRequestsSent() { 
+    return ((dispatch) => {
+        db
+            .collection("users")
+            .doc(auth.currentUser.uid)
+            .collection('Friends')
+            .where('isFriend', '==', null)
+            .onSnapshot((snapshot) => {
+                let friends = snapshot.docs.map(doc => {
+                    const data = doc.data();
+                    const id = doc.id;
+                    return { id, ...data }
+                })
+                dispatch({ type: USER_FRIEND_REQUESTS_SENT_STATE_CHANGE, currentUserFriendRequestsSent: friends })
+            })
+       // unsubscribe.push(listener)
     })
 }
 
@@ -106,6 +126,31 @@ export function queryUsersByUsername(username) {
             db
                 .collection('users')
                 .where('username', '>=', username)
+                .limit(5)
+                .get()
+                .then((snapshot) => {
+                    let users = snapshot.docs.map(doc => {
+                        const data = doc.data();
+                        const id = doc.id;
+                        return { id, ...data }
+                    });
+                    resolve(users)
+                })
+        })
+    })
+}
+
+
+export function queryUsersByName(name) {
+    return ((dispatch, getState) => {
+        return new Promise((resolve, reject) => {
+
+            if (name.length == 0) {
+                resolve([])
+            }
+            db
+                .collection('users')
+                .where('name', '>=', name)
                 .limit(5)
                 .get()
                 .then((snapshot) => {
