@@ -57,7 +57,7 @@ export default function NewPost({post, setPost}){
         placeID: placeID, 
         bar: barInput,
         text: input,
-        votes: 0,
+        voteCount: 0,
         createdAt: dbTime,
         uid,
         });

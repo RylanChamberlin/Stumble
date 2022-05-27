@@ -5,40 +5,105 @@ import { Entypo } from '@expo/vector-icons';
 import { auth, db, FieldValue } from "../../../firebase";
 import timeSince from "../../../services/timeSince";
 import styles from "./styles";
+import { useEffect, useState } from "react";
 
 export default function PostBox({item}){
-  
-    const incrementVote = async() => {
-        const userRef = db.collection('messages').doc(item.key);
-        const increment = FieldValue.increment(1); 
-        userRef.update({ 
-            voteCount: increment, 
-            votes: auth.currentUser.uid
 
-        }); 
+    const [currentUserLike, setCurrentUserLike] = useState(null)
+    const [currentUserDislike, setCurrentUserDislike] = useState(null)
+    const [voteCount, setVoteCount] = useState(0)
 
-        console.log(item.key)
+
+    useEffect(() => {
+
+        setVoteCount(item.voteCount)
+
         db
             .collection("messages")
             .doc(item.key)
-            .collection("votes")
+            .collection("upvotes")
             .doc(auth.currentUser.uid)
-            .set({
-                upvote: true
+            .onSnapshot((snapshot) => {
+                let currentUserLike = false;
+                if (snapshot.exists) {
+                    currentUserLike = true;
+                }
+                setCurrentUserLike(currentUserLike)
             })
 
+        db
+            .collection("messages")
+            .doc(item.key)
+            .collection("downvotes")
+            .doc(auth.currentUser.uid)
+            .onSnapshot((snapshot) => {
+                let currentUserLike = false;
+                if (snapshot.exists) {
+                    currentUserLike = true;
+                }
+                setCurrentUserDislike(currentUserLike)
+            })
+
+    },[])
+  
+    const incrementVote = () => {
+
+        if(currentUserLike == false){
+
+            if(currentUserDislike == true){
+
+                setVoteCount(voteCount+2);
+                db
+                .collection("messages")
+                .doc(item.key)
+                .collection("downvotes")
+                .doc(auth.currentUser.uid)
+                .delete();
+                
+            }else{
+                setVoteCount(voteCount+1);
+            }
+            setCurrentUserLike(true)
+            setCurrentUserDislike(false)
+
+            console.log('upvoted')
+            db
+            .collection("messages")
+            .doc(item.key)
+            .collection("upvotes")
+            .doc(auth.currentUser.uid)
+            .set({})
+            }
     }
     const decrementVote = async() => { 
-        const userRef = db.collection('messages').doc(item.key);
-        const decrement = FieldValue.increment(-1); 
-        userRef.update({ voteCount: decrement });
+        
+        if(currentUserDislike == false){
+            console.log('downvoted')
 
-        db
-        .collection("messages")
-        .doc(item.key)
-        .collection("votes")
-        .doc(auth.currentUser.uid)
-        .delete()
+            if(currentUserLike == true){
+                setVoteCount(voteCount-2);
+
+                db
+                .collection("messages")
+                .doc(item.key)
+                .collection("upvotes")
+                .doc(auth.currentUser.uid)
+                .delete();
+
+            }else{
+                setVoteCount(voteCount-1);
+            }
+            
+            setCurrentUserLike(false)
+            setCurrentUserDislike(true)
+
+            db
+            .collection("messages")
+            .doc(item.key)
+            .collection("downvotes")
+            .doc(auth.currentUser.uid)
+            .set({})
+        }
 
     }
 
@@ -53,21 +118,24 @@ export default function PostBox({item}){
             </View>
 
             <View style={styles.likeContainer}>
+
+
                 <TouchableOpacity onPress={incrementVote}>
                     <Entypo 
                         name="plus" 
                         size={24} 
-                        color="black"
+                        color={ currentUserLike ? "red" : "black"}
                     />
                 </TouchableOpacity>
 
-                <Text style = {{marginTop: 5}}>{item.voteCount}</Text>
+
+                <Text style = {{marginTop: 5}}>{voteCount}</Text>
 
                 <TouchableOpacity onPress={decrementVote}>
                     <Entypo 
                         name="minus" 
                         size={24} 
-                        color="black" 
+                        color={currentUserDislike ? "red" : "black"} 
                     />
                 </TouchableOpacity>
                 
