@@ -27,6 +27,7 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const database = firebase.database()
 const FieldValue = firebase.firestore.FieldValue;
+const GeoPoint = firebase.firestore.GeoPoint;
 const dbTime = firebase.firestore.FieldValue.serverTimestamp()
 
-export { auth, db, database, FieldValue, dbTime};
+export { auth, db, database, FieldValue, dbTime, GeoPoint};

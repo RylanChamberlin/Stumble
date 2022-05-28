@@ -7,6 +7,7 @@ import useLocation from "../../../hooks/useLocation";
 import { useRef } from "react";
 import styles from "./styles";
 
+const geofire = require('geofire-common');
 
 export default function NewPost({post, setPost}){
 
@@ -15,6 +16,7 @@ export default function NewPost({post, setPost}){
     const [placeID, setPlaceID] = useState("");
     const [photoID, setPhotoID] = useState("");
     const [nearby, setNearby] = useState("");
+    const [barData, setBarData] = useState("");
 
     const inputRef = useRef(null);
     const barInputRef = useRef(null);
@@ -35,8 +37,6 @@ export default function NewPost({post, setPost}){
             console.log('fetching nearby list search ' + {GOOGLE_KEY})
         }
     }, [barInput])
-
-
    
     // if(nearby){
     //     nearby.results.forEach(element => console.log(element.name));
@@ -64,10 +64,21 @@ export default function NewPost({post, setPost}){
 
     }
 
-    const addNewBarWithMessage = async() => {
+    const addNewBarWithMessage = () => {
+
+
+        console.log(barData.geometry.location)
+        const lat = barData.geometry.location.lat;
+        const lng = barData.geometry.location.lng;
+        const hash = geofire.geohashForLocation([lat, lng]);
+
+        console.log(hash)
+
         db.collection('bars').doc(placeID).set({
             name: barInput,
-            photoID: photoID
+            photoID: photoID,
+            // coords: GeoPoint(lat, lng),
+            geohash: hash,
         });
 
         writeMessage();
@@ -91,6 +102,7 @@ export default function NewPost({post, setPost}){
             if (doc.exists) {
                 writeMessage();
             } else {
+                console.log('adding bar')
                 addNewBarWithMessage();
             }
         }).catch((error) => {
@@ -105,13 +117,15 @@ export default function NewPost({post, setPost}){
 
     const clickBarName = (data) => {
         
-        console.log(data);  
+        setBarData(data)
         setPhotoID(data.photos[0]?.photo_reference);
         setBarInput(data.name)
         setNearby('')
         setPlaceID(data.place_id);
-        console.log(barInput)
         inputRef.current.focus();
+
+
+        
     }
 
 
