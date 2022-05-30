@@ -6,7 +6,6 @@ import BottomTab from "./frontend/src/components/BottomTab";
 import UserFriends from "./frontend/src/components/ProfileScreen/UserFriends";
 import LoginScreen from "./frontend/src/screens/auth/LoginScreen";
 import PostScreen from "./frontend/src/screens/PostScreen";
-import { RootStackParamList } from "./frontend/src/screens/RootStackPrams";
 
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
@@ -17,13 +16,19 @@ const store = createStore(rootReducer, applyMiddleware(thunk))
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+export type RootStackParamList = {
+  Login: undefined;
+  Single: undefined;
+  BottomTab: undefined;
+  UserFriends: undefined;  
+  UserInfo: undefined;
+};
+
 export default function App() {
 
-  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-  LogBox.ignoreAllLogs();//Ignore all log notifications
+  // LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  // LogBox.ignoreAllLogs();//Ignore all log notifications
 
-
-  
 
   return (
 

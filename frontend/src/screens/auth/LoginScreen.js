@@ -1,18 +1,18 @@
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { auth, db } from '../../firebase';
-import { useNavigation } from '@react-navigation/native';
+import { auth, db} from '../../firebase';
 
-const LoginScreen = () => {
+
+//type Props = NativeStackScreenProps<RootStackParamList, 'BottomTab'>;
+
+const LoginScreen = ({navigation}) => {
 
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [name, setName] = useState('');
-
-
-    const navigation = useNavigation()
+    // const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {

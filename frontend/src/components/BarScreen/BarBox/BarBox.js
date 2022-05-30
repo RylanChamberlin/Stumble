@@ -2,10 +2,14 @@ import {View, Text, TouchableOpacity, Image, ScrollView, ImageStyle } from "reac
 import {GOOGLE_KEY} from '@env'
 import { useNavigation } from "@react-navigation/native";
 import styles from "./styles";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../../../../App";
+
+// type Props = NativeStackScreenProps<RootStackParamList, 'Single'>;
 
 const BarBox = ({item, numComment}) => {
 
-    const navigation = useNavigation({navigator});
+    const navigation = useNavigation({navigation});
     // navigates to comments on the bar
     const clickBar = () => {
         navigation.navigate('Single', {

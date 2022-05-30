@@ -5,13 +5,8 @@ import { useNavigation } from '@react-navigation/native'
 import AppView from '../../general/AppView'
 import { AntDesign } from '@expo/vector-icons';
 import styles from './styles';
-import { RootStackParamList } from '../../../screens/RootStackPrams';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import FriendBox from '../FriendBox';
 import useFriends from '../../../hooks/useFriends';
-import PopupPost from '../../general/PopupPost';
-import GestureRecognizer from 'react-native-swipe-gestures';
-import { Feather } from '@expo/vector-icons'; 
 import AddFriends from '../AddFriends';
 import { connect } from 'react-redux';
 
