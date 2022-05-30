@@ -4,16 +4,14 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
       flex: 1,
-      //backgroundColor: 'black',
+
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 20,
-      //marginBottom: 30,
-      marginVertical: 20
+      marginVertical: 5
       
     },
     map: {
-      //marginTop: 30,
       width: '100%',
       height: '100%',
       borderRadius: 20
@@ -29,7 +27,7 @@ export default StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         marginHorizontal: 30,
-        marginBottom: 10,
+        //marginBottom: 10,
         backgroundColor: '#f2f1f1',
         borderWidth: 1,
         borderRadius: 10

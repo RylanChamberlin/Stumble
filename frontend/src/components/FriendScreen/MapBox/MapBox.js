@@ -6,31 +6,22 @@ import styles from './styles'
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { useState } from 'react';
 import { BlurView } from 'expo-blur';
-
-import { auth, db } from '../../../firebase';
 import { connect } from 'react-redux';
 
 function MapBox(props) {
 
     const [showPeeps, setPeeps] = useState(false);
     const [peopleList, setPeopleList] = useState({})
-    const [publicLocation, setPublicLocation] = useState(false);
-
-    const [checkIns, setCheckIns] = useState(null);
-    const [friends, setFriends] = useState('');
+    const [friends, setFriends] = useState({});
     const [region, setRegion] = useState();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
 
-        console.log('UseEffect MapBox')
-        const {currentUserLocation, checkIns, currentUserFriends } = props;
+        const {currentUserLocation, currentUserFriendsData } = props;
 
-        setCheckIns(checkIns);
-        setFriends(currentUserFriends);
-
+        setFriends(currentUserFriendsData);
         if(currentUserLocation){
-            console.log('settingregion')
             setLoading(false)
             setRegion({
                 latitude: currentUserLocation.coords.latitude,
@@ -40,25 +31,16 @@ function MapBox(props) {
             }); 
         }
 
-    },[props.currentUserLocation, props.checkIns])
+    },[props.currentUserLocation, props.currentUserFriendsData])
 
    
     //gets a list of people that are at the same bar
     const showPeopleList = ({locationID, locationName}) => {
-        const people = checkIns.filter(item => item.checkIn.locationID == locationID)
+        const people = friends.filter(item => item.checkIn?.locationID == locationID)
         setPeopleList(people)
         setPeeps(!showPeeps)
     }
-    
-    const friendData = (list) => {
-
-        if(!friends) return null; 
-        list = list.filter((item) => 
-            friends.some((friend) => item.key == friend.id))
-        return list
-    }
-
-
+   
     if(loading) {
         return <View><ActivityIndicator /><Text>MAPBOX-location</Text></View>;
     }
@@ -79,45 +61,28 @@ function MapBox(props) {
                 </TouchableOpacity> */}
             </Marker>
 
-            {publicLocation ? 
+            {
 
-            checkIns.map((marker, index) => (
+            friends.map((marker, index) => {
 
+                if(marker.checkIn==null) return;
+                return (
                 <Marker
-                    key={marker.key}
+                    key={marker.uid}
                     coordinate={{latitude: marker.checkIn.coords.latitude,longitude: marker.checkIn.coords.longitude}}
                 > 
                     <TouchableOpacity onPress = {() => showPeopleList(marker.checkIn)}>
                         <Image style={styles.image} />
                     </TouchableOpacity>
                 </Marker>
-            ))
+                );
+            })
 
-            : friendData(checkIns)?.map((marker, index) => (
-
-                <Marker
-                    key={marker.key}
-                    coordinate={{latitude: marker.checkIn.coords.latitude,longitude: marker.checkIn.coords.longitude}}
-                > 
-                    <TouchableOpacity onPress = {() => showPeopleList(marker.checkIn)}>
-                        <Image style={styles.image} />
-                    </TouchableOpacity>
-                </Marker>
-                ))
+            
             }
 
         </MapView>
 
-
-        <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity style={[styles.Button,publicLocation ? {backgroundColor: 'white'} : {backgroundColor: 'black'}]} onPress={() =>  setPublicLocation(false)}>
-                    <Text style={[styles.buttonText,publicLocation ? {color: 'black'} : {color: 'white'}]}>Friends</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.Button,!publicLocation ? {backgroundColor: 'white'} : {backgroundColor: 'black'}]} onPress={() => setPublicLocation(true)}>
-                    <Text style={[styles.buttonText,!publicLocation ? {color: 'black'} : {color: 'white'}]}>Public</Text>
-                </TouchableOpacity>
-        </View>
-        
         <GestureRecognizer
             style={{}}
             onSwipeDown={() => setPeeps(!showPeeps)}
@@ -150,25 +115,14 @@ function MapBox(props) {
             </BlurView> 
             </Modal>
         </GestureRecognizer>
-
-
-        
-
-    </View>
-
-
-
-    
-
-    
+    </View>   
   )
 }
 
 
 const mapStateToProps = (store) => ({
     currentUserLocation: store.userState.currentUserLocation,
-    checkIns: store.usersState.checkIns,
-    currentUserFriends: store.userState.currentUserFriends
+    currentUserFriendsData: store.userState.currentUserFriendsData
   })
 
 export default connect(mapStateToProps)(MapBox);

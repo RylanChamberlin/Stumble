@@ -1,7 +1,7 @@
 
 import { auth, db } from '../../firebase'
 import * as Location from 'expo-location';
-import { USER_STATE_CHANGE, USER_LOCATION_STATE_CHANGE, USERS_CHECK_INS_STATE_CHANGE, USER_FRIENDS_STATE_CHANGE, USER_FRIEND_REQUESTS_STATE_CHANGE, USER_FRIEND_REQUESTS_SENT_STATE_CHANGE, USER_FRIENDS_DATA_STATE_CHANGE } from '../constants/index'
+import { USER_STATE_CHANGE, USER_LOCATION_STATE_CHANGE, USER_FRIENDS_STATE_CHANGE, USER_FRIEND_REQUESTS_STATE_CHANGE, USER_FRIEND_REQUESTS_SENT_STATE_CHANGE, USER_FRIENDS_DATA_STATE_CHANGE } from '../constants/index'
 
 let unsubscribe = [];
 
@@ -117,26 +117,6 @@ export function fetchUserFriendRequestsSent() {
                 dispatch({ type: USER_FRIEND_REQUESTS_SENT_STATE_CHANGE, currentUserFriendRequestsSent: friends })
             })
        // unsubscribe.push(listener)
-    })
-}
-
-export function fetchUsersCheckIns() {
-    return (async(dispatch) => {
-
-        let listener = db
-            .collection("users")
-            .orderBy("checkIn.checkInTime", "desc")
-            .onSnapshot((snapshot, error) => {
-                const users = [];
-                snapshot.forEach(documentSnapshot => {
-                    users.push({
-                        ...documentSnapshot.data(),
-                        key: documentSnapshot.id, 
-                    });                      
-                });
-                dispatch({ type: USERS_CHECK_INS_STATE_CHANGE, checkIns: users})
-            })
-        unsubscribe.push(listener)
     })
 }
 

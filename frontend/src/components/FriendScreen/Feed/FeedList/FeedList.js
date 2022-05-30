@@ -33,7 +33,6 @@ function FeedList (props) {
 }
 
 const mapStateToProps = (store) => ({
-  checkIns: store.usersState.checkIns,
   currentUserFriendsData: store.userState.currentUserFriendsData
 })
 

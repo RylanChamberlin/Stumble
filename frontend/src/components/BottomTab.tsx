@@ -9,7 +9,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 
 import { connect } from 'react-redux';
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
-import { fetchUser, fetchUserLocation, fetchUsersCheckIns, fetchUserFriends, fetchUserFriendRequests, fetchUserFriendRequestsSent } from '../redux/actions/index';
+import { fetchUser, fetchUserLocation, fetchUserFriends, fetchUserFriendRequests, fetchUserFriendRequestsSent } from '../redux/actions/index';
 
 
 const Tab = createBottomTabNavigator();
@@ -17,7 +17,6 @@ const Tab = createBottomTabNavigator();
 type Props = {
   fetchUser: () => void;
   fetchUserLocation: () => void;
-  fetchUsersCheckIns: () => void;
   fetchUserFriends: () => void;
   fetchUserFriendRequests: () => void;
   fetchUserFriendRequestsSent: () => void;
@@ -29,7 +28,6 @@ function BottomTab(props: Props) {
     
       props.fetchUser();
       props.fetchUserLocation();
-      props.fetchUsersCheckIns();
       props.fetchUserFriends();
       props.fetchUserFriendRequests();
       props.fetchUserFriendRequestsSent();
@@ -99,6 +97,6 @@ const mapStateToProps = (store: { userState: { currentUser: any; currentUserLoca
   currentUserLocation: store.userState.currentUserLocation
 })
 
-const mapDispatchProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators({ fetchUser, fetchUserLocation, fetchUsersCheckIns, fetchUserFriends, fetchUserFriendRequests, fetchUserFriendRequestsSent }, dispatch);
+const mapDispatchProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators({ fetchUser, fetchUserLocation, fetchUserFriends, fetchUserFriendRequests, fetchUserFriendRequestsSent }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchProps)(BottomTab);
