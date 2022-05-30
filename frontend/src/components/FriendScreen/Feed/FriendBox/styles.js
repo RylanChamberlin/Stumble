@@ -27,7 +27,7 @@ export default StyleSheet.create({
     },
     rightContainer: {
         alignItems: "flex-end",
-        justifyContent: 'space-between',
+        marginTop: 'auto',
         paddingVertical: 5,
         paddingRight: 5
     }

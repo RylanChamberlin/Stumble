@@ -15,7 +15,6 @@ export default function FriendBox({item}){
                 <Text style = {{fontWeight: "bold"}}>{item.checkIn?.locationName}</Text>
             </View>
             <View style = {styles.rightContainer}>
-                <LikeButton/>
                 <Text>{item.checkIn.checkInTime ? timeSince(item.checkIn?.checkInTime.seconds) : 'Now' }</Text>
                 {/* <Text>{item.checkInAt.seconds = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Text> */}
             </View>
