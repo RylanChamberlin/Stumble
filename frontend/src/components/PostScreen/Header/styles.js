@@ -26,7 +26,7 @@ export default StyleSheet.create({
     },
     postTitle:{
         color: 'white',
-        fontSize: 25,
+        fontSize: 35,
         shadowColor: "black",
         shadowOffset: {width: 5, height: 5}, //gives shadow offset
         shadowOpacity: .6,

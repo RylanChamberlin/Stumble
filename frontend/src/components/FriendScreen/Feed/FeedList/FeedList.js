@@ -25,7 +25,7 @@ function FeedList (props) {
         
         <FriendBox item = {item}/>
       )}
-      keyExtractor={(item) => item.key}
+      keyExtractor={(item) => item.uid}
       showsVerticalScrollIndicator={false}
     />  
 

@@ -7,9 +7,9 @@ export default StyleSheet.create({
        
         padding: 10,
         fontSize: 20,
-        // borderTopLeftRadius: 10,
-        // borderTopRightRadius: 10,
-        borderRadius: 10,
+        //borderRadius: 10,
+        borderTopRightRadius: 10,
+        borderTopLeftRadius: 10,
         textAlignVertical: "top",
         backgroundColor: 'white',
         borderWidth: 1,
@@ -31,7 +31,7 @@ export default StyleSheet.create({
 
 
     list: {
-        marginTop: 50,
+        marginTop: 61,
         marginLeft: 15,
         width: '100%',
         height: '90%',

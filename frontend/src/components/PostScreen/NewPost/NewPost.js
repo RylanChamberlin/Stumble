@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import {Alert, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View} from "react-native";
+import {Alert, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, View} from "react-native";
 import { auth, db, dbTime } from "../../../firebase";
 import {GOOGLE_KEY} from '@env'
 import PopupPost from "../../general/PopupPost/PopupPost";
 import useLocation from "../../../hooks/useLocation";
 import { useRef } from "react";
 import styles from "./styles";
+import { connect } from 'react-redux';
 
 const geofire = require('geofire-common');
 
-export default function NewPost({post, setPost}){
+const NewPost = (props) => {
 
     const [barInput, setBarInput] = useState("");
     const [input, setInput] = useState("");
@@ -18,54 +19,40 @@ export default function NewPost({post, setPost}){
     const [nearby, setNearby] = useState("");
     const [barData, setBarData] = useState("");
 
-    const inputRef = useRef(null);
-    const barInputRef = useRef(null);
-    const [location, getLocation] = useLocation();
-
-    useEffect(() => {
-        getLocation();
-    }, [])
-
     useEffect(() => {    
-        //if coords are there fethc data
-        if(location.data && barInput){
-            const latitude = location.data.coords.latitude;
-            const longitude = location.data.coords.longitude;
+        if(props.currentUserLocation && barInput){
+            const latitude = props.currentUserLocation.coords.latitude;
+            const longitude = props.currentUserLocation.coords.longitude;
             fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude}%2C${longitude}&radius=50000&type=bar&keyword=${barInput}&key=${GOOGLE_KEY}`)
             .then(response => response.json())
             .then(json => setNearby(json)) 
-            console.log('fetching nearby list search ' + {GOOGLE_KEY})
+            console.log('feethcing google nearby api')
         }
+
     }, [barInput])
-   
-    // if(nearby){
-    //     nearby.results.forEach(element => console.log(element.name));
-    // }
- 
+  
     const handleEndEditing = () => {
         if(!input && !barInput) return
         setBarInput("")
         setInput("")
     }
-
     
     const writeMessage = async() => {
 
         const messagesRef = db.collection('messages');
         const {uid, photoURL} = auth.currentUser;
         await messagesRef.add({
-        placeID: placeID, 
-        bar: barInput,
-        text: input,
-        voteCount: 0,
-        createdAt: dbTime,
-        uid,
+            placeID: placeID, 
+            bar: barInput,
+            text: input,
+            voteCount: 0,
+            createdAt: dbTime,
+            uid,
         });
 
     }
 
     const addNewBarWithMessage = () => {
-
 
         console.log(barData.geometry.location)
         const lat = barData.geometry.location.lat;
@@ -96,7 +83,7 @@ export default function NewPost({post, setPost}){
         }
         else{
     
-        setPost(!post);
+        props.setPost(!props.post);
         const docRef = db.collection("bars").doc(placeID);
         docRef.get().then((doc) => {
             if (doc.exists) {
@@ -116,37 +103,38 @@ export default function NewPost({post, setPost}){
     }
 
     const clickBarName = (data) => {
-        
+
         setBarData(data)
-        setPhotoID(data.photos[0]?.photo_reference);
+        if(data.photos){
+            setPhotoID(data.photos[0]?.photo_reference);
+        }
         setBarInput(data.name)
         setNearby('')
         setPlaceID(data.place_id);
-        inputRef.current.focus();
-
-
+       
         
     }
 
 
     return(
 
-        
-        <PopupPost post={post} setPost={setPost} title={'NEW POST'} buttonTitle={'POST'} buttonAction={sendMessage}>
+        <PopupPost post={props.post} setPost={props.setPost} title={'NEW POST'} buttonTitle={'POST'} buttonAction={sendMessage}>
         <TextInput 
-            ref={barInputRef}
             placeholder='@ bar location' 
-            style = {styles.barInput} 
+            style = {[styles.barInput, !nearby ? {borderRadius: 10} : null]} 
             maxLength = {100}
             value={barInput} 
-            onPressIn={() => {setBarInput('')}}
+            onPressIn={() => {setBarInput('');setBarData('');setInput('')}}
             onChangeText={(text) => {setBarInput(text)}}
             
         />
+
+
+        {!barData == '' ? 
+
         <TextInput 
             placeholder='Type SOMETHING........'
-            ref = {inputRef} 
-            style = {styles.textInput} 
+            style = {styles.textInput } 
             multiline={true} 
             maxHeight={300} 
             numberOfLines={3}
@@ -158,21 +146,32 @@ export default function NewPost({post, setPost}){
             }}
 
         />
+
+        :
         <View style={styles.list}>
         <FlatList
             data={nearby.results}
             renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => clickBarName(item)}>
+                <TouchableHighlight onPress={() => clickBarName(item)}>
                     <View style={{backgroundColor: 'white', borderWidth: 1, padding: 15,}}>
                         <Text style={{fontSize: 16, color: 'black', fontWeight: '400'}}>{item.name}</Text>
+                        <Text style={{fontSize: 10, color: 'grey', fontWeight: '300'}}>{item.vicinity}</Text>
                     </View>
-                </TouchableOpacity>
+                </TouchableHighlight>
             )}
-            // ItemSeparatorComponent={}
             keyExtractor={(item) => item.place_id}
             showsVerticalScrollIndicator={false} 
         /> 
         </View> 
+
+        }
         </PopupPost> 
     );
 }
+
+
+const mapStateToProps = (store) => ({
+    currentUserLocation: store.userState.currentUserLocation
+  })
+
+export default connect(mapStateToProps)(NewPost);

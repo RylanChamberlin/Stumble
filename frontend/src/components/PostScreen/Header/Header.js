@@ -28,7 +28,6 @@ const singleBar = (title) => {
 }
 
 const Header = ({title}) => {
-
   
   const [post, setPost] = useState(false);
   const [left, setLeft] = useState(true);
@@ -41,10 +40,8 @@ const Header = ({title}) => {
       
         {title ? singleBar(title) : <View style={{alignItems: "center"}}><Text style={styles.postTitle}>POSTS</Text></View>}
       
-
       <ButtonSwitch button1 = "RECENT" button2 = "POPULAR" left={left} setLeft={setLeft}/>
       <NewPost post = {post} setPost={setPost}/>
-
       <TouchableOpacity style={styles.newPost} onPress={() => setPost(!post)}>
         <Text style={{fontSize:20, fontWeight: "bold"}}>CREATE NEW POST</Text>
       </TouchableOpacity>

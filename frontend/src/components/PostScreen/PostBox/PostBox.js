@@ -110,9 +110,9 @@ export default function PostBox({item}){
     return(
         <View style={[styles.container, styles.elevation]}>
             <View style={styles.textContainer}>
-                <Text style={{paddingBottom: 15, fontSize: 20}}>{item.text}</Text>
-                <View style={{flexDirection: 'row'}}>
-                    <Text style = {{fontWeight: 'bold'}}>at {item.bar} </Text>
+                <Text style={{paddingBottom: 10, fontSize: 20}}>{item.text}</Text>
+                <View style={{flexDirection: 'row', marginTop: 'auto'}}>
+                    <Text style = {{fontWeight: 'bold', maxWidth: '65%'}}>at {item.bar} </Text>
                     <Text style = {{fontWeight: '200'}}>{timeSince(item.createdAt?.seconds)}</Text>
                 </View>
             </View>
