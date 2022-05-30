@@ -5,11 +5,7 @@ import { Entypo } from '@expo/vector-icons';
 
 import { connect } from 'react-redux';
 
-const Header = (props) => {
-
-  useEffect(() => {
-    console.log(props.currentUserLocation)
-  },[])
+const Header = () => {
 
   return (
     <View style={styles.container}> 
@@ -26,9 +22,4 @@ const Header = (props) => {
 }
 
 
-const mapStateToProps = (store) => ({
-  currentUserLocation: store.userState.currentUserLocation, 
-})
-
-
-export default connect(mapStateToProps)(Header);
+export default Header;

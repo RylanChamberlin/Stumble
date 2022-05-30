@@ -20,18 +20,15 @@ const BarList = () => {
             data={data} 
             renderItem={({ item, index }) => {   
             return (
-                
                 <BarBox
                     item={item}
                     numComment={1}
-                />
-                
+                /> 
             );
             }}
             vertical
             showsVerticalScrollIndicator={false}
-            keyExtractor={(bar) => bar.name}
-                
+            keyExtractor={(bar) => bar.name}    
         />
     )
 }
