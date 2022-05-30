@@ -1,7 +1,7 @@
 
 import { auth, db } from '../../firebase'
 import * as Location from 'expo-location';
-import { USER_STATE_CHANGE, USER_LOCATION_STATE_CHANGE, USERS_CHECK_INS_STATE_CHANGE, USER_FRIENDS_STATE_CHANGE, USER_FRIEND_REQUESTS_STATE_CHANGE, USER_FRIEND_REQUESTS_SENT_STATE_CHANGE } from '../constants/index'
+import { USER_STATE_CHANGE, USER_LOCATION_STATE_CHANGE, USERS_CHECK_INS_STATE_CHANGE, USER_FRIENDS_STATE_CHANGE, USER_FRIEND_REQUESTS_STATE_CHANGE, USER_FRIEND_REQUESTS_SENT_STATE_CHANGE, USER_FRIENDS_DATA_STATE_CHANGE } from '../constants/index'
 
 let unsubscribe = [];
 
@@ -37,6 +37,26 @@ export function fetchUserLocation() {
     })
 }
 
+export function fetchFriend(uid) {
+    return ((dispatch, getState) => {
+        const found = getState().userState.currentUserFriendsData.some(el => el.uid === uid);
+        if (!found) {
+            db
+            .collection("users")
+            .doc(uid)
+            .get()
+            .then((snapshot, error) => {
+                if (snapshot.exists) {
+                    let user = snapshot.data();
+                    user.uid = snapshot.id;
+                    dispatch({ type: USER_FRIENDS_DATA_STATE_CHANGE, currentUserFriendsData: user })
+                }    
+            })
+       
+        }
+    })
+}
+
 
 export function fetchUserFriends() {
     return ((dispatch) => {
@@ -52,6 +72,10 @@ export function fetchUserFriends() {
                     return { id, ...data }
                 })
                 dispatch({ type: USER_FRIENDS_STATE_CHANGE, currentUserFriends: friends })
+                for (let i = 0; i < friends.length; i++) {
+                    dispatch(fetchFriend(friends[i].id))
+                    //console.log(friends[i].id)
+                }
             })
         //unsubscribe.push(listener)
     })

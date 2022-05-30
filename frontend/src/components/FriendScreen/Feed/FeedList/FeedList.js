@@ -6,22 +6,23 @@ import { connect } from 'react-redux';
 
 function FeedList (props) {
 
-  const [checkIns, setCheckIns] = useState({});
+  const [friends, setFriends] = useState({})
   
   useEffect(() => {
-        setCheckIns(props.checkIns);
-  }, [props.checkIns])
+        setFriends(props.currentUserFriendsData);
+  }, [props.currentUserFriendsData])
 
 
-  if (!checkIns) {
+  if (!friends) {
     return <View><ActivityIndicator /><Text>FEEDLIST</Text></View>;
   }
 
   return (
     <FlatList
-      data={checkIns}
+      data={friends}
 
       renderItem={({ item }) => (
+        
         <FriendBox item = {item}/>
       )}
       keyExtractor={(item) => item.key}
@@ -32,7 +33,8 @@ function FeedList (props) {
 }
 
 const mapStateToProps = (store) => ({
-  checkIns: store.usersState.checkIns
+  checkIns: store.usersState.checkIns,
+  currentUserFriendsData: store.userState.currentUserFriendsData
 })
 
 export default connect(mapStateToProps)(FeedList);

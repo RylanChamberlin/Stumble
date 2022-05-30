@@ -1,41 +1,33 @@
-import { useContext, useEffect } from "react";
+import {useEffect } from "react";
 import { useState } from "react";
-import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
-import { auth, db, dbTime, FieldValue } from "../../../firebase";
+import { ActivityIndicator, FlatList, Image, Text, TouchableOpacity, View} from "react-native";
+import { auth, db, dbTime } from "../../../firebase";
 import PopupPost from "../../general/PopupPost/PopupPost";
 import styles from "./styles";
 import { connect } from 'react-redux';
-
 import {GOOGLE_KEY} from '@env'
-
-
 
 function CheckIn(props){
 
     const [check, setCheck] = useState({})
     const [bars, setBars] = useState('')
-
     const [location, setLocation] = useState({})
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
 
     //gets user info and users location
     useEffect(() => {
-
         const { currentUser, currentUserLocation } = props;
         setUser(currentUser)
         setLocation(currentUserLocation)
-
         if(currentUserLocation){ 
             setLoading(false)
             fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${currentUserLocation.coords.latitude}%2C${currentUserLocation.coords.longitude}&radius=50&type=bar&key=${GOOGLE_KEY}`)
             .then(response => response.json())
             .then(json => setBars(json)) 
-            //console.log('fetching nearby list' + {GOOGLE_KEY})
         }
 
     }, [props.currentUser, props.currentUserLocation])
-
 
     //checks user into bar where they are at stored in firebase
     const checkIn = async() => {

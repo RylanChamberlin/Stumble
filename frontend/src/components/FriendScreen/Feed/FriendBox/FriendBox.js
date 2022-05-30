@@ -1,9 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
-import timeSince from "../../../services/timeSince";
-import LikeButton from "../../general/LikeButton";
+import timeSince from "../../../../services/timeSince";
+import LikeButton from "../../../general/LikeButton";
 import styles from "./styles";
 
 export default function FriendBox({item}){
+
+    if (item.checkIn == null) return null;
 
     return(
         <View style={styles.container}>  
