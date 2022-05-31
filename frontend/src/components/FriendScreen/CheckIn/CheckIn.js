@@ -6,6 +6,7 @@ import PopupPost from "../../general/PopupPost/PopupPost";
 import styles from "./styles";
 import { connect } from 'react-redux';
 import {GOOGLE_KEY} from '@env'
+import Loader from "../../general/Loader";
 
 function CheckIn(props){
 
@@ -43,7 +44,7 @@ function CheckIn(props){
     }
 
     if(loading || !user) {
-        return <View><ActivityIndicator /><Text>CHECKINS</Text></View>;
+        return <Loader/>
     }
 
     return(

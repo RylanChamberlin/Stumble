@@ -2,6 +2,7 @@ import { FlatList, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import FriendBox from '../FriendBox'
 import { connect } from 'react-redux';
+import Loader from '../../../general/Loader';
 
 
 function FeedList (props) {
@@ -14,7 +15,7 @@ function FeedList (props) {
 
 
   if (!friends) {
-    return <View><ActivityIndicator /><Text>FEEDLIST</Text></View>;
+    return  <Loader/>
   }
 
   return (

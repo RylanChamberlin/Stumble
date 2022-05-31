@@ -3,6 +3,7 @@ import React from 'react'
 import { useEffect } from 'react';
 import useMessages from '../../../hooks/useMessages';
 import PostBox from '../PostBox';
+import Loader from '../../general/Loader';
 
 const PostList = ({itemId = null, userId = null}) => {
 
@@ -15,7 +16,7 @@ const PostList = ({itemId = null, userId = null}) => {
 
 
     if (loading) {
-        return <ActivityIndicator />;
+        return  <Loader/>
     }
 
   return (

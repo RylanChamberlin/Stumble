@@ -8,6 +8,7 @@ import styles from './styles';
 import FriendBox from '../FriendBox';
 import AddFriends from '../AddFriend/AddFriends';
 import { connect } from 'react-redux';
+import Loader from '../../../general/Loader';
 
 //type UserScreenProp = NativeStackNavigationProp<RootStackParamList, 'UserFriends'>;
 
@@ -31,7 +32,7 @@ const UserFriends = (props) => {
     }
 
     if (!friends) {
-        return <ActivityIndicator />;
+        return  <Loader/>
     }
 
     return (

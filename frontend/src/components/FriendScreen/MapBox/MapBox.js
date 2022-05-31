@@ -7,6 +7,7 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import { useState } from 'react';
 import { BlurView } from 'expo-blur';
 import { connect } from 'react-redux';
+import Loader from '../../general/Loader';
 
 function MapBox(props) {
 
@@ -42,7 +43,7 @@ function MapBox(props) {
     }
    
     if(loading) {
-        return <View><ActivityIndicator /><Text>MAPBOX-location</Text></View>;
+        return  <Loader/>
     }
 
     

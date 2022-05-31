@@ -1,6 +1,5 @@
 import { StyleSheet} from "react-native";
 import AppView from "../components/general/AppView";
-import { auth } from "../firebase";
 import Header from "../components/BarScreen/Header";
 import BarList from "../components/BarScreen/BarList";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";

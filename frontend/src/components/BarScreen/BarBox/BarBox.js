@@ -1,9 +1,7 @@
-import {View, Text, TouchableOpacity, Image, ScrollView, ImageStyle } from "react-native";
+import {View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import {GOOGLE_KEY} from '@env'
 import { useNavigation } from "@react-navigation/native";
 import styles from "./styles";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../../../../App";
 
 // type Props = NativeStackScreenProps<RootStackParamList, 'Single'>;
 
