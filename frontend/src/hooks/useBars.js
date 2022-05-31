@@ -1,6 +1,28 @@
 import { useState } from "react";
 import { db } from "../firebase";
 
+
+// interface FriendObject {
+//     isFriend: boolean;
+//     key: string;
+//     name: string;
+//     username: string;
+// }
+
+// interface FriendData {
+//     data: FriendObject | undefined | null | any; //temp fix so it would work in flatlist
+//     loading: boolean;
+//     error: any;
+// }
+
+// export default (): [FriendData, () => void] => {
+   
+//     const [result, setResult] = useState<FriendData>({
+//         data: null,
+//         loading: false,
+//         error: null
+//     })
+
 export default () => {
    
     const [result, setResult] = useState({
@@ -8,23 +30,6 @@ export default () => {
         loading: false,
         error: null
     });
-
-    //const [comment, setComment] = useState()
-
-    // function dayOrLess(time) {
-
-    //     var date = new Date(time*1000)
-    //     var seconds = Math.floor((new Date() - date) / 1000);
-
-    //     var interval = seconds / 86400;
-    //     if (interval > 1) {
-            
-    //         return false;
-    //       }else{
-    //           return true;
-    //       }
-          
-    //   }
 
     const getBars = async () => {
 

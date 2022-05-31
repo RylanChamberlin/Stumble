@@ -3,8 +3,6 @@ import {Alert, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableHighl
 import { auth, db, dbTime } from "../../../firebase";
 import {GOOGLE_KEY} from '@env'
 import PopupPost from "../../general/PopupPost/PopupPost";
-import useLocation from "../../../hooks/useLocation";
-import { useRef } from "react";
 import styles from "./styles";
 import { connect } from 'react-redux';
 

@@ -1,6 +1,5 @@
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import useUsers from '../../../../../hooks/useUsers';
 import styles from './styles';
 import FriendBox from '../../FriendBox';
 import { auth, db } from '../../../../../firebase';

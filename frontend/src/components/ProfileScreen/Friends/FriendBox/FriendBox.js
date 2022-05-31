@@ -1,14 +1,6 @@
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect } from 'react'
+import {  Text, View } from 'react-native'
+import React from 'react'
 import styles from './styles'
-import { auth, db } from '../../../../firebase'
-import useFriends from '../../../../hooks/useFriends'
-
-
-
-
-
-
 
 const FriendBox = (props) => {
 

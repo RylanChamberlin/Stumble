@@ -109,7 +109,7 @@ function MapBox(props) {
                                 </View>
                             </View>
                     )}
-                    keyExtractor={(item) => item.key}
+                    keyExtractor={(item) => item.uid}
                     showsVerticalScrollIndicator={false}
                 /> 
             </BlurView> 

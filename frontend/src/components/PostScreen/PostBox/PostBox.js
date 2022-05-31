@@ -12,10 +12,9 @@ export default function PostBox({item}){
     const [currentUserLike, setCurrentUserLike] = useState(null)
     const [currentUserDislike, setCurrentUserDislike] = useState(null)
     const [voteCount, setVoteCount] = useState(0)
-
-
+    
     useEffect(() => {
-
+        
         setVoteCount(item.voteCount)
 
         db
