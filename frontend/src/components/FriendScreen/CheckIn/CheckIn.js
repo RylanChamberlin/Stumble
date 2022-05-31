@@ -61,7 +61,8 @@ function CheckIn(props){
             <Text style={{color: 'red'}}>NEARBY</Text>
             <FlatList
                 data={bars.results} 
-                renderItem={({ item, index }) => {  
+                renderItem={({ item, index }) => {
+                    
                     // console.log(item.geometry.location) 
                 return (
                     <TouchableOpacity style={[styles.nameBox, check.id == item.place_id ? {backgroundColor: 'blue'} : {backgroundColor: 'white'}]} onPress={() => setCheck({id: item.place_id, name: item.name, locationTemp: item.geometry.location})}>

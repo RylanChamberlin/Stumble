@@ -18,6 +18,7 @@ const BarList = () => {
         <FlatList
             data={data} 
             renderItem={({ item, index }) => {   
+               
             return (
                 <BarBox
                     item={item}

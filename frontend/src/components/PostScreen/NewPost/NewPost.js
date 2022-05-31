@@ -149,14 +149,17 @@ const NewPost = (props) => {
         <View style={styles.list}>
         <FlatList
             data={nearby.results}
-            renderItem={({ item }) => (
+            renderItem={({ item, index }) => {
+                // console.log('render: ' + index)
+                return (
                 <TouchableHighlight onPress={() => clickBarName(item)}>
                     <View style={{backgroundColor: 'white', borderWidth: 1, padding: 15,}}>
                         <Text style={{fontSize: 16, color: 'black', fontWeight: '400'}}>{item.name}</Text>
                         <Text style={{fontSize: 10, color: 'grey', fontWeight: '300'}}>{item.vicinity}</Text>
                     </View>
                 </TouchableHighlight>
-            )}
+                );
+            }}
             keyExtractor={(item) => item.place_id}
             showsVerticalScrollIndicator={false} 
         /> 

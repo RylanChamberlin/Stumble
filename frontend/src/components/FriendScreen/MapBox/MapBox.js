@@ -98,7 +98,8 @@ function MapBox(props) {
              <BlurView intensity={5} style={{flex: 1, paddingTop: 200}}>
                 <FlatList
                     data={peopleList}
-                    renderItem={({ item }) => (
+                    renderItem={({ item, index }) => {
+                        return(
                             <View style={styles.box}>
                                 <Image style={styles.image} />
                                 <Text style={{fontSize: 30, flex:1, marginLeft: 10}}>{item.name}</Text>
@@ -109,7 +110,8 @@ function MapBox(props) {
                                     <Text>{new Date(item.checkIn.checkInTime.seconds *1000).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Text>
                                 </View>
                             </View>
-                    )}
+                        );
+                    }}
                     keyExtractor={(item) => item.uid}
                     showsVerticalScrollIndicator={false}
                 /> 

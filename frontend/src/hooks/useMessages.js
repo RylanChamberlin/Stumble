@@ -34,7 +34,10 @@ export default () => {
         
         try{
                 subscriber
-                .onSnapshot(querySnapshot => {
+                .limit(5)
+                .get()
+                .then(querySnapshot => {
+                    console.log('query')
                     const users = [];
 
                     querySnapshot.forEach(documentSnapshot => {

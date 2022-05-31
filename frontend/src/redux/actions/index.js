@@ -1,7 +1,7 @@
 
 import { auth, db } from '../../firebase'
 import * as Location from 'expo-location';
-import { USER_STATE_CHANGE, USER_LOCATION_STATE_CHANGE, USER_FRIENDS_STATE_CHANGE, USER_FRIEND_REQUESTS_STATE_CHANGE, USER_FRIEND_REQUESTS_SENT_STATE_CHANGE, USER_FRIENDS_DATA_STATE_CHANGE } from '../constants/index'
+import { USER_STATE_CHANGE, USER_LOCATION_STATE_CHANGE, USER_FRIENDS_STATE_CHANGE, USER_FRIEND_REQUESTS_STATE_CHANGE, USER_FRIEND_REQUESTS_SENT_STATE_CHANGE, USER_FRIENDS_DATA_STATE_CHANGE, USERS_POSTS_STATE_CHANGE, USERS_LAST_POST_STATE_CHANGE } from '../constants/index'
 
 let unsubscribe = [];
 
@@ -55,6 +55,44 @@ export function fetchFriend(uid) {
        
         }
     })
+}
+export function fetchPosts(lastDocument) {
+
+    return ((dispatch, getState) => {
+
+        let query = db.collection('messages').orderBy('createdAt', 'desc'); // sort the data
+        if (lastDocument !== undefined) {
+        query = query.startAfter(lastDocument); // fetch data following the last document accessed
+        }
+        query.limit(8) // limit to your page size, 3 is just an example
+            .get()
+            .then(querySnapshot => {
+
+            let lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+            
+            dispatch({ type: USERS_LAST_POST_STATE_CHANGE, lastDoc });
+
+            let posts = querySnapshot.docs.map(doc => {
+                const data = doc.data();
+                const key = doc.id;
+                return { key, ...data }
+            })
+            //const posts = [];
+            // querySnapshot.forEach(documentSnapshot => {
+            //     console.log(documentSnapshot.id)
+            //     posts.push({
+            //         ...documentSnapshot.data(),
+            //         key: documentSnapshot.id,
+            //     });
+            // });
+
+            dispatch({ type: USERS_POSTS_STATE_CHANGE, posts });
+
+            });
+
+    })
+
+
 }
 
 
@@ -119,6 +157,8 @@ export function fetchUserFriendRequestsSent() {
        // unsubscribe.push(listener)
     })
 }
+
+
 
 export function queryUsersByUsername(username) {
     return ((dispatch, getState) => {

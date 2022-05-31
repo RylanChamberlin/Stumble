@@ -1,5 +1,5 @@
 import { FlatList, ActivityIndicator } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import FriendBox from '../FriendBox'
 import { connect } from 'react-redux';
 import Loader from '../../../general/Loader';
@@ -18,15 +18,17 @@ function FeedList (props) {
     return  <Loader/>
   }
 
+  const renderItem = useCallback(
+    ({ item, index }) => <FriendBox item = {item}/>,
+    []
+    );
+  const keyExtractor = useCallback( (item) => item.uid, []);
+
   return (
     <FlatList
       data={friends}
-
-      renderItem={({ item }) => (
-        
-        <FriendBox item = {item}/>
-      )}
-      keyExtractor={(item) => item.uid}
+      renderItem={renderItem}
+      keyExtractor={keyExtractor}
       showsVerticalScrollIndicator={false}
     />  
 

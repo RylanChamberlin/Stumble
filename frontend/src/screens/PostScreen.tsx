@@ -21,6 +21,7 @@ const PostScreen: FC<Props> = (props) => {
         <AppView>
             <Header title = {name}/>
             <PostList itemId={itemId}/>
+            {/* <PostList/> */}
         </AppView>
        
     );
