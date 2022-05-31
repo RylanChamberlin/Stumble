@@ -32,34 +32,41 @@ const UserInfo = (props) => {
     }
 
   return (
+    <>
     <View style={styles.container}>
     <View style={styles.image}></View>
 
-    <View style={styles.textContainer}>
+        <View style={styles.textContainer}>
 
-        <Text style={styles.name}>{user.name}</Text>
-        <Text style={styles.username}>@{user.username}</Text>
-
-        <View style={styles.statContainer}>
-
-            <View style={styles.statCircle}>
-                <Text>{user.checkInCount ? user.checkInCount : 0}</Text>
-                <Text>checkins</Text>
+            <View style={{flexDirection: 'row'}}>
+                <View style={{flexDirection: 'column'}}>
+                    <Text style={styles.name}>{user.name}</Text>
+                    <Text style={styles.username}>@{user.username}</Text>
+                </View>
+                <TouchableOpacity onPress={() => {clickFriends()}} style={{marginLeft: 50}}>
+                <View style={styles.statCircle}>
+                    {/* <Text>{user.friendTotal ? user.friendTotal : 0}</Text> */}
+                    <Text>Friends</Text>
+                </View>
+                </TouchableOpacity>
             </View>
-            <View style={styles.statCircle}>
-                <Text>{user.upVoteTotal ? user.upVoteTotal : 0}</Text>
-                <Text>upvotes</Text>
-            </View>
+            
 
-            <TouchableOpacity onPress={() => {clickFriends()}}>
-            <View style={styles.statCircle}>
-                <Text>{user.friendTotal ? user.friendTotal : 0}</Text>
-                <Text>friends</Text>
+            <View style={styles.statContainer}>
+
+                <View style={{flexDirection: 'column'}}>
+                <Text>Check In Location:</Text>
+                <Text style={{fontSize: 20, fontWeight: 'bold'}}>{user.checkIn ? user.checkIn.locationName: 'Nowhere go check in!'}</Text>
+                </View>
+    
+                
             </View>
-            </TouchableOpacity>
         </View>
     </View>
+    <View style = {{backgroundColor: 'black', borderRadius: 20, alignItems: 'center'}}>
+        <Text style = {{fontWeight: 'bold', fontSize: 30, color: 'white', justifyContent: 'center'}}>My Posts</Text>
     </View>
+    </>
   )
 }
 

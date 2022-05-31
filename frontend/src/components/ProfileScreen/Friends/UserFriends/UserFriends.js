@@ -1,13 +1,12 @@
-import { ActivityIndicator, FlatList, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { FC, useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
-import AppView from '../../general/AppView'
+import AppView from '../../../general/AppView'
 import { AntDesign } from '@expo/vector-icons';
 import styles from './styles';
 import FriendBox from '../FriendBox';
-import useFriends from '../../../hooks/useFriends';
-import AddFriends from '../AddFriends';
+import AddFriends from '../AddFriend/AddFriends';
 import { connect } from 'react-redux';
 
 //type UserScreenProp = NativeStackNavigationProp<RootStackParamList, 'UserFriends'>;
@@ -19,12 +18,10 @@ const UserFriends = (props) => {
     const [query,setQuery] = useState('');
     const [friends, setFriends] = useState({});
 
-    const [{data, loading, error}, getFriends] = useFriends();
-
     useEffect(() => {
         setFriends(props.currentUserFriends)
-        getFriends();
-    }, []);
+       
+    }, [props.currentUserFriends]);
 
     const navigation = useNavigation()
 
@@ -33,7 +30,7 @@ const UserFriends = (props) => {
         navigation.navigate("BottomTab")
     }
 
-    if (loading || !friends) {
+    if (!friends) {
         return <ActivityIndicator />;
     }
 
@@ -76,7 +73,7 @@ const UserFriends = (props) => {
 
                     </View>
                 </View>
-            <AddFriends post={post} setPost={setPost} data ={data}/>
+            <AddFriends post={post} setPost={setPost}/>
             
         </AppView>
     )

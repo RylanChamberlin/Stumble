@@ -1,13 +1,13 @@
 import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import styles from './styles'
-import FriendBox from '../FriendBox'
+import FriendBox from '../../FriendBox'
 import { Feather } from '@expo/vector-icons'; 
-import { auth, db } from '../../../firebase';
-import { acceptRequest, cancelRequest,  } from '../../../services/FriendRequestHelpers';
+import { auth, db } from '../../../../../firebase';
+import { acceptRequest, cancelRequest,  } from '../../../../../services/FriendRequestHelpers';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchUserFriendRequests } from '../../../redux/actions/index';
+import { fetchUserFriendRequests } from '../../../../../redux/actions/index';
 
 
 const RequestList = (props) => {

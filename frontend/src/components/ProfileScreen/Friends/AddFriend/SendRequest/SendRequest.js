@@ -1,10 +1,10 @@
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import useUsers from '../../../hooks/useUsers';
+import useUsers from '../../../../../hooks/useUsers';
 import styles from './styles';
-import FriendBox from '../FriendBox';
-import { auth, db } from '../../../firebase';
-import { sendRequest, acceptRequest } from '../../../services/FriendRequestHelpers';
+import FriendBox from '../../FriendBox';
+import { auth, db } from '../../../../../firebase';
+import { sendRequest, acceptRequest } from '../../../../../services/FriendRequestHelpers';
 import { connect } from 'react-redux';
 
 const SendRequest = (props) => {

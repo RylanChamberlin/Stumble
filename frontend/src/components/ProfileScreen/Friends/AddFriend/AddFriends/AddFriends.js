@@ -2,14 +2,14 @@ import { FlatList, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } 
 import GestureRecognizer from "react-native-swipe-gestures";
 import { Feather } from '@expo/vector-icons'; 
 
-import AppView from "../../general/AppView";
+import AppView from "../../../../general/AppView";
 import styles from "./styles";
 import { FC, useEffect, useState } from "react";
 import SendRequest from "../SendRequest";
 import RequestList from "../RequestList";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { queryUsersByUsername, queryUsersByName } from '../../../redux/actions/index';
+import { queryUsersByUsername, queryUsersByName } from '../../../../../redux/actions/index';
 
 const AddFriends = (props) => {
 
@@ -37,7 +37,6 @@ const AddFriends = (props) => {
     return (
         <GestureRecognizer
             style={{flex: 1}}
-            onSwipeDown={() => props.setPost(!props.post)}
             >
             <Modal
                 animationType="slide"

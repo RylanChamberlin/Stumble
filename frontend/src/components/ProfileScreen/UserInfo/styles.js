@@ -7,18 +7,22 @@ export default StyleSheet.create({
         borderRadius: 20,
         padding: 15,
         flexDirection: 'row',
-        marginBottom: 10
+        marginBottom: 10,
+       
     },
 
     textContainer:{
-        flexDirection: 'column'
+        flexDirection: 'column',
+        
     },
 
     statContainer:{
-        flexDirection: 'row'
+        flexDirection: 'row',
+       
     },
 
     image:{
+      
         width: 75,
         height: 75,
         borderRadius: 50,
@@ -32,14 +36,15 @@ export default StyleSheet.create({
     },
 
     username: {
-
+       
     },
 
     statCircle:{
-        alignItems: 'center',
-        margin: 5,
+        //alignItems: 'center',
+        //margin: 115,
         padding: 10,
         borderRadius: 15,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        borderWidth: 1,
     },
 })

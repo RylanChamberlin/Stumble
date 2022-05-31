@@ -3,7 +3,7 @@ import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navig
 import { LogBox } from "react-native";
 
 import BottomTab from "./frontend/src/components/BottomTab";
-import UserFriends from "./frontend/src/components/ProfileScreen/UserFriends";
+import UserFriends from "./frontend/src/components/ProfileScreen/Friends/UserFriends";
 import LoginScreen from "./frontend/src/screens/auth/LoginScreen";
 import PostScreen from "./frontend/src/screens/PostScreen";
 
