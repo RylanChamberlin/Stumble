@@ -13,7 +13,6 @@ const NewPost = (props) => {
     const [barInput, setBarInput] = useState("");
     const [input, setInput] = useState("");
     const [placeID, setPlaceID] = useState("");
-    const [photoID, setPhotoID] = useState("");
     const [nearby, setNearby] = useState("");
     const [barData, setBarData] = useState("");
 
@@ -43,6 +42,7 @@ const NewPost = (props) => {
             placeID: placeID, 
             bar: barInput,
             text: input,
+            score: 0,
             voteCount: 0,
             createdAt: dbTime,
             uid,
@@ -61,7 +61,6 @@ const NewPost = (props) => {
 
         db.collection('bars').doc(placeID).set({
             name: barInput,
-            photoID: photoID,
             // coords: GeoPoint(lat, lng),
             geohash: hash,
         });
@@ -102,12 +101,9 @@ const NewPost = (props) => {
 
     const clickBarName = (data) => {
 
-        setBarData(data)
-        if(data.photos){
-            setPhotoID(data.photos[0]?.photo_reference);
-        }
-        setBarInput(data.name)
-        setNearby('')
+        setBarData(data);
+        setBarInput(data.name);
+        setNearby('');
         setPlaceID(data.place_id);
        
         

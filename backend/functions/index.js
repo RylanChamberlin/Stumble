@@ -54,6 +54,32 @@ exports.updateVote = functions.firestore
             });
       }
     });
+exports.updateScore = functions.firestore
+    .document("/messages/{messageID}")
+    .onUpdate((change, context) => {
+      const newValue = change.after.data();
+      const voteCount = newValue.voteCount;
+      const secondsSince = newValue.createdAt.seconds;
+      const dateCreated = new Date(secondsSince*1000);
+      const seconds = Math.floor((new Date() - dateCreated) / 1000);
+      const interval = seconds / 3600;
+      let score = 0;
+      if (interval > 48) {
+        score = 0;
+      } else if (interval > 24) {
+        score = voteCount;
+      } else if (interval > 1) {
+        score = voteCount * 2;
+      } else {
+        score = voteCount * 3;
+      }
+      return db
+          .collection("messages")
+          .doc(context.params.messageID)
+          .update({
+            score: score,
+          });
+    });
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions

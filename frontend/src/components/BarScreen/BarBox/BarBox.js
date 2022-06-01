@@ -17,7 +17,6 @@ const BarBox = ({item, numComment}) => {
     }
     
     return (
-
             <TouchableOpacity activeOpacity={.8} onPress={clickBar}>
             <ScrollView horizontal={true}  showsHorizontalScrollIndicator={false}>
             
@@ -26,11 +25,10 @@ const BarBox = ({item, numComment}) => {
                     <View style = {styles.infoBox}>
                         <View style = {styles.infoBoxLeft}>
                             <Text style = {[styles.title, styles.bold]}>{item.name}</Text>
+                            <Text style = {{fontSize: 10, fontWeight: 'bold', textDecorationLine: 'underline',}}>TODAY'S TOP POST</Text>
                             <Text>new posts</Text>
                         </View>
-                        <View style={styles.infoBoxRight}>
-                            <Image style = {styles.image} source={{uri:`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${item.photoID}&key=${GOOGLE_KEY}`}}/>
-                        </View>
+                        
                     </View>
                 </View>
             </View>
