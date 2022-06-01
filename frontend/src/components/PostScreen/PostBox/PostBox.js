@@ -9,43 +9,41 @@ import { useEffect, useState } from "react";
 
 export default function PostBox({item}){
 
-    const [currentUserLike, setCurrentUserLike] = useState(null)
-    const [currentUserDislike, setCurrentUserDislike] = useState(null)
+    const [currentUserLike, setCurrentUserLike] = useState(false)
+    const [currentUserDislike, setCurrentUserDislike] = useState(false)
     const [voteCount, setVoteCount] = useState(0)
     
     useEffect(() => {
         
         setVoteCount(item.voteCount)
-
         db
             .collection("messages")
             .doc(item.key)
             .collection("upvotes")
             .doc(auth.currentUser.uid)
-            .onSnapshot((snapshot) => {
-                let currentUserLike = false;
+            .get()
+            .then((snapshot) => {
                 if (snapshot.exists) {
-                    currentUserLike = true;
+                    let vote = snapshot.data()
+                    if(vote.isVote){
+                        setCurrentUserLike(true)
+                        setCurrentUserDislike(false)
+                    }else{
+                        setCurrentUserLike(false)
+                        setCurrentUserDislike(true)
+                    }
+                    
+                }else{
+                    setCurrentUserLike(false)
+                    setCurrentUserDislike(false)
                 }
-                setCurrentUserLike(currentUserLike)
+                
             })
-
-        db
-            .collection("messages")
-            .doc(item.key)
-            .collection("downvotes")
-            .doc(auth.currentUser.uid)
-            .onSnapshot((snapshot) => {
-                let currentUserLike = false;
-                if (snapshot.exists) {
-                    currentUserLike = true;
-                }
-                setCurrentUserDislike(currentUserLike)
-            })
-
     },[])
   
     const incrementVote = () => {
+
+        console.log('incrementVote')
 
         if(currentUserLike == false){
 
@@ -55,23 +53,30 @@ export default function PostBox({item}){
                 db
                 .collection("messages")
                 .doc(item.key)
-                .collection("downvotes")
+                .collection("upvotes")
                 .doc(auth.currentUser.uid)
-                .delete();
+                .update({
+                    isVote: true,
+                })
                 
             }else{
                 setVoteCount(voteCount+1);
+
+                db
+                .collection("messages")
+                .doc(item.key)
+                .collection("upvotes")
+                .doc(auth.currentUser.uid)
+                .set({
+                    isVote: true,
+                })
+
             }
             setCurrentUserLike(true)
             setCurrentUserDislike(false)
 
             console.log('upvoted')
-            db
-            .collection("messages")
-            .doc(item.key)
-            .collection("upvotes")
-            .doc(auth.currentUser.uid)
-            .set({})
+            
             }
     }
     const decrementVote = async() => { 
@@ -87,21 +92,34 @@ export default function PostBox({item}){
                 .doc(item.key)
                 .collection("upvotes")
                 .doc(auth.currentUser.uid)
-                .delete();
+                .update({
+                    isVote: false,
+                })
 
             }else{
                 setVoteCount(voteCount-1);
+
+                db
+                .collection("messages")
+                .doc(item.key)
+                .collection("upvotes")
+                .doc(auth.currentUser.uid)
+                .set({
+                    isVote: false,
+                })
             }
             
             setCurrentUserLike(false)
             setCurrentUserDislike(true)
 
-            db
-            .collection("messages")
-            .doc(item.key)
-            .collection("downvotes")
-            .doc(auth.currentUser.uid)
-            .set({})
+            // db
+            // .collection("messages")
+            // .doc(item.key)
+            // .collection("upvotes")
+            // .doc(auth.currentUser.uid)
+            // .set({
+            //     isVote: false,
+            // })
         }
 
     }

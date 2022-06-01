@@ -6,59 +6,52 @@ admin.initializeApp();
 const db = admin.firestore();
 
 
-exports.addUpvote = functions.firestore
+exports.setVote = functions.firestore
     .document("/messages/{messageID}/upvotes/{uid}")
     .onCreate((snap, context) => {
-      return db
-          .collection("messages")
-          .doc(context.params.messageID)
-          .update({
-            voteCount: admin.firestore.FieldValue.increment(1),
-          });
+      const newValue = snap.data();
+      const vote = newValue.isVote;
+      // const previousValue = snap.before.data();
+      // const previousFieldValue = previousValue.isVote;
+      // console.log("the previous: " + previousFieldValue);
+      if (vote) {
+        return db
+            .collection("messages")
+            .doc(context.params.messageID)
+            .update({
+              voteCount: admin.firestore.FieldValue.increment(1),
+            });
+      } else {
+        return db
+            .collection("messages")
+            .doc(context.params.messageID)
+            .update({
+              voteCount: admin.firestore.FieldValue.increment(-1),
+            });
+      }
     });
-exports.removeUpvote = functions.firestore
-    .document("/messages/{messageID}/downvotes/{uid}")
-    .onCreate((snap, context) => {
-      return db
-          .collection("messages")
-          .doc(context.params.messageID)
-          .update({
-            voteCount: admin.firestore.FieldValue.increment(-1),
-          });
-    });
-
-exports.addDownvote = functions.firestore
+exports.updateVote = functions.firestore
     .document("/messages/{messageID}/upvotes/{uid}")
-    .onDelete((snap, context) => {
-      return db
-          .collection("messages")
-          .doc(context.params.messageID)
-          .update({
-            voteCount: admin.firestore.FieldValue.increment(-1),
-          });
-    });
-
-exports.removeDownvote = functions.firestore
-    .document("/messages/{messageID}/downvotes/{uid}")
-    .onDelete((snap, context) => {
-      return db
-          .collection("messages")
-          .doc(context.params.messageID)
-          .update({
-            voteCount: admin.firestore.FieldValue.increment(+1),
-          });
-    });
-
-exports.removeMessage = functions.firestore
-    .document("/messages/{messageID}")
-    .onUpdate((snap, context) => {
-      const newValue = snap.after.data();
-      const newFieldValue = newValue.field;
-      const previousValue = snap.before.data();
-      const previousFieldValue = previousValue.field;
-
-      if (previousFieldValue!== newFieldValue) {
-        console.log(newFieldValue);
+    .onUpdate((change, context) => {
+      const newValue = change.after.data();
+      const vote = newValue.isVote;
+      // const previousValue = snap.before.data();
+      // const previousFieldValue = previousValue.isVote;
+      // console.log("the previous: " + previousFieldValue);
+      if (vote) {
+        return db
+            .collection("messages")
+            .doc(context.params.messageID)
+            .update({
+              voteCount: admin.firestore.FieldValue.increment(2),
+            });
+      } else {
+        return db
+            .collection("messages")
+            .doc(context.params.messageID)
+            .update({
+              voteCount: admin.firestore.FieldValue.increment(-2),
+            });
       }
     });
 

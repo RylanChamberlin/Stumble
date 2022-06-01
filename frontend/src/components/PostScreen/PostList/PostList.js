@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { fetchPosts } from '../../../redux/actions/index'
 //{itemId = null, userId = null}
 
-function PostList(props){
+function PostList({itemId = null, userId = null}){
 
   // const [{data, loading, error}, getMessages] = useMessages();
 
@@ -32,16 +32,31 @@ function PostList(props){
     setPage(page + 1);
   }
 
-  
 
+  
   function LoadData() {
 
     if(!end){
 
     setIsMoreLoading(true);
-    console.log('LOAD');
+   
 
-    let query = db.collection('messages').orderBy('createdAt', 'desc'); // sort the data
+    let query = db.collection('messages')
+       
+    if(itemId != null){
+        query = query
+        .where('placeID', '==' , itemId)
+        
+    }else if(userId != null){
+        query = query
+        .where('uid', '==' , userId)
+        
+    }else{
+        query = query
+        .orderBy("createdAt", "desc")
+    }
+
+    // query = db.collection('messages').orderBy('createdAt', 'desc'); // sort the data
     if (lastDocument !== undefined) {
       query = query.startAfter(lastDocument); // fetch data following the last document accessed
     }
@@ -84,7 +99,7 @@ function PostList(props){
 
   const renderItem = useCallback(
     ({ item, index }) => {
-      console.log('render: ' + index + ' key: ' + item.key)
+      // console.log('render: ' + index + ' key: ' + item.key)
       return (<PostBox item = {item}/>
       )},
     []
@@ -96,9 +111,7 @@ function PostList(props){
   if (!userData) {
       return  <Loader/>
   }
-
     //console.log(props.posts)
-
   return (
     <FlatList
 
