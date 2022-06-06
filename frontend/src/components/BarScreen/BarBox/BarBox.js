@@ -26,7 +26,7 @@ const BarBox = ({item, numComment}) => {
                         
                         <Text style = {[styles.title, styles.bold]}>{item.name}</Text>
                         <Text style = {styles.topPostTitle}>TODAY'S TOP POST</Text>
-                        <Text style = {styles.topPost} >{item.topPost ? `"${item.topPost}"` : 'Go Post for TOP!'}</Text>
+                        <Text style = {styles.topPost} >{item.topPost ? `"${item.topPost}"` : 'Click to add new post'}</Text>
                         <View style = {styles.newPostsBox}>
                             <Text style = {styles.postCount}>{item.postCount} new posts </Text>
                             <Text style = {styles.seeAll}>see all</Text>

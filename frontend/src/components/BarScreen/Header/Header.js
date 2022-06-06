@@ -13,7 +13,7 @@ const Header = () => {
         <TouchableOpacity>
             <View style={styles.locationBox}>
                 {/* <Text style={{color: '#f2f1f1', marginTop: 6}}>within 10 miles of you</Text> */}
-                <Text style={{color: '#f2f1f1', marginTop: 5, textDecorationLine: 'underline', fontSize: 15}}>within 10 miles of you</Text>
+                <Text style={{color: '#f2f1f1', marginTop: 5, textDecorationLine: 'underline', fontSize: 15}}>within 10 miles</Text>
                 <Entypo name="location-pin" size={24} color="#f2f1f1" />
             </View>
         </TouchableOpacity>

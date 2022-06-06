@@ -6,7 +6,7 @@ const infoBoxWidth = windowWidth-30;
 
 export default StyleSheet.create({
     outsideContainer:{
-        padding: 3,
+        padding: 0,
         shadowColor: "black",
         shadowOffset: {width: 10, height: 30}, //gives shadow offset
         shadowOpacity: .3,
