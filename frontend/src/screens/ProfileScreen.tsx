@@ -16,7 +16,7 @@ const ProfileScreen = () => {
         <AppView>    
             <UserInfo/>  
             
-            <PostList userId={auth.currentUser?.uid}/>
+            <PostList itemID={auth.currentUser?.uid} field={'uid'} order="createdAt"/>
             {/* <PostList userId={auth.currentUser?.uid}/> */}
         </AppView>
     );

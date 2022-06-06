@@ -61,7 +61,8 @@ const NewPost = (props) => {
 
         db.collection('bars').doc(placeID).set({
             name: barInput,
-            // coords: GeoPoint(lat, lng),
+            lat: lat,
+            lng: lng,
             geohash: hash,
         });
 

@@ -27,12 +27,12 @@ const singleBar = (title) => {
 
 }
 
-const Header = ({title}) => {
+const Header = ({title, left, setLeft}) => {
   
   const [post, setPost] = useState(false);
-  const [left, setLeft] = useState(true);
+ 
   
-  console.log(title)
+  //console.log(title)
 
   return (
 

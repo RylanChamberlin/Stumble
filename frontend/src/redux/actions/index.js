@@ -1,9 +1,20 @@
 
 import { auth, db } from '../../firebase'
 import * as Location from 'expo-location';
-import { USER_STATE_CHANGE, USER_LOCATION_STATE_CHANGE, USER_FRIENDS_STATE_CHANGE, USER_FRIEND_REQUESTS_STATE_CHANGE, USER_FRIEND_REQUESTS_SENT_STATE_CHANGE, USER_FRIENDS_DATA_STATE_CHANGE, USERS_POSTS_STATE_CHANGE, USERS_LAST_POST_STATE_CHANGE } from '../constants/index'
+import { CLEAR_DATA, USERS_ALL_POSTS_STATE_CHANGE, USER_STATE_CHANGE, USER_LOCATION_STATE_CHANGE, USER_FRIENDS_STATE_CHANGE, USER_FRIEND_REQUESTS_STATE_CHANGE, USER_FRIEND_REQUESTS_SENT_STATE_CHANGE, USER_FRIENDS_DATA_STATE_CHANGE, USERS_POSTS_STATE_CHANGE, USERS_LAST_POST_STATE_CHANGE, USER_BARS_STATE_CHANGE } from '../constants/index'
 
+const geofire = require('geofire-common');
 let unsubscribe = [];
+
+
+export function clearData() {
+    return ((dispatch) => {
+        // for (let i = unsubscribe; i < unsubscribe.length; i++) {
+        //     unsubscribe[i]();
+        // }
+        dispatch({ type: CLEAR_DATA })
+    })
+}
 
 export function fetchUser() {
     return ((dispatch) => {
@@ -32,7 +43,10 @@ export function fetchUserLocation() {
         }
 
         let location = await Location.getCurrentPositionAsync({});
+        console.log('fethc bars')
+       
         dispatch({ type: USER_LOCATION_STATE_CHANGE, currentUserLocation: location })
+        dispatch(fetchBars())
             
     })
 }
@@ -56,45 +70,6 @@ export function fetchFriend(uid) {
         }
     })
 }
-export function fetchPosts(lastDocument) {
-
-    return ((dispatch, getState) => {
-
-        let query = db.collection('messages').orderBy('createdAt', 'desc'); // sort the data
-        if (lastDocument !== undefined) {
-        query = query.startAfter(lastDocument); // fetch data following the last document accessed
-        }
-        query.limit(8) // limit to your page size, 3 is just an example
-            .get()
-            .then(querySnapshot => {
-
-            let lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
-            
-            dispatch({ type: USERS_LAST_POST_STATE_CHANGE, lastDoc });
-
-            let posts = querySnapshot.docs.map(doc => {
-                const data = doc.data();
-                const key = doc.id;
-                return { key, ...data }
-            })
-            //const posts = [];
-            // querySnapshot.forEach(documentSnapshot => {
-            //     console.log(documentSnapshot.id)
-            //     posts.push({
-            //         ...documentSnapshot.data(),
-            //         key: documentSnapshot.id,
-            //     });
-            // });
-
-            dispatch({ type: USERS_POSTS_STATE_CHANGE, posts });
-
-            });
-
-    })
-
-
-}
-
 
 export function fetchUserFriends() {
     return ((dispatch) => {
@@ -207,6 +182,187 @@ export function queryUsersByName(name) {
                 })
         })
     })
+}
+
+export function fetchPostsByID(field = null, id = null, order = null, lastDoc = undefined) {
+    return ((dispatch, getState) => {
+        return new Promise((resolve, reject) => {
+
+            let isMore = true;
+            let secondFetch = false;
+            
+            let query = db.collection('messages')
+            let all = false;
+
+            if(field != null && id != null) {
+                query = query
+                .where(field, '==' , id)
+                
+            }else{
+                all = true;
+                query = query
+                .where("placeID", "in", ["ChIJK-bTLIle24cRvmyPEI5iwQY", "ChIJPcV4d8-33IcRT7MDdfcUmRQ", "ChIJX7IOCcS33IcR4zdKrb8iHqU", "ChIJna0jxVLKj4ARcmzC8VyOlZ0"])
+            }
+
+            if(order != null){
+                query = query
+                .orderBy(order, "desc")
+            }else{
+                query = query
+                .orderBy("createdAt", "desc")
+            }
+
+
+                
+            if (lastDoc !== undefined) {
+                console.log('borke')
+                secondFetch = true;
+                query = query.startAfter(lastDoc); // fetch data following the last document accessed
+            }
+            console.log('request')
+            query.limit(8) // limit to your page size, 3 is just an example
+                .get()
+                .then(querySnapshot => {
+                    const last = querySnapshot.docs[querySnapshot.docs.length - 1];
+                    const posts = [];
+                    querySnapshot.forEach(documentSnapshot => {
+                        posts.push({
+                            ...documentSnapshot.data(),
+                            key: documentSnapshot.id,
+                        });
+                    });
+
+                    // if(all){
+                    //     dispatch({ type: USERS_ALL_POSTS_STATE_CHANGE, allPosts: posts })
+                    // }else{
+                    //     dispatch({ type: USERS_POSTS_STATE_CHANGE, posts: posts })
+                    // }
+
+                    if(querySnapshot.docs.length < 8){
+                        isMore = false;
+                    }
+
+                    const data = {
+                        posts : posts,
+                        isMore: isMore,
+                        lastDoc: last,
+                        secondFetch: secondFetch
+                    }
+
+                    resolve(data);  
+                    
+                });         
+        })
+    })
+}
+
+
+export function fetchPosts(field = null, id = null, order = null) {
+    return ((dispatch, getState) => {
+        return new Promise((resolve, reject) => {
+            let lastDocument = getState().usersState.lastDoc
+
+            let query = db.collection('messages')
+
+            if(field != null && id != null) {
+                query = query
+                .where(field, '==' , id)
+                
+            }else{
+                query = query
+                .where("placeID", "in", ["ChIJK-bTLIle24cRvmyPEI5iwQY", "ChIJPcV4d8-33IcRT7MDdfcUmRQ", "ChIJX7IOCcS33IcR4zdKrb8iHqU", "ChIJna0jxVLKj4ARcmzC8VyOlZ0"])
+            }
+
+            if(order != null){
+                query = query
+                .orderBy(order, "desc")
+            }else{
+                query = query
+                .orderBy("createdAt", "desc")
+            }
+
+
+                
+            if (lastDocument !== undefined) {
+                query = query.startAfter(lastDocument); // fetch data following the last document accessed
+            }
+            console.log('request')
+            query.limit(8) // limit to your page size, 3 is just an example
+                .get()
+                .then(querySnapshot => {
+
+                    
+                    const last = querySnapshot.docs[querySnapshot.docs.length - 1];
+                    
+        
+                    dispatch({ type: USERS_LAST_POST_STATE_CHANGE, lastDoc: last })
+
+                    const posts = [];
+                    querySnapshot.forEach(documentSnapshot => {
+        
+                        posts.push({
+                            ...documentSnapshot.data(),
+                            key: documentSnapshot.id,
+                        });
+
+                    });
+
+                    resolve(posts);  
+                });         
+        })
+    })
+}
+
+
+export function fetchBars() {
+    return ((dispatch, getState) => {
+
+        const location = getState().userState.currentUserLocation;
+        const center = [location.coords.latitude, location.coords.longitude];
+        const radiusInM = 16 * 1000;
+
+        // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
+        // a separate query for each pair. There can be up to 9 pairs of bounds
+        // depending on overlap, but in most cases there are 4.
+        const bounds = geofire.geohashQueryBounds(center, radiusInM);
+        const promises = [];
+        for (const b of bounds) {
+            const q = db.collection('bars')
+                .orderBy('geohash')
+                .startAt(b[0])
+                .endAt(b[1])
+            promises.push(q.get());
+        }
+        // Collect all the query results together into a single list
+        Promise.all(promises).then((snapshots) => {
+        const matchingDocs = [];
+
+        for (const snap of snapshots) {
+            for (const doc of snap.docs) {
+                const lat = doc.get('lat');
+                const lng = doc.get('lng');
+
+                // We have to filter out a few false positives due to GeoHash
+                // accuracy, but most will match
+                const distanceInKm = geofire.distanceBetween([lat, lng], center);
+                const distanceInM = distanceInKm * 1000;
+                if (distanceInM <= radiusInM) {
+                    matchingDocs.push({
+                        ...doc.data(),
+                        key: doc.id,
+                    });
+                }
+            }
+        }
+
+        return matchingDocs;
+        }).then((matchingDocs) => {
+        // Process the matching documents
+        // ...
+            dispatch({ type: USER_BARS_STATE_CHANGE, bars: matchingDocs });
+        });
+        
+    });
 }
 
 

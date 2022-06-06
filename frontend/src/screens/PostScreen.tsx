@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import AppView from "../components/general/AppView";
 import Header from "../components/PostScreen/Header/Header";
 import PostList from "../components/PostScreen/PostList";
@@ -10,17 +10,24 @@ export type Props = {
 
 const PostScreen: FC<Props> = (props) => {
 
-    let itemId, name;
+    const [left, setLeft] = useState(true);
+    // useEffect(() => {
+    //     console.log('left')
+    // },[left])
+
+    let placeID, name;
     if(props.route.params){
-        itemId = props.route.params.itemId;
+        placeID = props.route.params.itemId;
         name = props.route.params.name
     }
 
     return(
        
         <AppView>
-            <Header title = {name}/>
-            <PostList itemId={itemId}/>
+            <Header title = {name} left={left} setLeft={setLeft}/>
+
+            {!left ?  <PostList itemID={placeID} field={'placeID'} left={left} order={'createdAt'}/> :  <PostList itemID={placeID} field={'placeID'} order={'score'} left={left}/>}
+           
             {/* <PostList/> */}
         </AppView>
        

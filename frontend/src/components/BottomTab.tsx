@@ -20,6 +20,7 @@ type Props = {
   fetchUserFriends: () => void;
   fetchUserFriendRequests: () => void;
   fetchUserFriendRequestsSent: () => void;
+  
 }
 
 function BottomTab(props: Props) {

@@ -1,22 +1,16 @@
-import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native'
-import React from 'react'
-import { useEffect } from 'react';
-import useBars from "../../../hooks/useBars";
+import {FlatList} from 'react-native'
+import React, { useState } from 'react'
 import BarBox from "../BarBox"; 
 import Loader from '../../general/Loader';
+import { connect } from 'react-redux';
 
-const BarList = () => {
+const BarList = (props) => {
 
-    const [{data, loading, error}, getBars] = useBars();
-    useEffect(() => {
-        getBars();
-    }, []);
-
-    if (loading) return <Loader/>
+    if (!props.bars) return <Loader/>
         
     return (
         <FlatList
-            data={data} 
+            data={props.bars} 
             renderItem={({ item, index }) => {   
                
             return (
@@ -28,10 +22,16 @@ const BarList = () => {
             }}
             vertical
             showsVerticalScrollIndicator={false}
-            keyExtractor={(bar) => bar.name}    
+            keyExtractor={(item) => item.key}    
         />
     )
 }
 
 
-export default BarList
+
+const mapStateToProps = (store) => ({
+    bars: store.userState.bars
+  })
+
+
+export default connect(mapStateToProps)(BarList);
