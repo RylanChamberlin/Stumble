@@ -23,34 +23,44 @@ export default StyleSheet.create({
    
     infoBox: {
 
+        flex: 1,
         padding: 10,
         margin: 10,
         borderRadius: 8,
         borderWidth: StyleSheet.hairlineWidth,
         backgroundColor: "#ffffff",
-        flexDirection: "row",
+        //flexDirection: "row",
         justifyContent: "space-between",
         
 
         },
-    infoBoxRight: {
-      
-     
-    },
-    infoBoxLeft: {
-        width: infoBoxWidth/3,
-        justifyContent: "space-between",
-       
-    },
+
     title: {
         fontSize: 20,
     },
     
-    image: {
-        resizeMode : 'stretch',
-        width: infoBoxWidth/2.3, 
-        height: infoBoxWidth/3,
-        borderRadius: 10
-    },
     bold,
+
+    topPostTitle: {
+        fontSize: 10, fontWeight: 'bold', textDecorationLine: 'underline',
+        paddingVertical: 10
+    },
+    topPost:{
+        fontSize: 25
+    },
+
+    postCount:{
+
+    },
+
+    seeAll: {
+        fontSize: 10, fontWeight: 'bold', textDecorationLine: 'underline',
+        marginTop: 2
+    },
+
+    newPostsBox: {
+        flexDirection: 'row',
+        marginLeft: 'auto'
+    }
+
 });

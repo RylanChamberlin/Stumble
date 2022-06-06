@@ -81,6 +81,44 @@ exports.updateScore = functions.firestore
           });
     });
 
+exports.updatePostCount = functions.firestore
+    .document("/messages/{messageID}")
+    .onCreate((snap, context) => {
+      const newValue = snap.data();
+      const placeID = newValue.placeID;
+      return db
+          .collection("bars")
+          .doc(placeID)
+          .update({
+            postCount: admin.firestore.FieldValue.increment(1),
+          });
+    });
+
+exports.updateTopPost24 = functions.pubsub
+    .schedule("2 17 * * *")
+    .timeZone("America/New_York")
+    .onRun((context) => {
+      let post;
+      return db.collection("bars").get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          db.collection("messages")
+              .where("placeID", "==", doc.id)
+              .orderBy("score", "desc").limit(1).get()
+              .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                  // doc.data() is never undefined for query doc snapshots
+                  console.log(doc.id, " => ");
+                  post = doc.data();
+                });
+
+                doc.ref.update({
+                  topPost: post.text,
+                  postCount: 0,
+                });
+              });
+        });
+      });
+    });
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //

@@ -23,11 +23,15 @@ const BarBox = ({item, numComment}) => {
             <View style={[styles.outsideContainer]}>
                 <View style={styles.container}>
                     <View style = {styles.infoBox}>
-                        <View style = {styles.infoBoxLeft}>
-                            <Text style = {[styles.title, styles.bold]}>{item.name}</Text>
-                            <Text style = {{fontSize: 10, fontWeight: 'bold', textDecorationLine: 'underline',}}>TODAY'S TOP POST</Text>
-                            <Text>new posts</Text>
+                        
+                        <Text style = {[styles.title, styles.bold]}>{item.name}</Text>
+                        <Text style = {styles.topPostTitle}>TODAY'S TOP POST</Text>
+                        <Text style = {styles.topPost} >{item.topPost ? `"${item.topPost}"` : 'Go Post for TOP!'}</Text>
+                        <View style = {styles.newPostsBox}>
+                            <Text style = {styles.postCount}>{item.postCount} new posts </Text>
+                            <Text style = {styles.seeAll}>see all</Text>
                         </View>
+                        
                         
                     </View>
                 </View>

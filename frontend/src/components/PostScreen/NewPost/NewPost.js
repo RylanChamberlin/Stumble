@@ -16,11 +16,15 @@ const NewPost = (props) => {
     const [nearby, setNearby] = useState("");
     const [barData, setBarData] = useState("");
 
+
+
+
+
     useEffect(() => {    
         if(props.currentUserLocation && barInput){
             const latitude = props.currentUserLocation.coords.latitude;
             const longitude = props.currentUserLocation.coords.longitude;
-            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude}%2C${longitude}&radius=50000&type=bar&keyword=${barInput}&key=${GOOGLE_KEY}`)
+            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude}%2C${longitude}&radius=16000&type=bar&keyword=${barInput}&key=${GOOGLE_KEY}`)
             .then(response => response.json())
             .then(json => setNearby(json)) 
             console.log('feethcing google nearby api')
@@ -64,6 +68,9 @@ const NewPost = (props) => {
             lat: lat,
             lng: lng,
             geohash: hash,
+            rating: 0,
+            postCount: 0,
+            topPost: ''
         });
 
         writeMessage();
@@ -114,6 +121,9 @@ const NewPost = (props) => {
     return(
 
         <PopupPost post={props.post} setPost={props.setPost} title={'NEW POST'} buttonTitle={'POST'} buttonAction={sendMessage}>
+
+       
+        
         <TextInput 
             placeholder='@ bar location' 
             style = {[styles.barInput, !nearby ? {borderRadius: 10} : null]} 
@@ -163,6 +173,7 @@ const NewPost = (props) => {
         </View> 
 
         }
+
         </PopupPost> 
     );
 }
