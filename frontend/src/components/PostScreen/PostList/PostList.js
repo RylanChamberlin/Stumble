@@ -17,6 +17,8 @@ function PostList(props){
   useEffect(() => {
     setPosts([])
     setData({})
+
+    
     setPage(page - 1)
 
   },[props.order])
@@ -24,10 +26,11 @@ function PostList(props){
   useEffect(() => {
     console.log('fetch')
     props.fetchPostsByID(props.field, props.itemID, props.order, data.lastDoc).then(setData);
+    //console.log('error3')
   }, [page]);
 
   useEffect(() => {
-    if(data.secondFetch){
+    if(data.secondFetch && posts){
       setPosts([...posts, ...data.posts])
     }else{  
       setPosts(data.posts)
@@ -36,6 +39,7 @@ function PostList(props){
   }, [data.posts]);
 
   const fetchMoreData = () => {
+    console.log('getch more\n')
     if(data.isMore) setPage(page + 1);
   }
 

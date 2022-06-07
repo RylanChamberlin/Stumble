@@ -17,7 +17,7 @@ export function clearData() {
 }
 
 export function fetchUser() {
-    return ((dispatch) => {
+    return ((dispatch, getState) => {
         let listener = db
             .collection("users")
             .doc(auth.currentUser.uid)
@@ -28,6 +28,25 @@ export function fetchUser() {
                     console.log('does not exists')
                 }
             })
+
+
+        // checks if checkin is older then 3 hours if is it deletes checkin from user
+        const secondsSince = getState().userState?.currentUser?.checkIn?.checkInTime.seconds
+        if(secondsSince){
+            const dateCreated = new Date(secondsSince*1000);
+            const seconds = Math.floor((new Date() - dateCreated) / 1000);
+            const interval = seconds / 3600;
+            if (interval >= 3) {
+                db
+                  .collection("users")
+                  .doc(auth.currentUser.uid)
+                  .update({ 
+                    checkIn: null,
+                  });
+            } else {
+                console.log('check in stay')
+            }
+        }
         unsubscribe.push(listener)
     })
 }
@@ -223,6 +242,7 @@ export function fetchPostsByID(field = null, id = null, order = null, lastDoc = 
             query.limit(8) // limit to your page size, 3 is just an example
                 .get()
                 .then(querySnapshot => {
+                    console.log('error')
                     const last = querySnapshot.docs[querySnapshot.docs.length - 1];
                     const posts = [];
                     querySnapshot.forEach(documentSnapshot => {
@@ -248,7 +268,7 @@ export function fetchPostsByID(field = null, id = null, order = null, lastDoc = 
                         lastDoc: last,
                         secondFetch: secondFetch
                     }
-
+                    console.log('error2')
                     resolve(data);  
                     
                 });         
