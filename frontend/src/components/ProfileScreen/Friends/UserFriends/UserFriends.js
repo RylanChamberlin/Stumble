@@ -20,9 +20,10 @@ const UserFriends = (props) => {
     const [friends, setFriends] = useState({});
 
     useEffect(() => {
-        setFriends(props.currentUserFriends)
+        setFriends(props.currentUserFriendsData)
+        console.log(props.currentUserFriendsData)
        
-    }, [props.currentUserFriends]);
+    }, [props.currentUserFriendsData]);
 
     const navigation = useNavigation()
 
@@ -64,11 +65,11 @@ const UserFriends = (props) => {
                     data={friends}
                     renderItem={({ item, index }) => {
                         if (item.name.toLowerCase().includes(query.toLowerCase()) && item.username.toLowerCase().includes(query.toLowerCase())) {
-                          return <FriendBox name = {item.name} username = {item.username}/>
+                          return <FriendBox name = {item.name} username = {item.username} photoURL={item.photoURL}/>
                         }
                           return null;
                         }}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item) => item.uid}
                     showsVerticalScrollIndicator={false}
                     />  
 
@@ -82,7 +83,7 @@ const UserFriends = (props) => {
 
 
 const mapStateToProps = (store) => ({
-    currentUserFriends: store.userState.currentUserFriends 
+    currentUserFriendsData: store.userState.currentUserFriendsData
   })
 
 export default connect(mapStateToProps)(UserFriends);
