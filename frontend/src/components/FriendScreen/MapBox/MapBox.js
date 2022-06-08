@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity, Modal, ActivityIndicator, Image, FlatList } from 'react-native'
 import React, { useEffect } from 'react'
 import MapView, { Marker } from 'react-native-maps'
-import { Ionicons } from '@expo/vector-icons'; 
 import styles from './styles'
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { useState } from 'react';
@@ -16,11 +15,11 @@ function MapBox(props) {
     const [friends, setFriends] = useState({});
     const [region, setRegion] = useState();
     const [loading, setLoading] = useState(true);
+    // const [avatar, setAvatar] = useState("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png");
 
     useEffect(() => {
 
         const {currentUserLocation, currentUserFriendsData } = props;
-
         setFriends(currentUserFriendsData);
         if(currentUserLocation){
             setLoading(false)
@@ -30,9 +29,15 @@ function MapBox(props) {
                 latitudeDelta: 0.00922,
                 longitudeDelta: 0.00421,
             }); 
+
+
+
         }
 
     },[props.currentUserLocation, props.currentUserFriendsData])
+
+    
+
 
    
     //gets a list of people that are at the same bar
@@ -67,13 +72,17 @@ function MapBox(props) {
             friends.map((marker, index) => {
 
                 if(marker.checkIn==null) return;
+
+                if(marker.photoURL==null){
+                    marker.photoURL = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
+                }
                 return (
                 <Marker
                     key={marker.uid}
                     coordinate={{latitude: marker.checkIn.coords.latitude,longitude: marker.checkIn.coords.longitude}}
                 > 
                     <TouchableOpacity onPress = {() => showPeopleList(marker.checkIn)}>
-                        <Image style={styles.image} />
+                        <Image source={{uri: marker.photoURL}} style={styles.image} />
                     </TouchableOpacity>
                 </Marker>
                 );
@@ -101,14 +110,9 @@ function MapBox(props) {
                     renderItem={({ item, index }) => {
                         return(
                             <View style={styles.box}>
-                                <Image style={styles.image} />
-                                <Text style={{fontSize: 30, flex:1, marginLeft: 10}}>{item.name}</Text>
-                                <View style={{flexDirection: 'column', alignItems: "flex-end", padding: 5}}>
-                                    <TouchableOpacity>
-                                        <Ionicons name="person-add-sharp" size={24} color="black" style={{marginBottom: 15}}/>
-                                    </TouchableOpacity>
-                                    <Text>{new Date(item.checkIn.checkInTime.seconds *1000).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Text>
-                                </View>
+                                <Text style={{fontSize: 30, flex:1, marginLeft: 10, padding: 5}}>{item.name}</Text>
+                                <Text>{new Date(item.checkInTime.seconds *1000).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Text>
+                            
                             </View>
                         );
                     }}

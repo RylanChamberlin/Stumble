@@ -34,8 +34,8 @@ export default StyleSheet.create({
     },
 
     image: {
-      width: 25, 
-      height: 25, 
+      width: 50, 
+      height: 50, 
       borderWidth: 1, 
       borderRadius: 50,
       backgroundColor: 'blue',

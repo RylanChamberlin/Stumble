@@ -1,5 +1,6 @@
 
 import * as firebase from "firebase";
+import 'firebase/storage'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -23,8 +24,11 @@ if (firebase.apps.length === 0) {
 const auth = firebase.auth();
 const db = firebase.firestore();
 const database = firebase.database()
+const storage = firebase.storage()
+const storageRef = firebase.storage().ref();
 const FieldValue = firebase.firestore.FieldValue;
 const GeoPoint = firebase.firestore.GeoPoint;
 const dbTime = firebase.firestore.FieldValue.serverTimestamp()
 
-export { auth, db, database, FieldValue, dbTime, GeoPoint};
+
+export { auth, db, database, FieldValue, dbTime, GeoPoint, storage, storageRef};

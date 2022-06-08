@@ -23,7 +23,7 @@ function CheckIn(props){
         setLocation(currentUserLocation)
         if(currentUserLocation){ 
             setLoading(false)
-            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${currentUserLocation.coords.latitude}%2C${currentUserLocation.coords.longitude}&radius=50&type=bar&key=${GOOGLE_KEY}`)
+            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${currentUserLocation.coords.latitude}%2C${currentUserLocation.coords.longitude}&radius=500&type=bar&key=${GOOGLE_KEY}`)
             .then(response => response.json())
             .then(json => setBars(json)) 
         }
@@ -36,10 +36,10 @@ function CheckIn(props){
         props.setPost(false);
         data.locationID = check.id
         data.locationName = check.name
-        data.checkInTime = dbTime
         const userRef = db.collection('users').doc(auth.currentUser.uid);
         const res = await userRef.update({
             checkIn: data,
+            checkInTime: dbTime
             });
     }
 
@@ -52,7 +52,7 @@ function CheckIn(props){
 
         <View style={styles.container}>
             <View style={styles.userBox}>
-                <Image style={styles.image}/>
+                {/* <Image style={styles.image}/> */}
                 <View>
                     <Text style={styles.name}>{user.name}</Text>
                     <Text style={styles.username}>@{user.username}</Text>

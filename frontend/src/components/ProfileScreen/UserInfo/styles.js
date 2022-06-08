@@ -21,13 +21,24 @@ export default StyleSheet.create({
        
     },
 
-    image:{
-      
+    imageContainer:{
+        //flex: 1, 
         width: 75,
         height: 75,
         borderRadius: 50,
-        backgroundColor: "blue",
+        backgroundColor: "#E1E2E6",
+        alignItems: 'center',
+        justifyContent: 'center',
         marginRight: 10
+    },
+
+    image:{
+        position: "absolute",
+        width: 75,
+        height: 75,
+        alignItems: 'center', 
+        justifyContent: 'center',
+        borderRadius: 50,      
     },
 
     name: {

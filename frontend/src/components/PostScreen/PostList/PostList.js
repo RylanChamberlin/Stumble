@@ -24,9 +24,9 @@ function PostList(props){
   },[props.order])
   
   useEffect(() => {
-    console.log('fetch')
+   
     props.fetchPostsByID(props.field, props.itemID, props.order, data.lastDoc).then(setData);
-    //console.log('error3')
+  
   }, [page]);
 
   useEffect(() => {

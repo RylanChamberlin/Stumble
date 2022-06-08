@@ -31,7 +31,7 @@ export function fetchUser() {
 
 
         // checks if checkin is older then 3 hours if is it deletes checkin from user
-        const secondsSince = getState().userState?.currentUser?.checkIn?.checkInTime.seconds
+        const secondsSince = getState().userState?.currentUser?.checkInTime.seconds
         if(secondsSince){
             const dateCreated = new Date(secondsSince*1000);
             const seconds = Math.floor((new Date() - dateCreated) / 1000);
@@ -42,6 +42,7 @@ export function fetchUser() {
                   .doc(auth.currentUser.uid)
                   .update({ 
                     checkIn: null,
+                    checkInTime: null
                   });
             } else {
                 console.log('check in stay')
@@ -52,7 +53,7 @@ export function fetchUser() {
 }
 
 export function fetchUserLocation() {
-    return (async(dispatch) => {
+    return (async(dispatch, getState) => {
 
         let { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -234,7 +235,6 @@ export function fetchPostsByID(field = null, id = null, order = null, lastDoc = 
 
                 
             if (lastDoc !== undefined) {
-                console.log('borke')
                 secondFetch = true;
                 query = query.startAfter(lastDoc); // fetch data following the last document accessed
             }
@@ -242,7 +242,6 @@ export function fetchPostsByID(field = null, id = null, order = null, lastDoc = 
             query.limit(8) // limit to your page size, 3 is just an example
                 .get()
                 .then(querySnapshot => {
-                    console.log('error')
                     const last = querySnapshot.docs[querySnapshot.docs.length - 1];
                     const posts = [];
                     querySnapshot.forEach(documentSnapshot => {
@@ -268,7 +267,7 @@ export function fetchPostsByID(field = null, id = null, order = null, lastDoc = 
                         lastDoc: last,
                         secondFetch: secondFetch
                     }
-                    console.log('error2')
+                
                     resolve(data);  
                     
                 });         

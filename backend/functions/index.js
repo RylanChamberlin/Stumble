@@ -119,10 +119,18 @@ exports.updateTopPost24 = functions.pubsub
         });
       });
     });
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+// deletes checks ins older then 3 hours and checks every 3 hours
+exports.checkIns3 = functions.pubsub
+    .schedule("0 */3 * * *")
+    .onRun((context) => {
+      let post;
+      db.collection("users").orderBy("checkInTime").get()
+          .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              doc.ref.update({
+                topPost: post.text,
+                postCount: 0,
+              });
+            });
+          });
+    });
