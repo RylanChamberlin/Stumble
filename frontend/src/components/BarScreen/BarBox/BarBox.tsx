@@ -1,13 +1,25 @@
 import {View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "./styles";
+import { Bar } from "../../../services/bars";
+import { FC } from "react";
+import { RootStackParamList } from "../../../../../App";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 // type Props = NativeStackScreenProps<RootStackParamList, 'Single'>;
 
-const BarBox = ({item}) => {
+type Props = { 
+    item: Bar,
+    
+ }; 
 
-    const navigation = useNavigation({navigation});
+ type NavigationProps = NativeStackScreenProps<RootStackParamList, 'Single'>;
 
+const BarBox: FC<Props> = ({item}) => {
+
+    //const navigation = useNavigation<navigation>();
+    const navigation = useNavigation<any>()
+    
     // navigates to comments on the bar
     const clickBar = () => {
         navigation.navigate('Single', {
@@ -19,7 +31,6 @@ const BarBox = ({item}) => {
     return (
             <TouchableOpacity activeOpacity={.8} onPress={clickBar}>
             <ScrollView horizontal={true}  showsHorizontalScrollIndicator={false}>
-            
             <View style={[styles.outsideContainer]}>
                 <View style={styles.container}>
                     <View style = {styles.infoBox}>

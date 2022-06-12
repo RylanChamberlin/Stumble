@@ -1,5 +1,5 @@
-import {FlatList, RefreshControl, Text} from 'react-native'
-import React, { useCallback, useState} from 'react'
+import {FlatList, RefreshControl} from 'react-native'
+import React, { useCallback} from 'react'
 import BarBox from "../BarBox"; 
 import Loader from '../../general/Loader';
 import { useGetBarsByLocationQuery } from '../../../services/bars';
@@ -12,6 +12,7 @@ const BarList = () => {
     const onRefresh = useCallback(() => {refetch()}, []);
           
     if(isLoading) return <Loader/>
+
 
     return (
         <FlatList
