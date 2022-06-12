@@ -18,9 +18,7 @@ const BarScreen = ({navigation}: Props) => {
     //     })
     //     .catch(error => alert(error.message))
     // }
-
-   
-        
+     
     return (
         <AppView>
             {/* <View style={styles.logo}>

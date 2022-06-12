@@ -11,8 +11,9 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './frontend/src/redux/reducers';
+import { store } from "./frontend/src/app/store";
+//const store = createStore(rootReducer, applyMiddleware(thunk))
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

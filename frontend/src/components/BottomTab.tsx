@@ -27,12 +27,12 @@ function BottomTab(props: Props) {
 
     useEffect(() => {
     
-      props.fetchUser();
-      props.fetchUserLocation();
-      props.fetchUserFriends();
-      props.fetchUserFriendRequests();
-      props.fetchUserFriendRequestsSent();
-      console.log('FETCHING ALL DATA')
+      // props.fetchUser();
+      // props.fetchUserLocation();
+      // props.fetchUserFriends();
+      // props.fetchUserFriendRequests();
+      // props.fetchUserFriendRequestsSent();
+      // console.log('FETCHING ALL DATA')
   
     }, [])
 
@@ -93,11 +93,13 @@ function BottomTab(props: Props) {
   );
 }
 
-const mapStateToProps = (store: { userState: { currentUser: any; currentUserLocation: any; }; }) => ({
-  currentUser: store.userState.currentUser,
-  currentUserLocation: store.userState.currentUserLocation
-})
+// const mapStateToProps = (store: { userState: { currentUser: any; currentUserLocation: any; }; }) => ({
+//   currentUser: store.userState.currentUser,
+//   currentUserLocation: store.userState.currentUserLocation
+// })
 
-const mapDispatchProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators({ fetchUser, fetchUserLocation, fetchUserFriends, fetchUserFriendRequests, fetchUserFriendRequestsSent }, dispatch);
+// const mapDispatchProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators({ fetchUser, fetchUserLocation, fetchUserFriends, fetchUserFriendRequests, fetchUserFriendRequestsSent }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchProps)(BottomTab);
+// export default connect(mapStateToProps, mapDispatchProps)(BottomTab);
+
+export default BottomTab
