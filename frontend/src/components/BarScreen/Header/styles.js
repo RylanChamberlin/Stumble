@@ -19,6 +19,12 @@ export default StyleSheet.create({
         shadowColor: "black",
         shadowOffset: {width: 5, height: 5}, //gives shadow offset
         shadowOpacity: .5,
+    },
+    buttonText: {
+        color: '#f2f1f1', 
+        marginTop: 5, 
+        textDecorationLine: 'underline', 
+        fontSize: 15
     }
     
 
