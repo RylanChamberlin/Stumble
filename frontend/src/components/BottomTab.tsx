@@ -10,6 +10,9 @@ import ProfileScreen from '../screens/ProfileScreen';
 import { connect } from 'react-redux';
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { fetchUser, fetchUserLocation, fetchUserFriends, fetchUserFriendRequests, fetchUserFriendRequestsSent } from '../redux/actions/index';
+import { useAppDispatch } from '../app/hooks';
+import { storeLocation } from '../features/Location/locationSlice';
+import { fetchLocation } from '../services/fetchLocation';
 
 
 const Tab = createBottomTabNavigator();
@@ -25,8 +28,12 @@ type Props = {
 
 function BottomTab(props: Props) {
 
-    useEffect(() => {
-    
+    const dispatch = useAppDispatch()
+
+    useEffect( async () => {
+
+      dispatch(storeLocation(await fetchLocation()));
+
       // props.fetchUser();
       // props.fetchUserLocation();
       // props.fetchUserFriends();

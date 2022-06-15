@@ -1,17 +1,26 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { fetchBars } from '../services/bars'
-import { setupListeners } from '@reduxjs/toolkit/query'
-// ...
+import { fetchPosts } from '../services/posts'
+import locationReducer from '../features/Location/locationSlice'
+
 
 export const store = configureStore({
   reducer: {
-   [fetchBars.reducerPath]: fetchBars.reducer
+    location: locationReducer,
+   [fetchBars.reducerPath]: fetchBars.reducer,
+   [fetchPosts.reducerPath]: fetchPosts.reducer
   },
+
+  
 
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(fetchBars.middleware),
+  
+  middleware: (getDefaultMiddleware) => 
+    getDefaultMiddleware({
+        serializableCheck: false, //disables so time object from firebase db can pass
+    }).concat(fetchBars.middleware).concat(fetchPosts.middleware),
+    //getDefaultMiddleware(),
 })
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

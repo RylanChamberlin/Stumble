@@ -7,6 +7,7 @@ import { RootStackParamList } from "../../../../../App";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 // type Props = NativeStackScreenProps<RootStackParamList, 'Single'>;
+//const navigation = useNavigation<navigation>();
 
 type Props = { 
     item: Bar,

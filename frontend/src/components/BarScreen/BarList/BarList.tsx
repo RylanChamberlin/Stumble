@@ -6,7 +6,7 @@ import { useGetBarsByLocationQuery } from '../../../services/bars';
 
 const BarList = () => {
 
-    const { data, error, isLoading, isFetching, isSuccess, refetch } = useGetBarsByLocationQuery();
+    const { data: bars, error, isLoading, isFetching, isSuccess, refetch } = useGetBarsByLocationQuery();
 
     const renderItem = useCallback (({ item }) => <BarBox item={item}/>,[]);
     const onRefresh = useCallback(() => {refetch()}, []);
@@ -17,7 +17,7 @@ const BarList = () => {
     return (
         <FlatList
     
-            data={data} 
+            data={bars} 
             renderItem={renderItem}
             refreshControl={
                 <RefreshControl

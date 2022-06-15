@@ -8,9 +8,6 @@ import LoginScreen from "./frontend/src/screens/auth/LoginScreen";
 import PostScreen from "./frontend/src/screens/PostScreen";
 
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import thunk from 'redux-thunk';
-import rootReducer from './frontend/src/redux/reducers';
 import { store } from "./frontend/src/app/store";
 //const store = createStore(rootReducer, applyMiddleware(thunk))
 

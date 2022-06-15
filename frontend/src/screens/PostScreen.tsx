@@ -1,6 +1,7 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import AppView from "../components/general/AppView";
-import Header from "../components/PostScreen/Header/Header";
+import Header from "../components/PostScreen/Header";
+import PopularPostList from "../components/PostScreen/PopularPostList";
 import PostList from "../components/PostScreen/PostList";
 
 
@@ -10,7 +11,7 @@ export type Props = {
 
 const PostScreen: FC<Props> = (props) => {
 
-    const [left, setLeft] = useState(true);
+    const [left, setLeft] = useState(false);
     // useEffect(() => {
     //     console.log('left')
     // },[left])
@@ -24,9 +25,10 @@ const PostScreen: FC<Props> = (props) => {
     return(
        
         <AppView>
+           {/* // <Header title = {name} left={left} setLeft={setLeft}/> */}
             <Header title = {name} left={left} setLeft={setLeft}/>
 
-            {!left ?  <PostList itemID={placeID} field={'placeID'} left={left} order={'createdAt'}/> :  <PostList itemID={placeID} field={'placeID'} order={'score'} left={left}/>}
+            {!left ?  <PostList itemID={placeID} order={'createdAt'}/> : <PopularPostList itemID={placeID}/>}
            
             {/* <PostList/> */}
         </AppView>
