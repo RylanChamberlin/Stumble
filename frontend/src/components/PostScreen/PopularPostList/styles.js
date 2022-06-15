@@ -21,18 +21,5 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-
-    postText: {
-        paddingBottom: 10, fontSize: 20
-    },
-
-    bottomTextInfo:{
-        flexDirection: 'row', marginTop: 'auto'
-    },
-    
-    barName: {fontWeight: 'bold', maxWidth: '65%'},
-
-    date: {fontWeight: '200'},
-
     elevation
 })
