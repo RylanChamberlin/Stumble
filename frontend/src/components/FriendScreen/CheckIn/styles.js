@@ -55,5 +55,9 @@ export default StyleSheet.create({
     },
     barnameBox:{
         flexDirection: 'row',
+    },
+
+    nearby: {
+        color: 'red'
     }
 });

@@ -1,57 +1,57 @@
-import { View, Text, TouchableOpacity, Modal, ActivityIndicator, Image, FlatList } from 'react-native'
+import { View, Text, TouchableOpacity, Modal, Image, FlatList } from 'react-native'
 import React, { useEffect } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import styles from './styles'
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { useState } from 'react';
 import { BlurView } from 'expo-blur';
-import { connect } from 'react-redux';
 import Loader from '../../general/Loader';
+import { useAppSelector } from '../../../app/hooks';
+import useUsers from '../../../hooks/useUsers';
 
-function MapBox(props) {
+function MapBox() {
 
     const [showPeeps, setPeeps] = useState(false);
-    const [peopleList, setPeopleList] = useState({})
-    const [friends, setFriends] = useState({});
-    const [region, setRegion] = useState();
-    const [loading, setLoading] = useState(true);
-    // const [avatar, setAvatar] = useState("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png");
+    const [peopleList, setPeopleList] = useState<any>([])
+    const [region, setRegion] = useState<any>();
+
+    const {isLoading, isError, data} = useUsers();
+    const location = useAppSelector(state => state.location.coords)
 
     useEffect(() => {
-
-        const {currentUserLocation, currentUserFriendsData } = props;
-        setFriends(currentUserFriendsData);
-        if(currentUserLocation){
-            setLoading(false)
+        if(location){
             setRegion({
-                latitude: currentUserLocation.coords.latitude,
-                longitude: currentUserLocation.coords.longitude,
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
                 latitudeDelta: 0.00922,
                 longitudeDelta: 0.00421,
             }); 
-
-
-
         }
-
-    },[props.currentUserLocation, props.currentUserFriendsData])
+        
+    },[location])
 
     
-
-
-   
     //gets a list of people that are at the same bar
-    const showPeopleList = ({locationID, locationName}) => {
-        const people = friends.filter(item => item.checkIn?.locationID == locationID)
+    const showPeopleList = ({locationID}: {locationID: string}) => {
+        const people = data.filter((item: any) => item.checkIn?.locationID == locationID)
         setPeopleList(people)
         setPeeps(!showPeeps)
     }
-   
-    if(loading) {
-        return  <Loader/>
+
+
+    const personItem = (item: any) => { 
+        return (
+            <View style={styles.box}>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text>{new Date(item.checkInTime.seconds *1000).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Text>
+            </View>
+        );
     }
 
-    
+  if(isLoading || !location.coords) {
+    return  <Loader/>
+  }
+
   return (
   
     <View style={styles.container}>
@@ -60,7 +60,7 @@ function MapBox(props) {
         <MapView style={styles.map} 
             initialRegion={region}
         >
-            <Marker coordinate={region}>
+            <Marker coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude}}>
                 {/* <TouchableOpacity onPress = {() => setPeeps(!showPeeps)}>
                     <Image style={styles.image} />
 
@@ -69,22 +69,22 @@ function MapBox(props) {
 
             {
 
-            friends.map((marker, index) => {
+            data.map((marker: any, index) => {
 
                 if(marker.checkIn==null) return;
-
                 if(marker.photoURL==null){
                     marker.photoURL = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
                 }
                 return (
-                <Marker
-                    key={marker.uid}
-                    coordinate={{latitude: marker.checkIn.coords.latitude,longitude: marker.checkIn.coords.longitude}}
-                > 
+                   <Marker
+                        key={marker.uid}
+                        coordinate={{latitude: marker.checkIn.location.coords.latitude, longitude: marker.checkIn.location.coords.longitude}}
+                    > 
                     <TouchableOpacity onPress = {() => showPeopleList(marker.checkIn)}>
                         <Image source={{uri: marker.photoURL}} style={styles.image} />
                     </TouchableOpacity>
                 </Marker>
+               
                 );
             })
 
@@ -104,17 +104,11 @@ function MapBox(props) {
                 onRequestClose={() => setPeeps(!showPeeps)}
             >
             
-             <BlurView intensity={5} style={{flex: 1, paddingTop: 200}}>
+            <BlurView intensity={5} style={styles.blurBackground}>
                 <FlatList
                     data={peopleList}
                     renderItem={({ item, index }) => {
-                        return(
-                            <View style={styles.box}>
-                                <Text style={{fontSize: 30, flex:1, marginLeft: 10, padding: 5}}>{item.name}</Text>
-                                <Text>{new Date(item.checkInTime.seconds *1000).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Text>
-                            
-                            </View>
-                        );
+                        return(personItem(item));
                     }}
                     keyExtractor={(item) => item.uid}
                     showsVerticalScrollIndicator={false}
@@ -126,11 +120,5 @@ function MapBox(props) {
   )
 }
 
-
-const mapStateToProps = (store) => ({
-    currentUserLocation: store.userState.currentUserLocation,
-    currentUserFriendsData: store.userState.currentUserFriendsData
-  })
-
-export default connect(mapStateToProps)(MapBox);
+export default MapBox;
 

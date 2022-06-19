@@ -46,4 +46,16 @@ export default StyleSheet.create({
     backgroundColor: 'green',
     borderRadius: 10,
   },
+
+  blurBackground: {
+    flex: 1, 
+    paddingTop: 200
+  },
+
+  name: {
+    fontSize: 30, 
+    flex:1, 
+    marginLeft: 10, 
+    padding: 5
+  }
 })

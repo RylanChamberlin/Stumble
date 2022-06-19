@@ -5,27 +5,24 @@ import ButtonSwitch from '../../general/ButtonSwitch'
 import CheckIn from '../CheckIn'
 import { useState } from 'react'
 
-const Header = ({feed, setFeed}) => {
+const Header = ({feed, setFeed}: {feed: boolean, setFeed: (arg0: boolean) => void}) => {
 
 const [post, setPost] = useState(false);
 
-  return (
+  return ( 
         <View style={styles.header}>
-        
             <View style={{alignItems: "center",}}>
-            
                 <Text style={styles.title}>FRIENDS</Text>
             </View>
             <ButtonSwitch button1 = "FEED" button2 = "MAP" left = {feed} setLeft = {setFeed}/>
 
-            <CheckIn post={post} setPost={setPost}/>
             {/* Not sure the best place for this */}
+            <CheckIn post={post} setPost={setPost}/>
 
             <TouchableOpacity style={styles.newPost} onPress={() => setPost(!post)}>
                 <Text style={{fontSize:20, fontWeight: "bold"}}>CHECK-IN</Text>
             </TouchableOpacity>
         </View>
-
   )
 }
 

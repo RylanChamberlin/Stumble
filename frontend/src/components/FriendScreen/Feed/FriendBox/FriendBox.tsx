@@ -1,10 +1,49 @@
 import { useEffect, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import timeSince from "../../../../services/timeSince";
-import LikeButton from "../../../general/LikeButton";
+
 import styles from "./styles";
 
-export default function FriendBox({item}){
+type location = {
+    coords: coords
+    timestamp: number
+}
+
+type coords = {
+    accuracy: number
+    altitude: number
+    altitudeAccuracy: number
+    heading: number
+    latitude: number
+    longitude: number
+    speed: number
+}
+
+type checkIn = {
+    location: location
+    locationID: string
+    locationName: string
+ 
+}
+
+type user = {
+    checkIn: checkIn
+    checkInCount: number
+    checkInTime: any
+    name: string
+    photoURL: string
+    upvoteTotal: number
+    username: string
+
+}
+
+type item = {
+    item: user
+}
+
+
+
+export default function FriendBox({item}: item){
 
     if (item.checkIn == null) return null;
 
