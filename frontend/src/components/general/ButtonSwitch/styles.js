@@ -16,4 +16,19 @@ export default StyleSheet.create({
     buttonText:{
         fontSize:20, fontWeight: "bold",
     },
+
+    whiteBackground:{
+        backgroundColor: 'white'
+    },
+
+    blackBackground:{
+        backgroundColor: 'black'
+    },
+
+    blackColor:{
+        color: 'black'
+    },
+    whiteColor:{
+        color: 'white'
+    },
 });

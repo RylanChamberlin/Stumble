@@ -1,11 +1,21 @@
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Modal, Text, TouchableOpacity, View } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import { Feather } from '@expo/vector-icons'; 
 
 import AppView from "../AppView";
 import styles from "./styles";
+import { FC } from "react";
 
-export default function PopupPost(props){
+
+type Props = {
+    post: boolean
+    setPost: (arg0: boolean) => void
+    title: string
+    buttonAction: () => void;
+    buttonTitle: string
+}
+
+const PopupPost: FC<Props> = (props) => {
 
     return(
 
@@ -43,3 +53,4 @@ export default function PopupPost(props){
     );
 }
 
+export default PopupPost;
