@@ -11,10 +11,11 @@ import { connect } from 'react-redux';
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { fetchUser, fetchUserLocation, fetchUserFriends, fetchUserFriendRequests, fetchUserFriendRequestsSent } from '../redux/actions/index';
 import { useAppDispatch } from '../app/hooks';
-import { storeLocation, storeUserInfo } from '../features/Location/locationSlice';
+import { storeLocation, storeUserFriends, storeUserInfo } from '../features/Location/locationSlice';
 import { fetchLocation } from '../services/fetchLocation';
 
 import { fetchUserInfo } from '../services/fetchUserInfo';
+import { fetchFriends } from '../services/userFetchData';
 
 
 const Tab = createBottomTabNavigator();
@@ -36,6 +37,7 @@ function BottomTab(props: Props) {
 
       dispatch(storeLocation(await fetchLocation()));
       dispatch(storeUserInfo(await fetchUserInfo()));
+      dispatch(storeUserFriends(await fetchFriends()));
 
       // props.fetchUser();
       // props.fetchUserLocation();

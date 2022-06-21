@@ -56,7 +56,7 @@ function CheckIn(props:Props){
     },[])
 
     useEffect(() => {
-        searchNearbyPhone(50);
+        searchNearbyPhone(500);
     }, [location])
 
     const postCheckIn = () => {

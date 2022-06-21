@@ -3,7 +3,7 @@ import { ImageBackground, SafeAreaView, StyleSheet} from 'react-native';
 import styles from './styles';
 
 type Props = {
-    style: any
+    style?: any
 }
 
 const AppView: FC<Props> = props => {

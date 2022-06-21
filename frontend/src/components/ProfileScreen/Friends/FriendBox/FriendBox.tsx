@@ -4,7 +4,7 @@ import styles from './styles'
 
 
 type Props = {  
-    photoURL: string
+    photoURL?: string
     name: string
     username: string
 }

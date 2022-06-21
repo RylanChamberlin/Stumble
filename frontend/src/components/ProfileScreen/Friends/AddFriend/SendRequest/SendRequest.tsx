@@ -20,7 +20,7 @@ const SendRequest: FC<Props> = (props) => {
           renderItem={({ item, index }) => {
               return (
                   <View style={{flexDirection: "row", alignItems: "center"}}>
-                      <FriendBox name={item.name} username={item.username} photoURL={''}/>
+                      <FriendBox name={item.name} username={item.username}/>
                       {
                         props.acceptOrAdd(item.id) ?
                         <TouchableOpacity onPress={() => props.sendRequest(item)} style={styles.acceptButton}>

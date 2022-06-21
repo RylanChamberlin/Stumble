@@ -9,13 +9,13 @@ import Loader from '../../general/Loader';
 import { useAppSelector } from '../../../app/hooks';
 import useUsers from '../../../hooks/useUsers';
 
-function MapBox() {
+function MapBox(props: any) {
 
     const [showPeeps, setPeeps] = useState(false);
     const [peopleList, setPeopleList] = useState<any>([])
     const [region, setRegion] = useState<any>();
 
-    const {isLoading, isError, data} = useUsers();
+   
     const location = useAppSelector(state => state.location.coords)
 
     useEffect(() => {
@@ -33,7 +33,7 @@ function MapBox() {
     
     //gets a list of people that are at the same bar
     const showPeopleList = ({locationID}: {locationID: string}) => {
-        const people = data.filter((item: any) => item.checkIn?.locationID == locationID)
+        const people = props.data.filter((item: any) => item.checkIn?.locationID == locationID)
         setPeopleList(people)
         setPeeps(!showPeeps)
     }
@@ -48,7 +48,7 @@ function MapBox() {
         );
     }
 
-  if(isLoading || !location.coords) {
+  if(props.isLoading || !location.coords) {
     return  <Loader/>
   }
 
@@ -69,12 +69,16 @@ function MapBox() {
 
             {
 
-            data.map((marker: any, index) => {
+            props.data.map((marker: any) => {
 
-                if(marker.checkIn==null) return;
+                console.log(marker)
+                console.log('\n\n\n')
+
+                if(marker.checkIn==null) return null;
                 if(marker.photoURL==null){
                     marker.photoURL = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
                 }
+               
                 return (
                    <Marker
                         key={marker.uid}

@@ -5,20 +5,22 @@ import Loader from '../../../general/Loader';
 import useUsers from '../../../../hooks/useUsers';
 
 
-function FeedList () {
+function FeedList (props: any) {
 
-  const {isLoading, isError, data} = useUsers();
+  // const {isLoading, isError, data} = useUsers();
+
+  //console.log(data)
    
   const renderItem = useCallback (({ item }) => <FriendBox item = {item}/>,[]);
   const keyExtractor = useCallback( (item) => item.uid, []);
 
-  if (isLoading) {
+  if (props.isLoading || !props.data) {
     return  <Loader/>
   }
 
   return (
     <FlatList
-      data={data}
+      data={props.data}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       showsVerticalScrollIndicator={false}

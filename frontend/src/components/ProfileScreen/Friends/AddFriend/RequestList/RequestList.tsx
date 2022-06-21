@@ -12,11 +12,10 @@ type Props = {
 
 const RequestList: FC<Props>= (props) => {
 
-    const title = 'Requests'
+    const title = 'Requests';
 
     return (
         <View style = {styles.innerBox}>
-
             <Text>{title}</Text>
             <FlatList
                 data={props.requestList}
@@ -25,7 +24,7 @@ const RequestList: FC<Props>= (props) => {
                         <TouchableOpacity onPress= {() =>  props.cancelRequest(item.id)}>
                             <Feather name="x" size={24} color="black"/>
                         </TouchableOpacity>
-                        <FriendBox name={item.name} username={item.username} photoURL={''}/>
+                        <FriendBox name={item.name} username={item.username}/>
                         <TouchableOpacity onPress={() => props.acceptRequest(item.id)} style={styles.acceptButton}>
                             <Text>Accept</Text>
                         </TouchableOpacity>

@@ -1,16 +1,17 @@
-import { StyleSheet} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import AppView from "../components/general/AppView";
 import Header from "../components/BarScreen/Header";
 import BarList from "../components/BarScreen/BarList";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../App";
 import { useNavigation } from "@react-navigation/native";
+import { auth } from "../firebase";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
 const BarScreen = ({navigation}: Props) => {
 
-    // const navigation = useNavigation({navigator})
+    //const navigation = useNavigation({navigator})
     // const handleSignOut = () => {
     //     auth
     //     .signOut()

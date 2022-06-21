@@ -18,11 +18,9 @@ type Props = {
 const AddFriends: FC<Props> = (props) => {
 
     const {queryUsers, sendList, requestList, acceptOrAdd, acceptRequest, sendRequest, cancelRequest} = useSearchUsers()
-   
+   console.log('brome')
     return (
-        <GestureRecognizer
-            style={{flex: 1}}
-            >
+        <GestureRecognizer style={{flex: 1}}>
             <Modal
                 animationType="slide"
                 transparent={true}

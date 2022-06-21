@@ -11,6 +11,7 @@ import Loader from '../../../general/Loader';
 import useUsers from '../../../../hooks/useUsers';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../../../../App';
+import { useAppSelector } from '../../../../app/hooks';
 
 type UserScreenProp = NativeStackNavigationProp<RootStackParamList, 'BottomTab'>;
 
@@ -19,14 +20,15 @@ const UserFriends = () => {
 
     const [post, setPost] = useState(false);
     const [query,setQuery] = useState('');
-    const {isLoading, isError, data, friends} = useUsers();
+   
+    const friends = useAppSelector(state => state.location.friends)
     const navigation = useNavigation<UserScreenProp>()
 
     const goBack = () => {
         navigation.navigate("BottomTab")
     }
    
-    if (isLoading) {
+    if (!friends) {
         return  <Loader/>
     }
 

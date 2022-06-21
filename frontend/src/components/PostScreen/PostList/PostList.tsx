@@ -42,7 +42,7 @@ function PostList(props: Props){
   const renderLoader = () => { return isMore ? <Loader/> : null}
   const keyExtractor = useCallback( (item) => item.key, []);
 
-  if(!posts) return <Loader/>
+  if(isLoading) return <Loader/>
 
   return (
     <FlatList
