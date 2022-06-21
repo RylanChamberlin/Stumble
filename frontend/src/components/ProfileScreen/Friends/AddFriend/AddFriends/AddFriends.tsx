@@ -1,39 +1,24 @@
-import { FlatList, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Modal, Text, TextInput, TouchableOpacity, View } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 import { Feather } from '@expo/vector-icons'; 
 
 import AppView from "../../../../general/AppView";
 import styles from "./styles";
-import { FC, useEffect, useState } from "react";
 import SendRequest from "../SendRequest";
 import RequestList from "../RequestList";
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { queryUsersByUsername, queryUsersByName } from '../../../../../redux/actions/index';
+import useSearchUsers from "../../../../../hooks/useSearchUsers";
+import { FC } from "react";
 
-const AddFriends = (props) => {
-
-    const [usernames, setUsernames] = useState([])
-    const [names, setNames] = useState([]) 
-    const [allUsers, setAllUsers] = useState([])
-
-    const searchUser = (search) => {
-
-        if(search.length == 0){
-            setAllUsers([])
-            return;
-        }
-
-        props.queryUsersByUsername(search).then(setUsernames)
-        props.queryUsersByName(search).then(setNames)
-
-        const ids = new Set(usernames.map(d => d.id));
-        const merged = [...usernames, ...names.filter(d => !ids.has(d.id))]
-
-        setAllUsers(merged)
-
-    }
+type Props = {
+    post: boolean
+    setPost: (arg0: boolean) => void;
     
+}
+
+const AddFriends: FC<Props> = (props) => {
+
+    const {queryUsers, sendList, requestList, acceptOrAdd, acceptRequest, sendRequest, cancelRequest} = useSearchUsers()
+   
     return (
         <GestureRecognizer
             style={{flex: 1}}
@@ -58,11 +43,14 @@ const AddFriends = (props) => {
                     autoCapitalize='none'
                     autoCorrect={false}
                     style={styles.search}
-                    onChangeText={(search) => searchUser(search)}
+                    onChangeText={(search) => queryUsers(search)}
                     />
 
                 <View style = {styles.box}>
-                    {allUsers.length ? <SendRequest data={allUsers} /> : <RequestList/>}
+                    {sendList.length ? 
+                        <SendRequest data={sendList} acceptOrAdd={acceptOrAdd} acceptRequest={acceptRequest} sendRequest={sendRequest} /> : 
+                        <RequestList requestList = {requestList} cancelRequest={cancelRequest} acceptRequest={acceptRequest}/>
+                    }
                 </View>
 
             </AppView>
@@ -72,8 +60,5 @@ const AddFriends = (props) => {
 }
 
 
-
-const mapDispatchProps = (dispatch) => bindActionCreators({ queryUsersByUsername, queryUsersByName }, dispatch);
-
-export default connect(null, mapDispatchProps)(AddFriends);
+export default AddFriends;
 

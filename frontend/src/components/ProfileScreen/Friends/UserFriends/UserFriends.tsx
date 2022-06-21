@@ -1,5 +1,5 @@
-import { ActivityIndicator, FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { FC, useEffect, useState } from 'react'
+import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { FC, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
 import AppView from '../../../general/AppView'
@@ -7,32 +7,26 @@ import { AntDesign } from '@expo/vector-icons';
 import styles from './styles';
 import FriendBox from '../FriendBox';
 import AddFriends from '../AddFriend/AddFriends';
-import { connect } from 'react-redux';
 import Loader from '../../../general/Loader';
+import useUsers from '../../../../hooks/useUsers';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../../../../../App';
 
-//type UserScreenProp = NativeStackNavigationProp<RootStackParamList, 'UserFriends'>;
+type UserScreenProp = NativeStackNavigationProp<RootStackParamList, 'BottomTab'>;
 
 
-const UserFriends = (props) => {
+const UserFriends = () => {
 
     const [post, setPost] = useState(false);
     const [query,setQuery] = useState('');
-    const [friends, setFriends] = useState({});
-
-    useEffect(() => {
-        setFriends(props.currentUserFriendsData)
-        console.log(props.currentUserFriendsData)
-       
-    }, [props.currentUserFriendsData]);
-
-    const navigation = useNavigation()
+    const {isLoading, isError, data, friends} = useUsers();
+    const navigation = useNavigation<UserScreenProp>()
 
     const goBack = () => {
-
         navigation.navigate("BottomTab")
     }
-
-    if (!friends) {
+   
+    if (isLoading) {
         return  <Loader/>
     }
 
@@ -48,7 +42,7 @@ const UserFriends = (props) => {
                     <AntDesign name="adduser" size={24} color="black" />
                 </TouchableOpacity>
                 </View> 
-
+        
             <TextInput 
                 placeholder="Search for my friend" 
                 style={styles.search}
@@ -63,28 +57,23 @@ const UserFriends = (props) => {
 
                     <FlatList
                     data={friends}
-                    renderItem={({ item, index }) => {
+                    renderItem={({ item }: {item: any}) => {
                         if (item.name.toLowerCase().includes(query.toLowerCase()) && item.username.toLowerCase().includes(query.toLowerCase())) {
                           return <FriendBox name = {item.name} username = {item.username} photoURL={item.photoURL}/>
                         }
                           return null;
                         }}
-                    keyExtractor={(item) => item.uid}
+                    keyExtractor={(item) => item.id}
                     showsVerticalScrollIndicator={false}
                     />  
 
                     </View>
                 </View>
-            <AddFriends post={post} setPost={setPost}/>
-            
+            <AddFriends post={post} setPost={setPost}/> 
         </AppView>
+        
     )
 }
 
-
-const mapStateToProps = (store) => ({
-    currentUserFriendsData: store.userState.currentUserFriendsData
-  })
-
-export default connect(mapStateToProps)(UserFriends);
+export default UserFriends;
 

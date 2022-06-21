@@ -1,8 +1,15 @@
 import {  Image, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import styles from './styles'
 
-const FriendBox = (props) => {
+
+type Props = {  
+    photoURL: string
+    name: string
+    username: string
+}
+
+const FriendBox: FC<Props> = (props) => {
 
     const [avatar, setAvatar] = useState("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png");
 
@@ -14,10 +21,7 @@ const FriendBox = (props) => {
 
     return (
         <View style={styles.friend}>
-
-            {props.photoURL &&
-                <Image source={{uri: avatar}} style={styles.image}></Image>
-            }
+            {props.photoURL && <Image source={{uri: avatar}} style={styles.image}></Image>}
             <View style={styles.name}>
                 <Text>{props.name}</Text>
                 <Text>@{props.username}</Text>

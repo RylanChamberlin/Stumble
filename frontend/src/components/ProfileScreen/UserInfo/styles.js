@@ -16,11 +16,6 @@ export default StyleSheet.create({
         
     },
 
-    statContainer:{
-        flexDirection: 'row',
-       
-    },
-
     imageContainer:{
         //flex: 1, 
         width: 75,
@@ -46,16 +41,31 @@ export default StyleSheet.create({
         fontWeight: "bold",
     },
 
-    username: {
-       
+    sectionContainer:{
+        flexDirection: 'row'
     },
 
-    statCircle:{
-        //alignItems: 'center',
-        //margin: 115,
+    text: {
+        flexDirection: 'column'
+    },
+
+    friendButton: {
+        marginLeft: 50,
         padding: 10,
         borderRadius: 15,
         backgroundColor: 'white',
         borderWidth: 1,
     },
+
+    checkinSpot: {
+        fontSize: 20, fontWeight: 'bold'
+    },
+
+    postButton: {
+        backgroundColor: 'black', borderRadius: 20, alignItems: 'center'
+    },
+
+    postText: {
+        fontWeight: 'bold', fontSize: 30, color: 'white', justifyContent: 'center'
+    }
 })
