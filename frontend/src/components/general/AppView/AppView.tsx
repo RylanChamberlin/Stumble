@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { ImageBackground, SafeAreaView, StyleSheet} from 'react-native';
 import styles from './styles';
 
-const AppView = props => {
+type Props = {
+    style: any
+}
+
+const AppView: FC<Props> = props => {
 
     const image = require('../../../assets/images/yeet.jpeg');
 
