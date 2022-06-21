@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase";
 
 
-export default (itemID = null, order = 'createdAt') => {
+export default (itemID = null, order = 'createdAt', field = 'placeID') => {
 
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
@@ -15,7 +15,7 @@ export default (itemID = null, order = 'createdAt') => {
 
     if(itemID != null) {
         ref = ref
-        .where('placeID', '==' , itemID) 
+        .where(field, '==' , itemID) 
     }
     // else{
     //     ref = ref

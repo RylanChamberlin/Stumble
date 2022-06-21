@@ -8,19 +8,27 @@ import useMessages from '../../../hooks/useMessages';
 type Props = {
   itemID: null
   order: string
+  field: string
 }
 
 function PostList(props: Props){
 
   const [posts, setPosts] = useState([])
-  const {isLoading, isError, data, isMore, fetchMoreMessages} = useMessages(props.itemID, 'createdAt');
+  const {isLoading, isError, data, isMore, fetchMoreMessages} = useMessages(props.itemID, 'createdAt', props.field);
 
   useEffect(() => {
     if(posts.length ){
-      if(!data.some(r=> posts.indexOf(r) >= 0)) setPosts([...posts, ...data]); 
+      //if(!data.some(r=> posts.indexOf(r) >= 0)) 
+      setPosts([...posts, ...data]); 
     }else{
       setPosts(data)
     } 
+
+    return () => {
+      setPosts([])
+      console.log('unmount')
+    }
+
   },[data])
 
   const fetchMoreData = () => {

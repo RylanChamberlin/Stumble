@@ -1,7 +1,4 @@
 import * as Location from 'expo-location';
-import { useAppDispatch } from '../app/hooks';
-
-
 
 export const fetchLocation = async() => {
     

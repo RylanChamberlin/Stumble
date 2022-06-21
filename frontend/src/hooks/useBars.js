@@ -45,6 +45,7 @@ export default () => {
         try{
             const subscriber = barRef
                 .onSnapshot(querySnapshot => {
+                    console.log('listening bars')
                     const users = [];
                     querySnapshot.forEach(documentSnapshot => {
                         users.push({
