@@ -58,6 +58,6 @@ export default StyleSheet.create({
     },
 
     nearby: {
-        color: 'red'
+        color: 'black'
     }
 });

@@ -2,24 +2,25 @@ import { View, Text, TouchableOpacity, Modal, Image, FlatList } from 'react-nati
 import React, { useEffect } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import styles from './styles'
-import GestureRecognizer from 'react-native-swipe-gestures';
 import { useState } from 'react';
-import { BlurView } from 'expo-blur';
 import Loader from '../../general/Loader';
 import { useAppSelector } from '../../../app/hooks';
-import useUsers from '../../../hooks/useUsers';
+import { useGetBarsByLocationQuery } from '../../../services/bars';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import MapList from '../MapList';
 
 function MapBox(props: any) {
 
     const [showPeeps, setPeeps] = useState(false);
-    const [peopleList, setPeopleList] = useState<any>([])
+    const [peopleList, setPeopleList] = useState([])
     const [region, setRegion] = useState<any>();
+    const [title, setTitle] = useState('');
 
-   
+    const { data: bars, error, isLoading, isFetching, isSuccess, refetch } = useGetBarsByLocationQuery();
     const location = useAppSelector(state => state.location.coords)
 
     useEffect(() => {
-        if(location){
+        if(location.coords){
             setRegion({
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude,
@@ -30,96 +31,42 @@ function MapBox(props: any) {
         
     },[location])
 
-    
-    //gets a list of people that are at the same bar
-    const showPeopleList = ({locationID}: {locationID: string}) => {
-        const people = props.data.filter((item: any) => item.checkIn?.locationID == locationID)
+
+    const showFriendsAtBar = (id: string, name: string) => {
+        const people = props.data.filter((item: any) => item.checkIn?.locationID == id)
         setPeopleList(people)
         setPeeps(!showPeeps)
+        setTitle(name)
+        console.log(id)
     }
 
-
-    const personItem = (item: any) => { 
+    const activeBars = bars.map((marker: any) => {
+        const people = props.data.filter((item: any) => item.checkIn?.locationID == marker.key);
+        if (!people.length) return; //only shows if people are at bar
         return (
-            <View style={styles.box}>
-                <Text style={styles.name}>{item.name}</Text>
-                <Text>{new Date(item.checkInTime.seconds *1000).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Text>
-            </View>
+            <Marker key={marker.key} coordinate={{ latitude: marker.lat, longitude: marker.lng }}>
+                <Text>{people.length}</Text>
+                <TouchableOpacity onPress={() => showFriendsAtBar(marker.key, marker.name)}>
+                    <MaterialCommunityIcons name="beer" size={29} color="black" />
+                </TouchableOpacity>
+            </Marker>
         );
+    });
+
+
+    if(props.isLoading) {
+        return  <Loader/>
     }
 
-  if(props.isLoading || !location.coords) {
-    return  <Loader/>
-  }
-
-  return (
+    return (
   
     <View style={styles.container}>
-
-
-        <MapView style={styles.map} 
-            initialRegion={region}
-        >
-            <Marker coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude}}>
-                {/* <TouchableOpacity onPress = {() => setPeeps(!showPeeps)}>
-                    <Image style={styles.image} />
-
-                </TouchableOpacity> */}
-            </Marker>
-
-            {
-
-            props.data.map((marker: any) => {
-
-                console.log(marker)
-                console.log('\n\n\n')
-
-                if(marker.checkIn==null) return null;
-                if(marker.photoURL==null){
-                    marker.photoURL = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
-                }
-               
-                return (
-                   <Marker
-                        key={marker.uid}
-                        coordinate={{latitude: marker.checkIn.location.coords.latitude, longitude: marker.checkIn.location.coords.longitude}}
-                    > 
-                    <TouchableOpacity onPress = {() => showPeopleList(marker.checkIn)}>
-                        <Image source={{uri: marker.photoURL}} style={styles.image} />
-                    </TouchableOpacity>
-                </Marker>
-               
-                );
-            })
-
-            
-            }
-
+        <MapView style={styles.map} initialRegion={region}>
+            <Marker coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude}}/>
+            {activeBars}
         </MapView>
+        <MapList setPeeps={setPeeps} showPeeps={showPeeps} friends={peopleList} title={title} />
 
-        <GestureRecognizer
-            style={{}}
-            onSwipeDown={() => setPeeps(!showPeeps)}
-            >
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={showPeeps}
-                onRequestClose={() => setPeeps(!showPeeps)}
-            >
-            
-            <BlurView intensity={5} style={styles.blurBackground}>
-                <FlatList
-                    data={peopleList}
-                    renderItem={({ item, index }) => {
-                        return(personItem(item));
-                    }}
-                    keyExtractor={(item) => item.uid}
-                    showsVerticalScrollIndicator={false}
-                /> 
-            </BlurView> 
-            </Modal>
-        </GestureRecognizer>
     </View>   
   )
 }

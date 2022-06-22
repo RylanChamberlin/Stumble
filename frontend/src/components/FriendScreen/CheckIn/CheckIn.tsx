@@ -67,7 +67,7 @@ function CheckIn(props:Props){
     const barList = (item: bar) => {
         console.log(item)
         return (
-            <TouchableOpacity style={[styles.nameBox, checkSpot?.place_id == item.place_id || checkSpot?.locationID == item.place_id ? {backgroundColor: 'blue'} : {backgroundColor: 'white'}]} onPress={() => setCheckSpot(item)}>
+            <TouchableOpacity style={[styles.nameBox, checkSpot?.place_id == item.place_id || checkSpot?.locationID == item.place_id ? {backgroundColor: 'grey'} : {backgroundColor: 'white'}]} onPress={() => setCheckSpot(item)}>
                 <Text style={styles.barName}>{item.name}</Text>
             </TouchableOpacity>
         );
