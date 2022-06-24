@@ -1,16 +1,17 @@
 import {Text, TouchableOpacity, View } from "react-native";
 import { Entypo } from '@expo/vector-icons'; 
-import timeSince from "../../../services/timeSince";
 import styles from "./styles";
-import useVotes from "../../../hooks/useVotes";
+import { FC, Props } from "react";
+import useVotes from "../../../../hooks/useVotes";
+import timeSince from "../../../../services/timeSince";
 
 export type dateTime = {
     nanoseconds: number,
     seconds: number
 }
 
-export type Props = {
-    item: Post
+export type PostBoxProps = {
+    post: Post
 }
 
 export type Post = { 
@@ -23,21 +24,21 @@ export type Post = {
     votes: number,
   }
 
-export default function PostBox(props: Props){
+const PostBox: FC<PostBoxProps> = ({post}) => {
 
-    const {userLike, userDislike, voteCount , incrementVote, decrementVote} = useVotes(props.item);
+    const {userLike, userDislike, voteCount , incrementVote, decrementVote} = useVotes(post);
 
     return(
         <View style={[styles.container, styles.elevation]}>
             <View style={styles.textContainer}>
-                <Text style={styles.postText}>{props.item.text}</Text>
+                <Text style={styles.postText}>{post.text}</Text>
                 <View style={styles.bottomTextInfo}>
-                    <Text style = {styles.barName}>at {props.item.bar} </Text>
-                    <Text style = {styles.date}>{timeSince(props.item.createdAt?.seconds)}</Text>
+                    <Text style = {styles.barName}>at {post.bar} </Text>
+                    <Text style = {styles.date}>{timeSince(post.createdAt?.seconds)}</Text>
                 </View>
             </View>
 
-            <View style={styles.likeContainer}>
+            <View style={styles.voteContainer}>
                 <TouchableOpacity onPress={incrementVote}>
                     <Entypo name="plus" size={24} color={ userLike ? "red" : "black"}/>
                 </TouchableOpacity>
@@ -50,3 +51,5 @@ export default function PostBox(props: Props){
         </View>
     );
 }
+
+export default PostBox

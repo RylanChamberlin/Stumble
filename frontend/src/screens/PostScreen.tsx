@@ -1,37 +1,21 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FC, useState } from "react";
+import { RootStackParamList } from "../../../App";
 import AppView from "../components/general/AppView";
 import Header from "../components/PostScreen/Header";
-import PopularPostList from "../components/PostScreen/PopularPostList";
-import PostList from "../components/PostScreen/PostList";
+import PopularPostList from "../components/PostScreen/Posts/PopularPostList";
+import RecentPostList from "../components/PostScreen/Posts/RecentPostList";
 
+type PostScreenProps = NativeStackScreenProps<RootStackParamList, 'PostScreen'>;
 
-export type Props = {
-    route: any
-  };
-
-const PostScreen: FC<Props> = (props) => {
+const PostScreen: FC<PostScreenProps> = ({route}) => {
 
     const [left, setLeft] = useState(false);
-    // useEffect(() => {
-    //     console.log('left')
-    // },[left])
-
-    let placeID, name;
-    if(props.route.params){
-        placeID = props.route.params.itemId;
-        name = props.route.params.name
-    }
-
+  
     return(
-       
         <AppView>
-           {/* // <Header title = {name} left={left} setLeft={setLeft}/> */}
-            <Header title = {name} left={left} setLeft={setLeft}/>
-
-            {!left ?  <PostList itemID={placeID} order='createdAt' field='placeID'/> : <PopularPostList itemID={placeID}/>}
-         
-           
-            {/* <PostList/> */}
+            <Header title = {route.params?.name} left={left} setLeft={setLeft}/>
+            {!left ?  <RecentPostList itemID={route.params?.placeID} order='createdAt' field='placeID'/> : <PopularPostList itemID={route.params?.placeID}/>}
         </AppView>
        
     );

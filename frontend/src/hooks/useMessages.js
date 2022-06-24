@@ -1,6 +1,21 @@
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
 
+// export type dateTime = {
+//     nanoseconds: number,
+//     seconds: number
+// }
+
+// export type Post = { 
+//     bar: string
+//     createdAt: dateTime
+//     key: string
+//     text: string
+//     uid: string
+//     voteCount: number
+//     votes: number,
+//   }
+
 
 export default (itemID = null, order = 'createdAt', field = 'placeID', version) => {
 

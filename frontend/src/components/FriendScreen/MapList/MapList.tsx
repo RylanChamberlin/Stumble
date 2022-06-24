@@ -6,7 +6,7 @@ import MapListItem from "../MapListItem";
 import styles from "./styles";
 
 type MapListProps = {
-    setPeeps: Dispatch<SetStateAction<boolean>>;
+    setPeeps: Dispatch<SetStateAction<boolean>>
     showPeeps: boolean
     friends: any
     title: string

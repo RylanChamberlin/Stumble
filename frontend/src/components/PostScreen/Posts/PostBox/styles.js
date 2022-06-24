@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { elevation } from "../../../common/styles";
+import { elevation } from "../../../../common/styles";
 
 export default StyleSheet.create({
     container: {
@@ -15,7 +15,7 @@ export default StyleSheet.create({
         flexDirection: 'column',
         width: "90%"
     },
-    likeContainer: {
+    voteContainer: {
         marginLeft: 10,
         flexDirection: 'column',
         justifyContent: "center",
@@ -31,7 +31,8 @@ export default StyleSheet.create({
     },
 
     bottomTextInfo:{
-        flexDirection: 'row', marginTop: 'auto'
+        flexDirection: 'row', 
+        marginTop: 'auto'
     },
     
     barName: {

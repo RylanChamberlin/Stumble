@@ -7,9 +7,6 @@ import PostScreen from '../screens/PostScreen';
 import FriendScreen from '../screens/FriendScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
-import { connect } from 'react-redux';
-import { AnyAction, bindActionCreators, Dispatch } from 'redux';
-import { fetchUser, fetchUserLocation, fetchUserFriends, fetchUserFriendRequests, fetchUserFriendRequestsSent } from '../redux/actions/index';
 import { useAppDispatch } from '../app/hooks';
 import { storeLocation, storeUserFriends, storeUserInfo } from '../features/Location/locationSlice';
 import { fetchLocation } from '../services/fetchLocation';
@@ -33,19 +30,14 @@ function BottomTab(props: Props) {
 
     const dispatch = useAppDispatch()
 
-    useEffect( async () => {
+    useEffect( () => {
 
-      dispatch(storeLocation(await fetchLocation()));
-      dispatch(storeUserInfo(await fetchUserInfo()));
-      dispatch(storeUserFriends(await fetchFriends()));
-
-      // props.fetchUser();
-      // props.fetchUserLocation();
-      // props.fetchUserFriends();
-      // props.fetchUserFriendRequests();
-      // props.fetchUserFriendRequestsSent();
-      // console.log('FETCHING ALL DATA')
-  
+      (async () => { 
+        dispatch(storeLocation(await fetchLocation()));
+        dispatch(storeUserInfo(await fetchUserInfo()));
+        dispatch(storeUserFriends(await fetchFriends()));
+      })();
+      
     }, [])
 
     
@@ -104,14 +96,5 @@ function BottomTab(props: Props) {
     </Tab.Navigator>
   );
 }
-
-// const mapStateToProps = (store: { userState: { currentUser: any; currentUserLocation: any; }; }) => ({
-//   currentUser: store.userState.currentUser,
-//   currentUserLocation: store.userState.currentUserLocation
-// })
-
-// const mapDispatchProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators({ fetchUser, fetchUserLocation, fetchUserFriends, fetchUserFriendRequests, fetchUserFriendRequestsSent }, dispatch);
-
-// export default connect(mapStateToProps, mapDispatchProps)(BottomTab);
 
 export default BottomTab

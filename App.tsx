@@ -9,6 +9,7 @@ import PostScreen from "./frontend/src/screens/PostScreen";
 
 import { Provider } from 'react-redux';
 import { store } from "./frontend/src/app/store";
+import { StrictMode } from "react";
 //const store = createStore(rootReducer, applyMiddleware(thunk))
 
 
@@ -16,7 +17,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
   Login: undefined;
-  Single: undefined;
+  PostScreen: { placeID?: string, name?: string } | undefined;
   BottomTab: undefined;
   UserFriends: undefined;  
   UserInfo: undefined;
@@ -29,16 +30,17 @@ export default function App() {
 
 
   return (
-
+    // <StrictMode>
     <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Login" component={LoginScreen}  options={{ headerShown: false }}/>
-        <Stack.Screen name="Single" component={PostScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="PostScreen" component={PostScreen} options={{ headerShown: false }} />
         <Stack.Screen name="BottomTab" component={BottomTab}  options={{ headerShown: false }}/>
         <Stack.Screen name="UserFriends" component={UserFriends} options={{ headerShown: false }} />
       </Stack.Navigator>
       </NavigationContainer>
     </Provider>
+    // </StrictMode>
   );
 }
