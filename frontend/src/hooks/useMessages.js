@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase";
 
 
-export default (itemID = null, order = 'createdAt', field = 'placeID') => {
+export default (itemID = null, order = 'createdAt', field = 'placeID', version) => {
 
     const [isLoading, setIsLoading] = useState(false)
+    const [refresh, setRefresh] = useState(false)
     const [isError, setIsError] = useState(false)
     const [data, setData] = useState([])
     const [lastDoc, setLastDoc] = useState(undefined)
@@ -24,8 +25,26 @@ export default (itemID = null, order = 'createdAt', field = 'placeID') => {
 
     ref = ref.orderBy(order, "desc");
 
-    const fetchFirebase = async () => {
-        const getMessages = await ref
+
+    useEffect(() => {
+
+        console.log(version);
+        //setData([]);
+        fetchMessages()
+
+        return () => {
+            setData([])
+            setIsMore(true)
+            console.log('unmount hook')
+          }
+
+    },[version])
+
+    const fetchMessages = async () => {
+
+        setIsLoading(true)
+        console.log('fetching data')
+        const getMessages = ref
             .limit(8) // limit to your page size, 3 is just an example
             .get()
             .then((querySnapshot) => {
@@ -36,45 +55,67 @@ export default (itemID = null, order = 'createdAt', field = 'placeID') => {
                         setIsMore(false);
                     }
                     
-                    let data = []
+                    let posts = []
                     querySnapshot.forEach(doc => {
-                        data.push({...doc.data(), key: doc.id,});
+                        posts.push({...doc.data(), key: doc.id,});
                     });
-                    setData(data);
+
+                    if(data.length){
+                        setData(prevData => ([...prevData, ...posts]));
+                    }else{
+                        setData(posts);
+                    }
                     setIsLoading(false)
 
                 } else {
+                    setIsMore(false)
                     setIsLoading(false);
                 }
                 
             }).catch((err) => {setIsError(err)});   
 
-            return () => {
-                getMessages();
-            }
+            // return () => {
+            //     getMessages();
+            // }
     }
 
     
-    //initial fethc
-    (async () => {
-        if(secondFetch) return;
-        console.log('fetching firebase')
-        setSecondFetch(true)
-        setIsLoading(true);
-        fetchFirebase()
-        }
-    )();
+    // //initial fethc
+    // (async () => {
+    //     if(secondFetch) return;
+    //     console.log('fetching firebase')
+    //     setSecondFetch(true)
+    //     setIsLoading(true);
+    //     fetchFirebase()
+    //     }
+    // )();
 
     //fetch after first for pagiantion
     const fetchMoreMessages = async () => {
         console.log('fetching more from firebase')
-        setIsLoading(true);
-        ref = ref.startAfter(lastDoc);
-        fetchFirebase()
+        if(lastDoc) ref = ref.startAfter(lastDoc);
+        fetchMessages()
+    }
+
+    const reload = () => {
+
+        setRefresh(true)
+
+        console.log('reload')
+        setIsLoading(false);
+        setIsError(false);
+        setData([])
+        setLastDoc(undefined)
+        setIsMore(true)
+        setSecondFetch(false)
+        //fetchFirebase()
+
+
+        setRefresh(false)
     }
     
 
 
-    return {isLoading, isError, data, lastDoc, isMore, secondFetch, fetchMoreMessages}
+    return {isLoading, isError, data, lastDoc, isMore, secondFetch, fetchMoreMessages, reload, refresh}
 
 };

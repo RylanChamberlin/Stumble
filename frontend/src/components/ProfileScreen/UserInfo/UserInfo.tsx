@@ -50,15 +50,20 @@ const UserInfo = () => {
                     <Text style={styles.name}>{user.name}</Text>
                     <Text>@{user.username}</Text>
                 </View>
-                <TouchableOpacity onPress={() => {clickFriends()}} style={styles.friendButton}>
-                    <Text>Friends</Text>
-                </TouchableOpacity>
+               
             </View>
 
             <Text>Check In Location:</Text>
-            <Text style={styles.checkinSpot}>{user.checkIn ? user.checkIn.locationName: 'Nowhere go check in!'}</Text>
+            <TouchableOpacity>
+                <Text style={styles.checkinSpot}>{user.checkIn ? user.checkIn.locationName: 'Nowhere Right Now'}</Text>
+            </TouchableOpacity>
         </View>
+
+        <TouchableOpacity onPress={() => {clickFriends()}} style={styles.friendButton}>
+            <Text>Friends</Text>
+        </TouchableOpacity>
     </View>
+
     <View style = {styles.postButton}>
         <Text style = {styles.postText}>My Posts</Text>
     </View>

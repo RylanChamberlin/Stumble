@@ -8,18 +8,18 @@ export default StyleSheet.create({
     },
 
     titleContainer: {
-        alignItems: "center",
+        // alignItems: "center",
         flexDirection: 'row'
     },
 
     backArrow: {
-        marginRight: "auto"
+        // marginRight: "auto"
     },
 
     title:{
-        marginRight: "auto",
+       // marginRight: "auto",
         color: 'white',
-        fontSize: 25,
+        fontSize: 35,
         shadowColor: "black",
         shadowOffset: {width: 5, height: 5}, //gives shadow offset
         shadowOpacity: .6,

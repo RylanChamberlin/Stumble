@@ -11,9 +11,6 @@ const BarList = () => {
     const renderItem = useCallback (({ item }) => <BarBox item={item}/>,[]);
     const onRefresh = useCallback(() => {refetch()}, []);
           
-    if(isLoading) return <Loader/>
-
-
     return (
         <FlatList
     

@@ -7,38 +7,28 @@ import useMessages from '../../../hooks/useMessages';
 
 type Props = {
   itemID: null
+  field?: string
 }
 
 function PopularPostList(props: Props){
 
-    const [posts, setPosts] = useState([])
-    const {isLoading, isError, data, isMore, fetchMoreMessages} = useMessages(props.itemID, 'score');
-  
-    useEffect(() => {
-      if(posts.length ){
-        if(!data.some(r=> posts.indexOf(r) >= 0)) setPosts([...posts, ...data]); 
-      }else{
-        setPosts(data)
-      } 
-    },[data])
-  
-    const fetchMoreData = async() => {
-      if(isMore){
-        fetchMoreMessages()
-      }
-    }
-  
-    const renderItem = useCallback(({ item, index }) => {return (<PostBox item = {item}/>)},[]);
-    const onRefresh = useCallback(() => {}, []);
-    const renderLoader = () => { return (isMore ? <Loader/> : null)}
-    const keyExtractor = useCallback( (item) => item.key, []);
-  
-    if(!posts) return <Loader/>
+  const [version, setVersion] = useState(0)
+  const {isLoading, isError, data, isMore, fetchMoreMessages, reload, refresh} = useMessages(props.itemID, 'score', props.field, version);
+
+  const fetchMoreData = () => {
+    console.log('fetch meee')
+    isMore && fetchMoreMessages();
+  }
+
+  const renderItem = useCallback(({ item, index }) => {return (<PostBox item = {item}/>)},[]);
+  const onRefresh = useCallback(() => {setVersion(v => v + 1)}, []);
+  const renderLoader = () => { return isMore ? <Loader/> : null}
+  const keyExtractor = useCallback( (item) => item.key, []);
   
     return (
       <FlatList
       contentContainerStyle={{marginBottom: 300}}
-      data={posts}
+      data={data}
       renderItem={renderItem}
       refreshControl={
         <RefreshControl

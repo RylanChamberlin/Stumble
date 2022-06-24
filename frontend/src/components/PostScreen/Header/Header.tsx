@@ -26,11 +26,11 @@ export const Header: FC<Props> = ({title, left, setLeft}) => {
     }
   
     return(
-      <View style={styles.titleContainer}>
+      <View style={{alignItems: "center", flexDirection: "row"}}>
         <TouchableOpacity onPress={goBack} style={styles.backArrow}>
-          <AntDesign name="arrowleft" size={34} color="black"/>
+          <AntDesign name="arrowleft" size={24} color="black"/>
         </TouchableOpacity>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.postTitle}>{title}</Text>
       </View> 
     );
   

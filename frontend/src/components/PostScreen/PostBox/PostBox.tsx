@@ -41,7 +41,7 @@ export default function PostBox(props: Props){
                 <TouchableOpacity onPress={incrementVote}>
                     <Entypo name="plus" size={24} color={ userLike ? "red" : "black"}/>
                 </TouchableOpacity>
-                 <Text>{voteCount}</Text>
+                 <Text style={styles.voteCount}>{voteCount}</Text>
 
                 <TouchableOpacity onPress={decrementVote}>
                     <Entypo name="minus" size={24} color={userDislike ? "red" : "black"}/>

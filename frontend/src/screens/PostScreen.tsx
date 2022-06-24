@@ -28,7 +28,8 @@ const PostScreen: FC<Props> = (props) => {
            {/* // <Header title = {name} left={left} setLeft={setLeft}/> */}
             <Header title = {name} left={left} setLeft={setLeft}/>
 
-            {!left ?  <PostList itemID={placeID} order='createdAt' field='placeID'/> : <PopularPostList itemID={placeID} />}
+            {!left ?  <PostList itemID={placeID} order='createdAt' field='placeID'/> : <PopularPostList itemID={placeID}/>}
+         
            
             {/* <PostList/> */}
         </AppView>

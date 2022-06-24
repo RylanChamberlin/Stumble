@@ -22,6 +22,10 @@ export default StyleSheet.create({
         alignItems: "center",
     },
 
+    voteCount: {
+        marginTop: 2,
+    },
+
     postText: {
         paddingBottom: 10, fontSize: 20
     },
@@ -30,9 +34,15 @@ export default StyleSheet.create({
         flexDirection: 'row', marginTop: 'auto'
     },
     
-    barName: {fontWeight: 'bold', maxWidth: '65%'},
+    barName: {
+        fontWeight: 'bold', 
+        maxWidth: '60%'},
 
-    date: {fontWeight: '200'},
+    date: {
+        fontWeight: '200',
+        marginLeft: 'auto',
+        marginTop: 'auto'
+    },
 
     elevation
 })

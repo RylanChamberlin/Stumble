@@ -17,7 +17,6 @@ export default StyleSheet.create({
     },
 
     imageContainer:{
-        //flex: 1, 
         width: 75,
         height: 75,
         borderRadius: 50,
@@ -50,8 +49,10 @@ export default StyleSheet.create({
     },
 
     friendButton: {
-        marginLeft: 50,
-        padding: 10,
+        
+        marginLeft: 'auto',
+        marginBottom: 'auto',
+        padding: 15,
         borderRadius: 15,
         backgroundColor: 'white',
         borderWidth: 1,
