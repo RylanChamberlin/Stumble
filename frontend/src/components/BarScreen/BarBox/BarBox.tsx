@@ -4,48 +4,40 @@ import styles from "./styles";
 import { Bar } from "../../../services/bars";
 import { FC } from "react";
 import { RootStackParamList } from "../../../../../App";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { NativeStackNavigationProp} from "@react-navigation/native-stack";
 
-// type Props = NativeStackScreenProps<RootStackParamList, 'Single'>;
-//const navigation = useNavigation<navigation>();
 
-type Props = { 
-    item: Bar,
-    
+type BarBoxProps = { 
+    bar: Bar,
  }; 
 
- type NavigationProps = NativeStackScreenProps<RootStackParamList, 'Single'>;
+type BarBoxNavigationProps = NativeStackNavigationProp<RootStackParamList, 'PostScreen'>;
 
-const BarBox: FC<Props> = ({item}) => {
+const BarBox: FC<BarBoxProps> = ({bar}) => {
 
-    //const navigation = useNavigation<navigation>();
-    const navigation = useNavigation<any>()
+    const navigation = useNavigation<BarBoxNavigationProps>()
     
-    // navigates to comments on the bar
+    // navigates to comments on the selected bar
     const clickBar = () => {
-        navigation.navigate('Single', {
-            itemId: item.key,
-            name: item.name,
+        navigation.navigate('PostScreen', {
+            placeID: bar.key,
+            name: bar.name,
           });
     }
     
     return (
-            <TouchableOpacity activeOpacity={.8} onPress={clickBar}>
-            <ScrollView horizontal={true}  showsHorizontalScrollIndicator={false}>
-            <View style={[styles.outsideContainer]}>
+            <TouchableOpacity style={[styles.outsideContainer]} activeOpacity={.8} onPress={clickBar}>
                 <View style={styles.container}>
                     <View style = {styles.infoBox}>
-                        <Text style = {[styles.title, styles.bold]}>{item.name}</Text>
+                        <Text style = {styles.title}>{bar.name}</Text>
                         <Text style = {styles.topPostTitle}>TODAY'S TOP POST</Text>
-                        <Text style = {styles.topPost} >{item.topPost ? `"${item.topPost}"` : 'Click to add new post'}</Text>
+                        <Text style = {styles.topPost} >{bar.topPost ? `"${bar.topPost}"` : 'Click to add new post'}</Text>
                         <View style = {styles.newPostsBox}>
-                            <Text style = {styles.postCount}>{item.postCount} new posts </Text>
+                            <Text style = {styles.postCount}>{bar.postCount} new posts </Text>
                             <Text style = {styles.seeAll}>see all</Text>
                         </View>
                     </View>
                 </View>
-            </View>
-            </ScrollView>
             </TouchableOpacity>
     );
 

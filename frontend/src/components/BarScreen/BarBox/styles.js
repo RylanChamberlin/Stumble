@@ -1,14 +1,12 @@
 import { Dimensions, StyleSheet } from 'react-native';
-import {bold} from "../../../common/styles";
 
 const windowWidth = Dimensions.get('window').width;
 const infoBoxWidth = windowWidth-30;
 
 export default StyleSheet.create({
     outsideContainer:{
-        padding: 0,
         shadowColor: "black",
-        shadowOffset: {width: 10, height: 30}, //gives shadow offset
+        shadowOffset: {width: 10, height: 10}, //gives shadow offset
         shadowOpacity: .3,
     },
 
@@ -29,7 +27,6 @@ export default StyleSheet.create({
         borderRadius: 8,
         borderWidth: StyleSheet.hairlineWidth,
         backgroundColor: "#ffffff",
-        //flexDirection: "row",
         justifyContent: "space-between",
         
 
@@ -37,9 +34,9 @@ export default StyleSheet.create({
 
     title: {
         fontSize: 20,
+        fontWeight: "bold"
     },
     
-    bold,
 
     topPostTitle: {
         fontSize: 10, fontWeight: 'bold', textDecorationLine: 'underline',
