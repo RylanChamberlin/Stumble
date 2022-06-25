@@ -1,5 +1,5 @@
-import {FlatList, RefreshControl } from 'react-native'
-import React, { useCallback , useState } from 'react'
+import {ActivityIndicator, FlatList, RefreshControl } from 'react-native'
+import React, { useCallback , useEffect, useState } from 'react'
 import Loader from '../../../general/Loader';
 import useMessages from '../../../../hooks/useMessages';
 import PostBox from '../PostBox';
@@ -12,17 +12,15 @@ type Props = {
 
 function RecentPostList(props: Props){
 
-  const [version, setVersion] = useState(0)
-  const {isLoading, isError, data, isMore, fetchMoreMessages, reload, refresh} = useMessages(props.itemID, 'createdAt', props.field, version);
+  const {isLoading, isError, data,  getMessages, getMore, isMoreLoading} = useMessages(props.itemID, props.order, props.field);
 
   const fetchMoreData = () => {
-    console.log('fetch meee')
-    isMore && fetchMoreMessages();
+    !isMoreLoading && getMore();
   }
 
   const renderItem = useCallback(({ item, index }) => {return (<PostBox post = {item}/>)},[]);
-  const onRefresh = useCallback(() => {setVersion(v => v + 1)}, []);
-  const renderLoader = () => { return isMore ? <Loader/> : null}
+  const renderFooter = () => {return isMoreLoading ? <Loader/> : null}
+  const onRefresh = () => { getMessages() }
   const keyExtractor = useCallback( (item) => item.key, []);
 
   return (
@@ -32,12 +30,12 @@ function RecentPostList(props: Props){
     renderItem={renderItem}
     refreshControl={
       <RefreshControl
-        refreshing={false}
+        refreshing={isLoading}
         onRefresh={onRefresh}
       />
     }
     keyExtractor={keyExtractor}
-    ListFooterComponent={renderLoader}
+    ListFooterComponent={renderFooter}
     showsVerticalScrollIndicator={false}
     onEndReachedThreshold={0.2}
     onEndReached={fetchMoreData}
