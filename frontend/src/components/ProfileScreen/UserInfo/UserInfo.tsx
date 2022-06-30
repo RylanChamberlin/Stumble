@@ -8,9 +8,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { useAppSelector } from '../../../app/hooks';
 import { pickAvatar } from '../../../services/profileHelpers';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../../../App';
+import Loader from '../../general/Loader';
+import { RootStackParamList } from '../../../navigation/Nav';
 
-type UserScreenProp = NativeStackNavigationProp<RootStackParamList, 'UserFriends'>;
+type UserScreenProp = NativeStackNavigationProp<RootStackParamList, 'ProfileFriendScreen'>;
 
 const UserInfo = () => {
 
@@ -25,7 +26,6 @@ const UserInfo = () => {
             setAvatar(user.photoURL);
             setHasAvatar(true)
          }
-
          return () => {
             console.log('unmount userInfo: ')
           }
@@ -33,8 +33,10 @@ const UserInfo = () => {
 
      // navigates to user friends
      const clickFriends = () => {
-        navigation.navigate('UserFriends')
+        navigation.navigate('ProfileFriendScreen')
     }
+
+    if(!user) return (<Loader/>)
 
     return (
     <>
