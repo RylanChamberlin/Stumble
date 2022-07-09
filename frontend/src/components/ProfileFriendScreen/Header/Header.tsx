@@ -2,8 +2,8 @@ import { Text, TouchableOpacity, View } from "react-native"
 import { AntDesign } from '@expo/vector-icons';
 import styles from "./styles";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from '../../../../../App'
 import { useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../../../navigation/Nav";
 
 type NavProp = NativeStackNavigationProp<RootStackParamList, 'BottomTab' | 'AddFriendScreen'>;
 

@@ -7,7 +7,7 @@ import ButtonSwitch from '../../general/ButtonSwitch';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../../../App';
+import { RootStackParamList } from '../../../navigation/Nav';
 
 type Props = {
   title?: string,

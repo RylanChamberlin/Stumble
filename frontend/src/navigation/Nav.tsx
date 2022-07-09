@@ -6,6 +6,7 @@ import LoginScreen from "../screens/auth/LoginScreen";
 import PostScreen from "../screens/PostScreen";
 import ProfileFriendScreen from "../screens/Profile/ProfileFriendScreen";
 import AddFriendScreen from "../screens/AddFriendScreen";
+import CheckInScreen from "../screens/CheckInScreen";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -14,6 +15,7 @@ export type RootStackParamList = {
   UserInfo: undefined;
   ProfileFriendScreen: undefined;
   AddFriendScreen: undefined;
+  CheckInScreen: undefined;
 }
 
 export const Nav = () => {
@@ -24,6 +26,7 @@ export const Nav = () => {
     const BOTTOM_TAB_TAG = 'BottomTab'
     const PROFILE_FRIEND_SCREEN_TAG = 'ProfileFriendScreen';
     const ADD_FRIEND_SCREEN_TAG = 'AddFriendScreen'
+    const CHECK_IN_SCREEN_TAG = 'CheckInScreen'
     
     
     return (
@@ -34,6 +37,7 @@ export const Nav = () => {
                 <Stack.Screen name={BOTTOM_TAB_TAG} component={BottomTab}  options={{ headerShown: false }}/>
                 <Stack.Screen name={PROFILE_FRIEND_SCREEN_TAG} component={ProfileFriendScreen} options={{ headerShown: false }} />
                 <Stack.Screen name={ADD_FRIEND_SCREEN_TAG} component={AddFriendScreen} options={{ headerShown: false }} />
+                <Stack.Screen name={CHECK_IN_SCREEN_TAG} component={CheckInScreen} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     )

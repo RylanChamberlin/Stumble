@@ -3,11 +3,11 @@ import React, { useEffect } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import styles from './styles'
 import { useState } from 'react';
-import Loader from '../../general/Loader';
-import { useAppSelector } from '../../../app/hooks';
-import { useGetBarsByLocationQuery } from '../../../services/bars';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import MapList from '../MapList';
+import { useGetBarsByLocationQuery } from '../../../../services/bars';
+import { useAppSelector } from '../../../../app/hooks';
+import Loader from '../../../general/Loader';
 
 function MapBox(props: any) {
 

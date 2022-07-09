@@ -1,20 +1,27 @@
 import { FlatList} from 'react-native'
-import React, { useCallback } from 'react'
+import React, { FC, useCallback } from 'react'
 import FriendBox from '../FriendBox'
 import Loader from '../../../general/Loader';
-import useUsers from '../../../../hooks/useUsers';
+
+type FeedListProps = {
+  isLoading: boolean
+  data: User[]
+}
+
+type User = {
+  name: string
+  username: string
+  photoURL: string
+  uid: string
+}
 
 
-function FeedList (props: any) {
+const FeedList: FC<FeedListProps>= (props) => {
 
-  // const {isLoading, isError, data} = useUsers();
-
-  //console.log(data)
-   
   const renderItem = useCallback (({ item }) => <FriendBox item = {item}/>,[]);
   const keyExtractor = useCallback( (item) => item.uid, []);
 
-  if (props.isLoading || !props.data) {
+  if (props.isLoading) {
     return  <Loader/>
   }
 
@@ -25,7 +32,6 @@ function FeedList (props: any) {
       keyExtractor={keyExtractor}
       showsVerticalScrollIndicator={false}
     />  
-
   )
 }
 

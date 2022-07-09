@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
 import timeSince from "../../../../services/timeSince";
 
@@ -37,13 +37,13 @@ type user = {
 
 }
 
-type item = {
+type FriendBoxProps = {
     item: user
 }
 
 
 
-export default function FriendBox({item}: item){
+const FriendBox: FC<FriendBoxProps>= ({item}) => {
 
     if (item.checkIn == null) return null;
 
@@ -55,18 +55,18 @@ export default function FriendBox({item}: item){
         }
     },[] )
     
-
     return(
         <View style={styles.container}>  
             <Image source={{uri: avatar}} style={styles.image}/>   
             <View style = {styles.textContainer}>
                 <Text>{item.name} is at</Text>
-                <Text style = {{fontWeight: "bold"}}>{item.checkIn?.locationName}</Text>
+                <Text style = {styles.location}>{item.checkIn.locationName}</Text>
             </View>
             <View style = {styles.rightContainer}>
                 <Text>{item.checkInTime ? timeSince(item.checkInTime.seconds) : 'Now' }</Text>
-                {/* <Text>{item.checkInAt.seconds = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</Text> */}
             </View>
         </View>
     );
 }
+
+export default FriendBox

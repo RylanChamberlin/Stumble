@@ -1,4 +1,3 @@
-import * as Location from 'expo-location';
 import { auth, db } from '../firebase';
 
 

@@ -10,7 +10,6 @@ export default StyleSheet.create({
 
     }, 
     image:{
-        //flex: 1,
         height: 50,
         width: 50,
         backgroundColor: 'blue',
@@ -30,5 +29,8 @@ export default StyleSheet.create({
         marginTop: 'auto',
         paddingVertical: 5,
         paddingRight: 5
+    },
+    location: {
+        fontWeight: "bold"
     }
 });

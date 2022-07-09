@@ -1,26 +1,37 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { Dispatch, FC, SetStateAction } from 'react'
 import styles from './styles'
 import ButtonSwitch from '../../general/ButtonSwitch'
-import CheckIn from '../CheckIn'
-import { useState } from 'react'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { RootStackParamList } from '../../../navigation/Nav'
+import { useNavigation } from '@react-navigation/native'
 
-const Header = ({feed, setFeed}: {feed: boolean, setFeed: (arg0: boolean) => void}) => {
+type NavProp = NativeStackNavigationProp<RootStackParamList, 'CheckInScreen'>;
 
-const [post, setPost] = useState(false);
+type HeaderProps = {
+    feed: boolean
+    setFeed: Dispatch<SetStateAction<boolean>>
+}
+
+const Header: FC<HeaderProps> = ({feed, setFeed}) => {
+
+    const navigation = useNavigation<NavProp>()
+
+    const goCheckIn = () => {
+        navigation.navigate("CheckInScreen")
+    }
 
   return ( 
         <View style={styles.header}>
-            <View style={{alignItems: "center",}}>
+
+            <View style={styles.titleContainer}>
                 <Text style={styles.title}>FRIENDS</Text>
             </View>
+
             <ButtonSwitch button1 = "FEED" button2 = "MAP" left = {feed} setLeft = {setFeed}/>
 
-            {/* Not sure the best place for this */}
-            <CheckIn post={post} setPost={setPost}/>
-
-            <TouchableOpacity style={styles.newPost} onPress={() => setPost(!post)}>
-                <Text style={{fontSize:20, fontWeight: "bold"}}>CHECK-IN</Text>
+            <TouchableOpacity style={styles.newPost} onPress={() => goCheckIn()}>
+                <Text style={styles.buttonText}>CHECK-IN</Text>
             </TouchableOpacity>
         </View>
   )
