@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons, FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons';
 
@@ -6,10 +6,30 @@ import BarScreen from "../screens/BarScreen";
 import PostScreen from '../screens/PostScreen';
 import FriendScreen from '../screens/FriendScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import { useAppDispatch } from '../app/hooks';
+import { storeLocation, storeUserFriends, storeUserInfo } from '../features/Location/locationSlice';
+import { fetchLocation } from '../services/fetchLocation';
+import { fetchUserInfo } from '../services/fetchUserInfo';
+import { fetchFriends } from '../services/userFetchData';
 
 const Tab = createBottomTabNavigator();
 
 const BottomTab = () => {
+
+  const dispatch = useAppDispatch()
+  
+  useEffect( () => {
+    
+    (async () => { 
+        console.log('get initla stuff')
+        dispatch(storeLocation(await fetchLocation()));
+        dispatch(storeUserInfo(await fetchUserInfo()));
+        dispatch(storeUserFriends(await fetchFriends()));
+
+        console.log('done fetch all stuff')
+    })();
+    
+  }, [])
 
   return (
     <Tab.Navigator 

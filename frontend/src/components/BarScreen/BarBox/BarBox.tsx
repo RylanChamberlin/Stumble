@@ -3,8 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "./styles";
 import { Bar } from "../../../services/bars";
 import { FC } from "react";
-import { RootStackParamList } from "../../../../../App";
 import { NativeStackNavigationProp} from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../../navigation/Nav";
 
 
 type BarBoxProps = { 

@@ -14,7 +14,7 @@ const FriendScreen = () => {
     const {isLoading, isError, data} = useUsers();
 
     return(
-       
+        
         <AppView>    
             <Header feed={feed} setFeed={setFeed}/>
             {feed ? <MapBox isLoading={isLoading} data={data}/> : <FeedList isLoading={isLoading} data={data}/>}

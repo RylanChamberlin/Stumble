@@ -17,7 +17,6 @@ const UserInfo = () => {
 
     const [avatar, setAvatar] = useState("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png");
     const [hasAvatar, setHasAvatar] = useState(false);
-
     const user = useAppSelector(state => state.location.info);
     const navigation = useNavigation<UserScreenProp>()
 
