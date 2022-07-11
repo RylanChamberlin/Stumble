@@ -29,11 +29,6 @@ export default () => {
     },[])
 
   
-    const setD = async() => {
-        
-    } 
-    
-
     const fetchFriend = async(uid) => {
         const query = await db.collection("users").doc(uid).get();
         let user = query.data();

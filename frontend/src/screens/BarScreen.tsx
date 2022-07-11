@@ -3,9 +3,9 @@ import AppView from "../components/general/AppView";
 import Header from "../components/BarScreen/Header";
 import BarList from "../components/BarScreen/BarList";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../../App";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebase";
+import { RootStackParamList } from "../navigation/Nav";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 

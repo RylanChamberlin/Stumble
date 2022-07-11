@@ -16,7 +16,7 @@ function MapBox(props: any) {
     const [region, setRegion] = useState<any>();
     const [title, setTitle] = useState('');
 
-    const { data: bars, error, isLoading, isFetching, isSuccess, refetch } = useGetBarsByLocationQuery();
+    //const { data: bars, error, isLoading, isFetching, isSuccess, refetch } = useGetBarsByLocationQuery();
     const location = useAppSelector(state => state.location.coords)
 
     useEffect(() => {
@@ -31,27 +31,48 @@ function MapBox(props: any) {
         
     },[location])
 
+    //gets list of bars people are at and the names and location
+    const makeList = () => {
 
+        const people = props.data.map((p: any) => p.checkIn)
+        const uniqueIds = new Set();
+        const bars = people.filter((element: any) => {
+            if(element == undefined) return;
+            const isDuplicate = uniqueIds.has(element.locationID);
+            uniqueIds.add(element.locationID);
+
+            if (!isDuplicate) {
+                return true;
+            }
+            return false;
+        });
+    
+       return bars
+        
+    }
+
+    
     const showFriendsAtBar = (id: string, name: string) => {
         const people = props.data.filter((item: any) => item.checkIn?.locationID == id)
         setPeopleList(people)
         setPeeps(!showPeeps)
         setTitle(name)
-        console.log(id)
     }
 
-    const activeBars = bars.map((marker: any) => {
-        const people = props.data.filter((item: any) => item.checkIn?.locationID == marker.key);
+    const activeBars = makeList().map((marker: any) => {
+        const people = props.data.filter((item: any) => item.checkIn?.locationID == marker.locationID);
         if (!people.length) return; //only shows if people are at bar
         return (
-            <Marker key={marker.key} coordinate={{ latitude: marker.lat, longitude: marker.lng }}>
+            <Marker key={marker.locationID} coordinate={{ latitude: marker.lat, longitude: marker.lng }}>
                 <Text>{people.length}</Text>
-                <TouchableOpacity onPress={() => showFriendsAtBar(marker.key, marker.name)}>
+                <TouchableOpacity onPress={() => showFriendsAtBar(marker.locationID, marker.locationName)}>
                     <MaterialCommunityIcons name="beer" size={29} color="black" />
                 </TouchableOpacity>
             </Marker>
         );
     });
+
+    
 
 
     if(props.isLoading) {

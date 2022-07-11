@@ -16,7 +16,7 @@ const NearbyBarList: FC<NearbyBarListProps>= ({user, data, isLoading, setSelecte
     const [selectedID, setSelectedID] = useState<string>('');
     
     useEffect(() => {
-        setSelectedID(user?.checkIn.locationID);
+        setSelectedID(user?.checkIn?.locationID);
     },[])
 
     const renderItem = ({ item }: any) => <BarItem item={item} selectedID={selectedID} setSelectedID={setSelectedID} setSelectedBar={setSelectedBar}/>;

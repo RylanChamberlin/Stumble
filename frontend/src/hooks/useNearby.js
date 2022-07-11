@@ -48,9 +48,10 @@ export default () => {
 
 
     const checkIn = (bar) => {
-        
+        console.log(bar)
         let check = {
-            location,
+            lat: bar.geometry.location.lat,
+            lng: bar.geometry.location.lng,
             locationID: bar.place_id,
             locationName: bar.name
         }

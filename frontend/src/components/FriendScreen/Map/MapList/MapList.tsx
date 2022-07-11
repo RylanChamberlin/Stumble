@@ -15,7 +15,7 @@ type MapListProps = {
 
 const MapList: FC<MapListProps> = ({setPeeps, showPeeps, friends, title}) => {
 
-    const renderItem = useCallback(({ item }) => {return (<MapListItem name={item.name} seconds={item.checkInTime.seconds}/>)},[]);
+    const renderItem = useCallback(({ item }) => {return (<MapListItem name={item.name} seconds={item.checkInTime?.seconds}/>)},[]);
 
     return (
 
