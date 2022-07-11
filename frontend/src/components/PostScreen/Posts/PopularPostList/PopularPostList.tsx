@@ -25,22 +25,21 @@ function PopularPostList(props: Props){
 
   return (
     <FlatList
-    contentContainerStyle={{marginBottom: 300}}
-    data={data}
-    renderItem={renderItem}
-    refreshControl={
-      <RefreshControl
-        refreshing={isLoading}
-        onRefresh={onRefresh}
-      />
-    }
-    keyExtractor={keyExtractor}
-    ListFooterComponent={renderFooter}
-    showsVerticalScrollIndicator={false}
-    onEndReachedThreshold={0.2}
-    onEndReached={fetchMoreData}
+      data={data}
+      renderItem={renderItem}
+      refreshControl={
+        <RefreshControl
+          refreshing={isLoading}
+          onRefresh={onRefresh}
+        />
+      }
+      keyExtractor={keyExtractor}
+      ListFooterComponent={renderFooter}
+      showsVerticalScrollIndicator={false}
+      onEndReachedThreshold={0.2}
+      onEndReached={fetchMoreData}
     
-/>  
+  />  
   )
-  }
+}
 export default PopularPostList;

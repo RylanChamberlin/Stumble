@@ -16,6 +16,7 @@ export default StyleSheet.create({
     },
 
     innerContainer:{
+       
         padding: 10,
         backgroundColor: "white",
         borderRadius: 15,

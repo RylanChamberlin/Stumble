@@ -34,6 +34,7 @@ const FriendList = () => {
             <Text style = {styles.title}>Friends</Text>
 
             <FlatList
+                contentContainerStyle={{ paddingBottom: 120 }}
                 data={filter}
                 renderItem={renderItem}  
                 showsVerticalScrollIndicator={false}

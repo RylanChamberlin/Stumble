@@ -10,7 +10,7 @@ type NavProp = NativeStackNavigationProp<RootStackParamList, 'PostScreen' | 'Bot
 
 type SimpleHeader = {
     title: string
-    bar: any
+    bar?: any
 }
 
 const SimpleHeader: FC<SimpleHeader>= ({title, bar}) => {
