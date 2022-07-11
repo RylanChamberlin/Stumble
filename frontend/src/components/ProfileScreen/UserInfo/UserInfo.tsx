@@ -21,6 +21,9 @@ const UserInfo = () => {
     const navigation = useNavigation<UserScreenProp>()
 
     useEffect( () => {
+
+        
+
         if (user?.photoURL) {
             setAvatar(user.photoURL);
             setHasAvatar(true)

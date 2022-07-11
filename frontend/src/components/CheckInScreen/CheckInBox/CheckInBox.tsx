@@ -2,9 +2,11 @@ import { useNavigation } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import React, { useEffect, useState } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
-import { useAppSelector } from "../../../app/hooks"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import { storeUserInfo } from "../../../features/Location/locationSlice"
 import useNearby from "../../../hooks/useNearby"
 import { RootStackParamList } from "../../../navigation/Nav"
+import { fetchUserInfo } from "../../../services/fetchUserInfo"
 import NearbyBarList from "../NearbyBarList"
 import styles from "./styles"
 
@@ -17,15 +19,16 @@ const CheckInBox = () => {
     const {data, isLoading, searchNearbyPhone, checkIn} = useNearby();
     const [selectedBar, setSelectedBar] = useState()
     const navigation = useNavigation<NavProp>()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         searchNearbyPhone(500);
     }, [location])
 
-    const barCheckIn = () => {
+    const barCheckIn = async() => {
         checkIn(selectedBar) 
         navigation.navigate("BottomTab")
-        
+        dispatch(storeUserInfo(await fetchUserInfo()));
     }
 
     return (

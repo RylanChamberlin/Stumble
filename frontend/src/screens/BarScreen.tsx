@@ -9,25 +9,24 @@ import { RootStackParamList } from "../navigation/Nav";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
-const BarScreen = ({navigation}: Props) => {
+const BarScreen = () => {
 
-    //const navigation = useNavigation({navigator})
-    // const handleSignOut = () => {
-    //     auth
-    //     .signOut()
-    //     .then(() => {
-    //         navigation.replace("Login")
-    //     })
-    //     .catch(error => alert(error.message))
-    // }
+    const navigation = useNavigation<any>()
+    const handleSignOut = () => {
+        auth
+        .signOut()
+        .then(() => {
+            navigation.navigate("Login")
+        })
+    }
      
     return (
         <AppView>
-            {/* <View style={styles.logo}>
+            <View style={styles.logo}>
                 <TouchableOpacity onPress={handleSignOut}>
                     <Text style={{color: '#ffff'}}>{auth.currentUser?.email}</Text>
                 </TouchableOpacity>
-            </View> */}
+            </View>
             <Header/>
             <BarList/>
             

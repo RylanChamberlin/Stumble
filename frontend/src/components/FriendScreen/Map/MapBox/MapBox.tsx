@@ -8,13 +8,15 @@ import MapList from '../MapList';
 import { useGetBarsByLocationQuery } from '../../../../services/bars';
 import { useAppSelector } from '../../../../app/hooks';
 import Loader from '../../../general/Loader';
+import useUsers from '../../../../hooks/useUsers';
 
-function MapBox(props: any) {
+const MapBox = () => {
 
     const [showPeeps, setPeeps] = useState(false);
     const [peopleList, setPeopleList] = useState([])
     const [region, setRegion] = useState<any>();
     const [title, setTitle] = useState('');
+    const {isLoading, isError, data} = useUsers();
 
     //const { data: bars, error, isLoading, isFetching, isSuccess, refetch } = useGetBarsByLocationQuery();
     const location = useAppSelector(state => state.location.coords)
@@ -34,7 +36,7 @@ function MapBox(props: any) {
     //gets list of bars people are at and the names and location
     const makeList = () => {
 
-        const people = props.data.map((p: any) => p.checkIn)
+        const people = data.map((p: any) => p.checkIn)
         const uniqueIds = new Set();
         const bars = people.filter((element: any) => {
             if(element == undefined) return;
@@ -53,14 +55,14 @@ function MapBox(props: any) {
 
     
     const showFriendsAtBar = (id: string, name: string) => {
-        const people = props.data.filter((item: any) => item.checkIn?.locationID == id)
+        const people = data.filter((item: any) => item.checkIn?.locationID == id)
         setPeopleList(people)
         setPeeps(!showPeeps)
         setTitle(name)
     }
 
     const activeBars = makeList().map((marker: any) => {
-        const people = props.data.filter((item: any) => item.checkIn?.locationID == marker.locationID);
+        const people = data.filter((item: any) => item.checkIn?.locationID == marker.locationID);
         if (!people.length) return; //only shows if people are at bar
         return (
             <Marker key={marker.locationID} coordinate={{ latitude: marker.lat, longitude: marker.lng }}>
@@ -75,7 +77,7 @@ function MapBox(props: any) {
     
 
 
-    if(props.isLoading) {
+    if(isLoading) {
         return  <Loader/>
     }
 

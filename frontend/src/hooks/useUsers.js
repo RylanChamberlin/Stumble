@@ -14,7 +14,8 @@ export default () => {
 
         setIsLoading(true)
         console.log('fetch user friends')
-        
+        if(!friends) return
+ 
         setData(await Promise.all(friends.map(async (friend) => {
             return fetchFriend(friend.id)
           }))
@@ -26,7 +27,7 @@ export default () => {
             console.log('unmount useUsers: ')
           }
         
-    },[])
+    },[friends])
 
   
     const fetchFriend = async(uid) => {
