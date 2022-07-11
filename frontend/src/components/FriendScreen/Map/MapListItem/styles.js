@@ -7,8 +7,8 @@ export default StyleSheet.create({
 
         flexDirection: "row",
         alignItems: "center",
-        marginHorizontal: 30,
-        //marginBottom: 10,
+        marginHorizontal: 15,
+        marginBottom: 10,
         backgroundColor: '#f2f1f1',
         borderWidth: 1,
         borderRadius: 10

@@ -19,7 +19,7 @@ const CheckInBox = () => {
     const navigation = useNavigation<NavProp>()
 
     useEffect(() => {
-        searchNearbyPhone(100);
+        searchNearbyPhone(500);
     }, [location])
 
     const barCheckIn = () => {

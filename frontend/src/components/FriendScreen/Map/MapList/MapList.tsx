@@ -30,8 +30,10 @@ const MapList: FC<MapListProps> = ({setPeeps, showPeeps, friends, title}) => {
                 onRequestClose={() => setPeeps(!showPeeps)}
             >
             
-            <BlurView intensity={5} style={styles.blurBackground}>
-                <Text style={styles.title}>{title}</Text>
+            <BlurView intensity={10} style={styles.blurBackground}>
+                <View style={{backgroundColor: 'white', marginHorizontal: 15, borderRadius: 10, padding: 5, marginBottom: 5}}>
+                    <Text style={styles.title}>{title}</Text>
+                </View>
                 <FlatList
                     data={friends}
                     renderItem={renderItem}

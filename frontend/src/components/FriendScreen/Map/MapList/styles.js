@@ -5,12 +5,15 @@ export default StyleSheet.create({
 
   blurBackground: {
     flex: 1, 
-    paddingTop: 200
+    paddingTop: 170
   },
 
   title: {
       alignItems: "center", 
       justifyContent: "center", 
-      fontSize: 30, 
-      marginLeft: 50}
+      fontSize: 40, 
+      textAlign: "center",
+      fontWeight: "bold"
+  
+    }
 })
