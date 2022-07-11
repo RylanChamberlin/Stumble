@@ -11,8 +11,8 @@ const NewPostScreen: FC<NewPostScreenProps> = ({route}) => {
 
     return(
         <AppView>
-            <SimpleHeader title={"NEW POST"}/>
-            <NewPostBox/>
+            <SimpleHeader title={"NEW POST"} bar = {route.params?.bar}/>
+            <NewPostBox bar = {route.params?.bar} />
         </AppView>
        
     );

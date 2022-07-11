@@ -14,8 +14,8 @@ const PostScreen: FC<PostScreenProps> = ({route}) => {
   
     return(
         <AppView>
-            <Header title = {route.params?.name} left={left} setLeft={setLeft}/>
-            {!left ?  <RecentPostList itemID={route.params?.placeID} order='createdAt' field='placeID'/> : <PopularPostList itemID={route.params?.placeID}/>}
+            <Header bar = {route.params?.bar}  left={left} setLeft={setLeft}/>
+            {!left ?  <RecentPostList itemID={route.params?.bar.place_id} order='createdAt' field='placeID'/> : <PopularPostList itemID={route.params?.bar.place_id}/>}
         </AppView>
        
     );

@@ -16,7 +16,7 @@ const BarList = () => {
             renderItem={renderItem}
             refreshControl={<RefreshControl refreshing={isFetching} onRefresh={onRefresh}/>}
             showsVerticalScrollIndicator={false}
-            keyExtractor={(bar) => bar.key}    
+            keyExtractor={(bar) => bar.place_id}    
         />
     )
 }

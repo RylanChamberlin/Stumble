@@ -27,7 +27,8 @@ export default StyleSheet.create({
     },
 
     postText: {
-        paddingBottom: 10, fontSize: 20
+        paddingBottom: 10, 
+        fontSize: 20
     },
 
     bottomTextInfo:{

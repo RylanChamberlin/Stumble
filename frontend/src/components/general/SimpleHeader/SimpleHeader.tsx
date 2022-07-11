@@ -6,18 +6,27 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../../navigation/Nav";
 import { FC } from "react";
 
-type NavProp = NativeStackNavigationProp<RootStackParamList, 'BottomTab'>;
+type NavProp = NativeStackNavigationProp<RootStackParamList, 'PostScreen' | 'BottomTab'>;
 
 type SimpleHeader = {
     title: string
+    bar: any
 }
 
-const SimpleHeader: FC<SimpleHeader>= ({title}) => {
+const SimpleHeader: FC<SimpleHeader>= ({title, bar}) => {
 
     const navigation = useNavigation<NavProp>()
 
     const goBack = () => {
-        navigation.navigate("BottomTab")
+
+        if(bar) {
+            navigation.navigate('PostScreen', {
+                bar: bar
+              });
+        }else{
+            navigation.navigate('BottomTab')
+        }
+        
     }
     return (
         <View style={styles.container}>

@@ -12,7 +12,7 @@ export type Bar = {
     postCount: number
     rating: number
     topPost: string,
-    key: string
+    place_id: string
   }
 
 // Define a service using a base URL and expected endpoints
@@ -64,7 +64,7 @@ export const fetchBars = createApi({
                         if (distanceInM <= radiusInM) {
                             matchingDocs.push({
                                 ...doc.data(),
-                                key: doc.id,
+                                place_id: doc.id,
                             });
                         }
                     }

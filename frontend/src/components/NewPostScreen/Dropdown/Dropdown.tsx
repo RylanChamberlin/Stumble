@@ -12,10 +12,19 @@ import {
 interface Props {
   label: string;
   data: any
+  select: any
   onSelect:  Dispatch<SetStateAction<any>>
 }
 
-const Dropdown: FC<Props> = ({ label, data, onSelect }) => {
+const Dropdown: FC<Props> = ({ label, data, onSelect, select }) => {
+
+
+  useEffect(() => {
+    if(select){
+      setSelected(select)
+    }
+  },[select])
+
   const DropdownButton = useRef<any>();
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState<any>(undefined);
@@ -56,7 +65,7 @@ const Dropdown: FC<Props> = ({ label, data, onSelect }) => {
         >
           <View style={[styles.dropdown, { top: dropdownTop }]}>
 
-            {!data.length && <Text style={styles.noBars}>No Bars Near You Please Be Within 100m of a bar</Text>}
+            {!data.length && !selected && <Text style={styles.noBars}>No Bars Near You Please Be Within 100m of a bar</Text>}
               
             <FlatList
               data={data}
@@ -73,7 +82,7 @@ const Dropdown: FC<Props> = ({ label, data, onSelect }) => {
   return (
     <TouchableOpacity
       ref={DropdownButton}
-      style={[styles.button, !visible && {borderRadius: 15}] }
+      style={[styles.button, !visible && {borderRadius: 15}, !data.length && {borderRadius: 15}] }
       onPress={toggleDropdown}
     >
       {renderDropdown()}

@@ -20,8 +20,7 @@ const BarBox: FC<BarBoxProps> = ({bar}) => {
     // navigates to comments on the selected bar
     const clickBar = () => {
         navigation.navigate('PostScreen', {
-            placeID: bar.key,
-            name: bar.name,
+            bar: bar
           });
     }
     

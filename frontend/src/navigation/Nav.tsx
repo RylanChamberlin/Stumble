@@ -11,13 +11,13 @@ import NewPostScreen from "../screens/NewPostScreen";
 
 export type RootStackParamList = {
   Login: undefined;
-  PostScreen: { placeID?: string, name?: string } | undefined;
+  PostScreen: { bar?: any } | undefined;
   BottomTab: undefined;
   UserInfo: undefined;
   ProfileFriendScreen: undefined;
   AddFriendScreen: undefined;
   CheckInScreen: undefined;
-  NewPostScreen: undefined;
+  NewPostScreen: {bar?: any} | undefined;
 }
 
 export const Nav = () => {

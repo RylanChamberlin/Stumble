@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useAppSelector } from "../../../app/hooks";
 import useNearby from "../../../hooks/useNearby";
@@ -10,9 +10,12 @@ import Dropdown from "../Dropdown";
 import styles from "./styles";
 
 
-type NavProp = NativeStackNavigationProp<RootStackParamList, 'BottomTab'>;
+type NavProp = NativeStackNavigationProp<RootStackParamList, 'PostScreen'>;
+type NewPostboxProps = {
+    bar?: any
+}
 
-const NewPostbox = () => {
+const NewPostbox: FC<NewPostboxProps>= ({bar}) => {
 
     const location = useAppSelector(state => state.location.coords);
     const {data: data, isLoading, searchNearbyPhone} = useNearby();
@@ -22,22 +25,37 @@ const NewPostbox = () => {
     const [selected, setSelected] = useState(undefined);
 
     useEffect(() => {
-        searchNearbyPhone(200);
+
+        if(!bar){
+            searchNearbyPhone(200);
+        }else{
+            console.log('selected ' + bar.name)
+            setSelected(bar)
+        }
+
+        
     }, [location])
 
     const postBar = () => {
-        
+        console.log(selected)
         if(sendMessage(postInput, selected)){
-            navigation.navigate("BottomTab")
+
+            if(bar){
+                navigation.navigate('PostScreen', {
+                    bar: bar
+                  });
+            }else{
+                navigation.navigate('BottomTab');
+            }
+            
         }   
-        
     }
     
     return (
         <>
             <View style = {styles.box}>
                
-                <Dropdown label="Select Bar" data={data} onSelect={setSelected} />
+                <Dropdown label="Select Bar" data={data} onSelect={setSelected} select={selected} />
                 <TextInput 
                     placeholder='Type SOMETHING........'
                     style = {styles.textInput} 
