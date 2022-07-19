@@ -1,5 +1,6 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { FlatList } from "react-native"
+import EmptyList from "../../general/EmptyList";
 import Loader from "../../general/Loader";
 import BarItem from "../BarItem";
 
@@ -20,6 +21,7 @@ const NearbyBarList: FC<NearbyBarListProps>= ({user, data, isLoading, setSelecte
     },[])
 
     const renderItem = ({ item }: any) => <BarItem item={item} selectedID={selectedID} setSelectedID={setSelectedID} setSelectedBar={setSelectedBar}/>;
+    const listEmptyComponent = () => {return <EmptyList name={'No Bars Within 50m'}/>}
 
     if (isLoading || !user) {
         <Loader/>
@@ -28,6 +30,7 @@ const NearbyBarList: FC<NearbyBarListProps>= ({user, data, isLoading, setSelecte
     return (
         <FlatList
             data={data} 
+            ListEmptyComponent={listEmptyComponent}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item: any) => item.place_id}

@@ -22,7 +22,7 @@ const CheckInBox = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        searchNearbyPhone(500);
+        searchNearbyPhone(50);
     }, [location])
 
     const barCheckIn = async() => {

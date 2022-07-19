@@ -1,6 +1,7 @@
 import { useCallback } from "react"
 import { FlatList, Text, View } from "react-native"
 import useAcceptFriends from "../../../hooks/useAcceptFriends"
+import EmptyList from "../../general/EmptyList"
 import NewFriendItem from "../NewFriendItem"
 
 
@@ -8,12 +9,14 @@ const FriendRequestList = () => {
 
     const {list} = useAcceptFriends()
     const renderItem = useCallback (({ item }) => <NewFriendItem item={item}/>,[]);
+    const listEmptyComponent = () => {return <EmptyList name={'You have no Friend Requests'}/>}
 
     return (
         <View>
           <Text>Accept Requests</Text>
             <FlatList
               data={list}
+              ListEmptyComponent={listEmptyComponent}
               renderItem={renderItem}
               showsVerticalScrollIndicator={false}
             />

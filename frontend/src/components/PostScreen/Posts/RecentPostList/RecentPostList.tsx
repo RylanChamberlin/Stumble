@@ -1,8 +1,9 @@
-import {ActivityIndicator, FlatList, RefreshControl } from 'react-native'
+import {ActivityIndicator, FlatList, RefreshControl, Text } from 'react-native'
 import React, { useCallback , useEffect, useState } from 'react'
 import Loader from '../../../general/Loader';
 import useMessages from '../../../../hooks/useMessages';
 import PostBox from '../PostBox';
+import EmptyList from '../../../general/EmptyList';
 
 type Props = {
   itemID?: any
@@ -22,6 +23,7 @@ function RecentPostList(props: Props){
   const renderFooter = () => {return isMoreLoading ? <Loader/> : null}
   const onRefresh = () => { getMessages() }
   const keyExtractor = useCallback( (item) => item.key, []);
+  const listEmptyComponent = () => {return <EmptyList name={'You have no Posts'}/>}
 
   return (
     <FlatList
@@ -34,6 +36,7 @@ function RecentPostList(props: Props){
         onRefresh={onRefresh}
       />
     }
+    ListEmptyComponent={listEmptyComponent}
     keyExtractor={keyExtractor}
     ListFooterComponent={renderFooter}
     showsVerticalScrollIndicator={false}

@@ -4,6 +4,7 @@ import { useAppSelector } from "../../../app/hooks";
 import FriendItem from "../FriendItem";
 import SearchFriend from "../../general/SearchFriend";
 import styles from "./styles";
+import EmptyList from "../../general/EmptyList";
 
 const FriendList = () => {
 
@@ -24,6 +25,7 @@ const FriendList = () => {
 
     const renderItem = useCallback (({ item }) => <FriendItem name = {item.name} username = {item.username} photoURL={item.photoURL}/>,[]);
     const onRefresh = useCallback(() => {}, []);
+    const listEmptyComponent = () => {return <EmptyList name={'You have no Friends'}/>}
 
     return (
 
@@ -34,8 +36,10 @@ const FriendList = () => {
             <Text style = {styles.title}>Friends</Text>
 
             <FlatList
+            
                 contentContainerStyle={{ paddingBottom: 120 }}
                 data={filter}
+                ListEmptyComponent={listEmptyComponent}
                 renderItem={renderItem}  
                 showsVerticalScrollIndicator={false}
             />  
