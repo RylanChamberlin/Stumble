@@ -25,7 +25,7 @@ const FriendList = () => {
 
     const renderItem = useCallback (({ item }) => <FriendItem name = {item.name} username = {item.username} photoURL={item.photoURL}/>,[]);
     const onRefresh = useCallback(() => {}, []);
-    const listEmptyComponent = () => {return <EmptyList name={'You have no Friends'}/>}
+    const listEmptyComponent = () => {return <EmptyList name={'You Have No Friends'}/>}
 
     return (
 

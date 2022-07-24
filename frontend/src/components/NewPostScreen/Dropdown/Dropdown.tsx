@@ -65,7 +65,7 @@ const Dropdown: FC<Props> = ({ label, data, onSelect, select }) => {
         >
           <View style={[styles.dropdown, { top: dropdownTop }]}>
 
-            {!data.length && !selected && <Text style={styles.noBars}>No Bars Near You Please Be Within 100m of a bar</Text>}
+            {!data.length && !selected && <Text style={styles.noBars}>No Bars Nearby</Text>}
               
             <FlatList
               data={data}
@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
   buttonText: {
     flex: 1,
     textAlign: 'center',
+    fontSize: 20
   },
   icon: {
     marginRight: 10,
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
   },
 
   noBars: {
-      fontSize: 30,
+      fontSize: 20,
       textAlign: 'center',
   }
 });

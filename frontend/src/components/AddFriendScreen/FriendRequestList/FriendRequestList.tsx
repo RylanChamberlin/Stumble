@@ -9,7 +9,7 @@ const FriendRequestList = () => {
 
     const {list} = useAcceptFriends()
     const renderItem = useCallback (({ item }) => <NewFriendItem item={item}/>,[]);
-    const listEmptyComponent = () => {return <EmptyList name={'You have no Friend Requests'}/>}
+    const listEmptyComponent = () => {return <EmptyList name={'No New Friend Requests'}/>}
 
     return (
         <View>

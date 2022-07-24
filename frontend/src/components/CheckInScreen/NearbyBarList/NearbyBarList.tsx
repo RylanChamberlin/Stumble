@@ -21,7 +21,7 @@ const NearbyBarList: FC<NearbyBarListProps>= ({user, data, isLoading, setSelecte
     },[])
 
     const renderItem = ({ item }: any) => <BarItem item={item} selectedID={selectedID} setSelectedID={setSelectedID} setSelectedBar={setSelectedBar}/>;
-    const listEmptyComponent = () => {return <EmptyList name={'No Bars Within 50m'}/>}
+    const listEmptyComponent = () => {return <EmptyList name={'No Bars Nearby'}/>}
 
     if (isLoading || !user) {
         <Loader/>

@@ -23,7 +23,7 @@ function RecentPostList(props: Props){
   const renderFooter = () => {return isMoreLoading ? <Loader/> : null}
   const onRefresh = () => { getMessages() }
   const keyExtractor = useCallback( (item) => item.key, []);
-  const listEmptyComponent = () => {return <EmptyList name={'You have no Posts'}/>}
+  const listEmptyComponent = () => {return <EmptyList name={'You Have No Posts'}/>}
 
   return (
     <FlatList

@@ -16,7 +16,7 @@ const FriendAddList: FC<FriendAddListProps>= (props) => {
 
     const {queryUsers, list} = useAddFriends()
     const renderItem = useCallback (({ item }) => <NewFriendItem item={item}/>,[]);
-    const listEmptyComponent = () => {return <EmptyList name={'Can not find User'}/>}
+    const listEmptyComponent = () => {return <EmptyList name={'No User Found'}/>}
 
     return (
         <View>
