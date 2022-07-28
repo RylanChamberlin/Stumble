@@ -27,7 +27,7 @@ export default StyleSheet.create({
     },
 
     newPostButton:{
-        marginTop: 5,
+        marginTop: 3,
         alignItems: "center", 
         backgroundColor: 'white',
         borderRadius: 10,

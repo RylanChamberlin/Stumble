@@ -32,7 +32,15 @@ const CreateNameScreen = () => {
         <SafeAreaView style={styles.outsidecontainer}>
             <KeyboardAvoidingView style={styles.keyboardContainer} behavior="padding">
                 <View style={styles.container}>
-                    <Text style={styles.title}>Welcome Please Choose A Username And Display Name</Text>
+                    <Text style={styles.title}>Welcome!</Text>
+                    <Text style={styles.text}>Please Enter Your Name and Chose a Username Below</Text>
+                    <FormField
+                        formKey='name'
+                        placeholder='Name'
+                        textInputProps={{
+                        }}
+                        handleFormValueChange={handleFormValueChange}
+                    />
                     <FormField
                         formKey='username'
                         placeholder='Username'
@@ -41,13 +49,7 @@ const CreateNameScreen = () => {
                         }}
                         handleFormValueChange={handleFormValueChange}
                     />
-                    <FormField
-                        formKey='name'
-                        placeholder='Display Name'
-                        textInputProps={{
-                        }}
-                        handleFormValueChange={handleFormValueChange}
-                    />
+                    
                 
 
                     <TouchableOpacity onPress={confirm}  style={styles.button}>
@@ -69,6 +71,12 @@ const styles = StyleSheet.create({
     title: {
         fontWeight: 'bold', 
         fontSize: 30, 
+        padding: 5, 
+        textAlign: 'center'
+    },
+    text:{
+        fontWeight: 'bold', 
+        fontSize: 25, 
         padding: 5, 
         textAlign: 'center'
     },

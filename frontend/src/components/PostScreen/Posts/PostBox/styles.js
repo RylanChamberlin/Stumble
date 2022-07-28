@@ -8,7 +8,7 @@ export default StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 15,
         paddingTop: 15,
-        marginVertical: 5,
+        marginVertical: 4,
         borderWidth: 1,
     },
     textContainer: {

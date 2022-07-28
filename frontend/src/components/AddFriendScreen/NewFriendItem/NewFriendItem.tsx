@@ -27,13 +27,13 @@ const NewFriendItem: FC<NewFriendItemProps> = (props) => {
 
         {isFriend == false ?
             <TouchableOpacity onPress={() => acceptRequest(id)} style={styles.button} >
-              <Text>Accept</Text>
+              <Text>ACCEPT</Text>
             </TouchableOpacity> 
             
             :
 
             <TouchableOpacity onPress={() => sendRequest(props.item)} style={styles.button} >
-              <Text>Send</Text>
+              <Text style={styles.buttonText}>ADD</Text>
             </TouchableOpacity> } 
         </View>   
     )

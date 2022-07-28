@@ -14,9 +14,18 @@ export default StyleSheet.create({
     },
 
     button:{
-        padding: 5,
+        marginTop: 20,
+        paddingLeft: 10,
+        paddingRight: 10,
         borderRadius: 10,
         backgroundColor: "lightgrey",
         marginLeft: 'auto',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    buttonText:{
+        fontWeight: '500',
     }
+
 })

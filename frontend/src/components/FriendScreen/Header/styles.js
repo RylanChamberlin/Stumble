@@ -4,9 +4,9 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
 
     header:{
-        height: "15%",
-        justifyContent: "space-between",
-        marginBottom: 10,
+        //height: "16%",
+        //justifyContent: "space-between",
+        //marginBottom: 10,
     },
     title:{
         color: 'white',
@@ -20,6 +20,7 @@ export default StyleSheet.create({
         alignItems: "center"
     },
     newPost:{
+        marginTop: 3,
         alignItems: "center", 
         backgroundColor: 'white',
         borderRadius: 10,
