@@ -11,13 +11,15 @@ import { storeLocation, storeUserFriends, storeUserInfo } from '../features/Loca
 import { fetchLocation } from '../services/fetchLocation';
 import { fetchUserInfo } from '../services/fetchUserInfo';
 import { fetchFriends } from '../services/userFetchData';
+import { auth } from '../firebase';
 
 const Tab = createBottomTabNavigator();
 
 const BottomTab = () => {
 
   const dispatch = useAppDispatch()
-  
+
+
   useEffect( () => {
     
     (async () => { 

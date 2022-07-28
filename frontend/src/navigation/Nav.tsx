@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
 import BottomTab from "./BottomTab";
 import LoginScreen from "../screens/auth/LoginScreen";
+import SignUpScreen from "../screens/auth/SignUpScreen";
+import CreateNameScreen from "../screens/auth/CreateNameScreen";
 import PostScreen from "../screens/PostScreen";
 import ProfileFriendScreen from "../screens/Profile/ProfileFriendScreen";
 import AddFriendScreen from "../screens/AddFriendScreen";
@@ -11,6 +13,8 @@ import NewPostScreen from "../screens/NewPostScreen";
 
 export type RootStackParamList = {
   Login: undefined;
+  SignUp: undefined;
+  CreateUser: undefined;
   PostScreen: { bar?: any } | undefined;
   BottomTab: undefined;
   UserInfo: undefined;
@@ -25,6 +29,8 @@ export const Nav = () => {
     
     const Stack = createNativeStackNavigator<RootStackParamList>();
     const LOGIN_TAG = 'Login';
+    const SIGN_UP_TAG = "SignUp"
+    const CREATE_USER = "CreateUser"
     const POST_TAG = 'PostScreen';
     const BOTTOM_TAB_TAG = 'BottomTab'
     const PROFILE_FRIEND_SCREEN_TAG = 'ProfileFriendScreen';
@@ -37,6 +43,8 @@ export const Nav = () => {
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen name={LOGIN_TAG} component={LoginScreen}  options={{ headerShown: false }}/>
+                <Stack.Screen name={SIGN_UP_TAG} component={SignUpScreen}  options={{ headerShown: false }}/>
+                <Stack.Screen name={CREATE_USER} component={CreateNameScreen}  options={{ headerShown: false }}/>
                 <Stack.Screen name={POST_TAG} component={PostScreen} options={{ headerShown: false }} />
                 <Stack.Screen name={BOTTOM_TAB_TAG} component={BottomTab}  options={{ headerShown: false }}/>
                 <Stack.Screen name={PROFILE_FRIEND_SCREEN_TAG} component={ProfileFriendScreen} options={{ headerShown: false }} />

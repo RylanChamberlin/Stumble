@@ -30,5 +30,10 @@ const FieldValue = firebase.firestore.FieldValue;
 const GeoPoint = firebase.firestore.GeoPoint;
 const dbTime = firebase.firestore.FieldValue.serverTimestamp()
 
+const provider = new firebase.auth.GoogleAuthProvider();
+const appleProvider = new firebase.auth.OAuthProvider('apple.com')
+const signInWithCredential = firebase.auth.signInWithCredential;
 
-export { auth, db, database, FieldValue, dbTime, GeoPoint, storage, storageRef};
+
+export { auth, db, database, FieldValue, dbTime, GeoPoint, storage, storageRef, provider, signInWithCredential, appleProvider};
+export {  }

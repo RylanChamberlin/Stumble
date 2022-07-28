@@ -1,7 +1,7 @@
-import { Nav } from "./navigation/Nav"
+import Routes from "./navigation/Routes"
 
 const Main = () => {
-  return(<Nav/>)
+  return(<Routes/>)
 }
 
 export default Main
