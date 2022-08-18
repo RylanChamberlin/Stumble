@@ -22,8 +22,6 @@ const UserInfo = () => {
 
     useEffect( () => {
 
-        
-
         if (user?.photoURL) {
             setAvatar(user.photoURL);
             setHasAvatar(true)

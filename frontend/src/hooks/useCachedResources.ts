@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../app/hooks';
 import { storeLocation, storeUserFriends, storeUserInfo } from '../features/Location/locationSlice';
 import { fetchLocation } from '../services/fetchLocation';
-import { fetchUserInfo } from '../services/fetchUserInfo';
-import { fetchFriends } from '../services/userFetchData';
+
 
 
 export default function useCachedResources() {
@@ -19,9 +18,7 @@ export default function useCachedResources() {
       
         console.log('get initla stuff')
         dispatch(storeLocation(await fetchLocation()));
-        dispatch(storeUserInfo(await fetchUserInfo()));
-        dispatch(storeUserFriends(await fetchFriends()));
-
+       
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
