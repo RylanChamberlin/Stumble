@@ -45,7 +45,7 @@ const NewPostbox: FC<NewPostboxProps>= ({bar}) => {
                     bar: bar
                   });
             }else{
-                navigation.navigate('BottomTab');
+                navigation.goBack();
             }
             
         }   

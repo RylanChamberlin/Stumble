@@ -27,8 +27,8 @@ const CheckInBox = () => {
 
     const barCheckIn = async() => {
         checkIn(selectedBar) 
-        navigation.navigate("BottomTab")
-        dispatch(storeUserInfo(await fetchUserInfo()));
+        navigation.goBack()
+        dispatch(storeUserInfo(await fetchUserInfo(user.uid)));
     }
 
     return (

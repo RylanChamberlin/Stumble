@@ -1,5 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { StatusBar } from "expo-status-bar";
 import React, { FC, useState } from "react";
+import { Platform } from "react-native";
 import AppView from "../components/general/AppView";
 import SimpleHeader from "../components/general/SimpleHeader";
 import NewPostBox from "../components/NewPostScreen/NewPostBox";
@@ -11,7 +13,7 @@ const NewPostScreen: FC<NewPostScreenProps> = ({route}) => {
 
     return(
         <AppView>
-            <SimpleHeader title={"NEW POST"} bar = {route.params?.bar}/>
+            <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
             <NewPostBox bar = {route.params?.bar} />
         </AppView>
        

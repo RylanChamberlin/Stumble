@@ -64,13 +64,15 @@ const HomeStack:FC<HomeStackProps> = () => {
 
      
      
-      <Stack.Screen name={BOTTOM_TAB_TAG} component={BottomTab}  options={{ headerShown: false }}/>
-      <Stack.Screen name={POST_TAG} component={PostScreen} options={{ headerShown: false }} />
-      <Stack.Screen name={PROFILE_FRIEND_SCREEN_TAG} component={ProfileFriendScreen} options={{ headerShown: false }} />
-      <Stack.Screen name={ADD_FRIEND_SCREEN_TAG} component={AddFriendScreen} options={{ headerShown: false }} />
-      <Stack.Screen name={CHECK_IN_SCREEN_TAG} component={CheckInScreen} options={{ headerShown: false }} />
-      <Stack.Screen name={NEW_POST_TAG} component={NewPostScreen} options={{ headerShown: false }} />
-      <Stack.Screen name={CREATE_USER} component={CreateNameScreen}  options={{ headerShown: false }}/> 
+        <Stack.Screen name={BOTTOM_TAB_TAG} component={BottomTab}  options={{ headerShown: false }}/>
+        <Stack.Screen name={POST_TAG} component={PostScreen} options={{ headerShown: false }} />
+        <Stack.Screen name={PROFILE_FRIEND_SCREEN_TAG} component={ProfileFriendScreen} options={{ headerShown: false }} />
+        <Stack.Screen name={ADD_FRIEND_SCREEN_TAG} component={AddFriendScreen} options={{ headerShown: false }} />
+        <Stack.Screen name={CREATE_USER} component={CreateNameScreen}  options={{ headerShown: false }}/> 
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+            <Stack.Screen name={CHECK_IN_SCREEN_TAG} component={CheckInScreen} options={{ title: 'Check In' }}/>
+            <Stack.Screen name={NEW_POST_TAG} component={NewPostScreen} options={{ title: 'New Post' }} />
+        </Stack.Group>
       
     </Stack.Navigator>
 );
