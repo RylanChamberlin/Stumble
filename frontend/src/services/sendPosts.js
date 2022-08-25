@@ -1,33 +1,35 @@
-import { useNavigation } from "@react-navigation/native";
+import { addDoc, collection, doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { Alert } from "react-native";
-import { auth, db, dbTime } from "../firebase";
+import { auth, db } from "../firebase";
 const geofire = require('geofire-common');
 
 
 //writes post to firebase db
-const writeMessage = (postInput, bar) => {
+const writeMessage = async(postInput, bar) => {
 
     console.log('creating post')
-    db.collection('messages')
-    .add({
+
+    const docRef = await addDoc(collection(db, "messages"), {
         placeID: bar.place_id, 
         bar: bar.name,
         text: postInput,
         score: 0,
         voteCount: 0,
-        createdAt: dbTime,
+        createdAt: serverTimestamp(),
         uid: auth.currentUser.uid,
-    });
+      });
+
+    console.log("Document written with ID: ", docRef.id);
 
 }
 
-const addNewBarWithMessage = (postInput, bar) => {
+const addNewBarWithMessage = async(postInput, bar) => {
 
     const lat = bar.geometry.location.lat;
     const lng = bar.geometry.location.lng;
     const hash = geofire.geohashForLocation([lat, lng]);
 
-    db.collection('bars').doc(bar.place_id).set({
+    await setDoc(doc(db, "bars", bar.place_id), {
         name: bar.name,
         lat: lat,
         lng: lng,
@@ -35,16 +37,15 @@ const addNewBarWithMessage = (postInput, bar) => {
         rating: 0,
         postCount: 0,
         topPost: ''
-    });
+      });
 
     writeMessage(postInput, bar);
 
     console.log("Making new document!");
 }
 
-export const sendMessage = (postInput, bar) => {
+export const sendMessage = async(postInput, bar) => {
 
-    
 
     if (postInput.trim().length < 1) {
         Alert.alert('Error', 'Message cannot be empty');
@@ -56,17 +57,17 @@ export const sendMessage = (postInput, bar) => {
     else{
 
         console.log(bar.name)
-        const docRef = db.collection("bars").doc(bar.place_id);
-        docRef.get().then((doc) => {
-            if (doc.exists) {
-                writeMessage(postInput, bar);
-            } else {
-                console.log('adding bar')
-                addNewBarWithMessage(postInput, bar);
-            }
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
+        const docRef = doc(db, "bars", bar.place_id)
+        const docSnap = await getDoc(docRef);
+
+        
+        if (docSnap.exists()) {
+            writeMessage(postInput, bar);
+        } else {
+            console.log('adding bar')
+            addNewBarWithMessage(postInput, bar);
+        }
+        
 
         return true
     }

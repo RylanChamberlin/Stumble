@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { auth, db } from '../firebase';
 import HomeStack from './HomeStack';
 import AuthStack from './AuthStack';
 import Loader from '../components/general/Loader';
@@ -9,16 +8,18 @@ import { useAppDispatch } from '../app/hooks';
 import { storeUserFriends, storeUserInfo } from '../features/Location/locationSlice';
 import { fetchUserInfo } from '../services/fetchUserInfo';
 import { fetchFriends } from '../services/userFetchData';
+import { auth } from '../firebase';
+
+
 
 
 const Routes = () => {
 
-    const [user, setUser ] = useState();
-    const [signedUp, setSignedUp] = useState(false);
+    const [user, setUser ] = useState<any>();
     const [loading, setLoading] = useState(true);
-    const [initializing, setInitializing] = useState(true);
     const dispatch = useAppDispatch()
 
+   
     useEffect(() => {
         const subscriber = auth.onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
@@ -31,11 +32,6 @@ const Routes = () => {
 
         dispatch(storeUserInfo(await fetchUserInfo(user.uid)));
         dispatch(storeUserFriends(await fetchFriends(user.uid)));
-        
-        // if(user){
-        //     DoesUserExistsInDoc(user.uid)
-        // }
-        if (initializing) setInitializing(false);
         setLoading(false);
         console.log('auth over')
     }

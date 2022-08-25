@@ -1,6 +1,6 @@
+
 import React from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
-import { auth, db } from '../../../../firebase';
 import FormField from '../FormField';
 import Header from '../Header';
 import { useFormData } from '../useFormData';
@@ -8,19 +8,20 @@ import styles from './styles';
 
 const LoginForm = () => {
 
+    
     const [formValues, handleFormValueChange, setFormValues] = useFormData({
         email: '',
         password: '',
     })
     
     const handleLogin = () => {
-        auth
-          .signInWithEmailAndPassword(formValues.email, formValues.password)
-          .then((userCredentials: { user: any; }) => {
-            const user = userCredentials.user;
-            console.log("Logged in with:", user.email);
-          })
-          .catch((error: { message: string; }) => Alert.alert(error.message));
+        // auth
+        //   .signInWithEmailAndPassword(formValues.email, formValues.password)
+        //   .then((userCredentials: { user: any; }) => {
+        //     const user = userCredentials.user;
+        //     console.log("Logged in with:", user.email);
+        //   })
+        //   .catch((error: { message: string; }) => Alert.alert(error.message));
       };
 
 

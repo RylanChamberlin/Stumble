@@ -1,30 +1,37 @@
 
+import { collection, getFirestore, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from 'react';
-import { auth, db } from '../firebase';
+import { auth, db } from "../firebase";
 
 export default () => {
     
     const [list, setList] = useState([])
+    
 
     useEffect( () => {
-        const subscriber = db
-            .collection("users")
-            .doc(auth.currentUser.uid)
-            .collection('Friends')
-            .where('isFriend', '==', false)
-            .onSnapshot((snapshot, error) => {
-                console.log('snapshot: getting friendRequest')
-                let friends = snapshot.docs.map(doc => {
-                    const data = doc.data();
-                    const id = doc.id;
-                    return { id, ...data }
-                })
-                setList(friends)
-            })
 
-        return () => subscriber()
+        getFriendRequest()
 
     },[])
+
+    const getFriendRequest = () => {
+        try{
+            const friendRef = collection(db, "users" , auth.currentUser.uid , 'Friends');
+            const q = query(friendRef, where("isFriend", "==", false))
+            const unsub = onSnapshot(q, (query) => {
+                const requests = [];
+                query.forEach(doc => {
+                    requests.push({...doc.data(), id: doc.id,});
+                })
+                setList(requests);
+            }); 
+                            
+            return () => unsub(); 
+
+        }catch(e){
+            console.log(e)
+        }
+    }
     
     return {list}
 

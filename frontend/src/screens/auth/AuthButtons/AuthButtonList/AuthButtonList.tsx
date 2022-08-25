@@ -5,7 +5,6 @@ import AppleButton from "../AppleButton"
 import GoogleButton from "../GoogleButton"
 import useAppleAuthentication from "../useAppleAuthentication"
 import styles from "./styles"
-import { auth, db } from "../../../../firebase"
 import { useNavigation } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { RootStackParamList } from "../../../../navigation/Nav"
@@ -31,12 +30,12 @@ const AuthButtonList:FC<AuthButtonListProps> = ({googleButtonField, appleSignIn}
     
         const user = await loginWithCredential(credential, data);
 
-        db.collection("users").doc(user.uid).get().then(((doc: { exists: any }) => {
-            console.log('checking exsistenceeeee\n\n\n')
-            if(!doc.exists){
-                navigation.navigate('CreateUser');
-            }
-        }))
+        // db.collection("users").doc(user.uid).get().then(((doc: { exists: any }) => {
+        //     console.log('checking exsistenceeeee\n\n\n')
+        //     if(!doc.exists){
+        //         navigation.navigate('CreateUser');
+        //     }
+        // }))
 
     }
 
@@ -52,8 +51,8 @@ const AuthButtonList:FC<AuthButtonListProps> = ({googleButtonField, appleSignIn}
   
     const loginWithApple = async() => {
         try {
-            const [credential] = await authWithApple();
-            await login(credential);
+            // const [credential] = await authWithApple();
+            // await login(credential);
         } catch (error) {
             console.error(error);
             Alert.alert('Error', 'Something went wrong. Please try again later.');

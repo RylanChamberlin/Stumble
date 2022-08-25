@@ -2,7 +2,7 @@ import { isAvailableAsync, AppleAuthenticationScope, signInAsync } from 'expo-ap
 import { digestStringAsync, CryptoDigestAlgorithm } from 'expo-crypto';
 import { useState, useEffect } from 'react';
 import { Alert, Platform } from 'react-native';
-import { appleProvider } from '../../../firebase';
+
 
 async function login() {
   console.log('Signing in with Apple...');
@@ -11,33 +11,33 @@ async function login() {
   const requestedScopes = [AppleAuthenticationScope.FULL_NAME, AppleAuthenticationScope.EMAIL];
 
   try {
-    const nonce = await digestStringAsync(CryptoDigestAlgorithm.SHA256, rawNonce);
+    // const nonce = await digestStringAsync(CryptoDigestAlgorithm.SHA256, rawNonce);
 
-    const appleCredential = await signInAsync({
-      requestedScopes,
-      state,
-      nonce,
-    });
+    // const appleCredential = await signInAsync({
+    //   requestedScopes,
+    //   state,
+    //   nonce,
+    // });
 
-    const { identityToken, email, fullName } = appleCredential;
+    // const { identityToken, email, fullName } = appleCredential;
 
-    if (!identityToken) {
-      throw new Error('No identity token provided.');
-    }
+    // if (!identityToken) {
+    //   throw new Error('No identity token provided.');
+    // }
 
     
-    appleProvider.addScope('email');
-    appleProvider.addScope('fullName');
+    // appleProvider.addScope('email');
+    // appleProvider.addScope('fullName');
 
-    const credential = appleProvider.credential({
-      idToken: identityToken,
-      rawNonce,
-    });
+    // const credential = appleProvider.credential({
+    //   idToken: identityToken,
+    //   rawNonce,
+    // });
 
-    const displayName = fullName ? `${fullName.givenName} ${fullName.familyName}` : undefined;
-    const data = { email, displayName };
+    // const displayName = fullName ? `${fullName.givenName} ${fullName.familyName}` : undefined;
+    // const data = { email, displayName };
 
-    return [credential, data] as const;
+    // return [credential, data] as const;
   } catch (error: any) {
     throw error;
   }

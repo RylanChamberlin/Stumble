@@ -30,7 +30,7 @@
     "expo-random": "~12.1.1",
     "expo-splash-screen": "^0.16.1",
     "expo-status-bar": "~1.2.0",
-    "firebase": "8.2.3",
+    "firebase": "^9.6.11",
     "geofire-common": "^5.2.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",

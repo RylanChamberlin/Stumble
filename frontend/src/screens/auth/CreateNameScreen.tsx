@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { auth, db } from "../../firebase"
 import { RootStackParamList } from "../../navigation/Nav";
 import FormField from "./Form/FormField"
 import { useFormData } from "./Form/useFormData"
@@ -19,10 +18,12 @@ const CreateNameScreen = () => {
     const confirm = () => {
 
 
-        db.collection("users").doc(auth.currentUser.uid).set({
-            username: formValues.username,
-            name: formValues.name
-        });
+        //changes this to v9
+
+        // db.collection("users").doc(auth.currentUser.uid).set({
+        //     username: formValues.username,
+        //     name: formValues.name
+        // });
 
         navigation.replace('BottomTab');
 

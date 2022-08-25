@@ -13,37 +13,37 @@ type Props = {
 
 function RecentPostList(props: Props){
 
-  const {isLoading, isError, data,  getMessages, getMore, isMoreLoading} = useMessages(props.itemID, props.order, props.field);
+    const {isLoading, isError, data,  getMessages, getMore, isMoreLoading} = useMessages(props.itemID, props.order, props.field);
 
-  const fetchMoreData = () => {
-    !isMoreLoading && getMore();
-  }
-
-  const renderItem = useCallback(({ item, index }) => {return (<PostBox post = {item}/>)},[]);
-  const renderFooter = () => {return isMoreLoading ? <Loader/> : null}
-  const onRefresh = () => { getMessages() }
-  const keyExtractor = useCallback( (item) => item.key, []);
-  const listEmptyComponent = () => {return <EmptyList name={'You Have No Posts'}/>}
-
-  return (
-    <FlatList
-    contentContainerStyle={{marginBottom: 300}}
-    data={data}
-    renderItem={renderItem}
-    refreshControl={
-      <RefreshControl
-        refreshing={isLoading}
-        onRefresh={onRefresh}
-      />
+    const fetchMoreData = () => {
+        !isMoreLoading && getMore();
     }
-    ListEmptyComponent={listEmptyComponent}
-    keyExtractor={keyExtractor}
-    ListFooterComponent={renderFooter}
-    showsVerticalScrollIndicator={false}
-    onEndReachedThreshold={0.2}
-    onEndReached={fetchMoreData}
+
+    const renderItem = useCallback(({ item, index }) => {return (<PostBox post = {item}/>)},[]);
+    const renderFooter = () => {return isMoreLoading ? <Loader/> : null}
+    const onRefresh = () => { getMessages() }
+    const keyExtractor = useCallback( (item) => item.key, []);
+    const listEmptyComponent = () => {return <EmptyList name={'You Have No Posts'}/>}
+
+    return (
+        <FlatList
+            contentContainerStyle={{marginBottom: 300}}
+            data={data}
+            renderItem={renderItem}
+            refreshControl={
+        <RefreshControl
+            refreshing={isLoading}
+            onRefresh={onRefresh}
+        />
+        }
+            ListEmptyComponent={listEmptyComponent}
+            keyExtractor={keyExtractor}
+            ListFooterComponent={renderFooter}
+            showsVerticalScrollIndicator={false}
+            onEndReachedThreshold={0.2}
+            onEndReached={fetchMoreData}
     
-/>  
+    />  
   )
 }
 

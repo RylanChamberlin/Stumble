@@ -3,7 +3,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { create } from 'react-test-renderer';
-import { auth, db } from '../../../../firebase';
+
 import { RootStackParamList } from '../../../../navigation/Nav';
 import FormField from '../FormField';
 import Header from '../Header';
@@ -85,18 +85,18 @@ const RegisterForm = () => {
     }
 
     const createAccount = async () => {
-        await auth
-        .createUserWithEmailAndPassword(formValues.email, formValues.password)
-        .then((userCredentials: { user: any; }) => {
-                const user = userCredentials.user;
-                db.collection("users").doc(user.uid).set({
-                    username: formValues.username.toLowerCase(),
-                    name: formValues.name
-            });
+        // await auth
+        // .createUserWithEmailAndPassword(formValues.email, formValues.password)
+        // .then((userCredentials: { user: any; }) => {
+        //         const user = userCredentials.user;
+        //         db.collection("users").doc(user.uid).set({
+        //             username: formValues.username.toLowerCase(),
+        //             name: formValues.name
+        //     });
 
-            console.log('Registered with:', user.uid);
-        })
-        .catch((error: { message: string; }) => Alert.alert(error.message))
+        //     console.log('Registered with:', user.uid);
+        // })
+        // .catch((error: { message: string; }) => Alert.alert(error.message))
     }
 
 

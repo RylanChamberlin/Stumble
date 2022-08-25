@@ -1,6 +1,7 @@
+import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../app/hooks";
-import { auth, db } from "../firebase";
+import { db } from "../firebase";
 
 export default () => {
 
@@ -31,10 +32,17 @@ export default () => {
 
   
     const fetchFriend = async(uid) => {
-        const query = await db.collection("users").doc(uid).get();
-        let user = query.data();
-        user.uid = query.id;
-        return user
+
+        const friendRef = doc(db, 'users', uid);
+        const docSnap = await getDoc(friendRef);
+        if (docSnap.exists()) {
+            let user = docSnap.data();
+            user.uid = docSnap.id;
+            return user
+        } else {
+            console.log("No such Friend document!");
+        }
+
     }
 
 

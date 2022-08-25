@@ -1,7 +1,9 @@
-import { storage, auth, db } from "../firebase";
 import * as ImagePicker from 'expo-image-picker';
+import { auth } from '../firebase';
 
 export const pickAvatar = async(setAvatar) => {
+
+
     console.log('picking')
     let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,

@@ -2,13 +2,13 @@ import { StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import AppView from "../components/general/AppView";
 import Header from "../components/BarScreen/Header";
 import BarList from "../components/BarScreen/BarList";
-import { auth } from "../firebase";
+
 
 const BarScreen = () => {
 
-    const handleSignOut = () => {
-        auth.signOut()
-    }
+    // const handleSignOut = () => {
+    //     auth.signOut()
+    // }
 
     return (
         <AppView>
