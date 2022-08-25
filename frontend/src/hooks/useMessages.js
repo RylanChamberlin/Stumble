@@ -29,20 +29,12 @@ export default (itemID = null, order = 'createdAt', field = 'placeID', version) 
 
     let messagesRef = collection(db, 'messages');
     
+    //if a single bar or users posts
     if(itemID != null) {
         messagesRef = query(messagesRef, where(field, '==' , itemID))
+    }else{
+        messagesRef = query(messagesRef, where("city", '==' , "Columbia"), where("state", '==' , "MO"))
     }
-
-    // else{
-    //     ref = ref
-    //     .where("placeID", "in", ["ChIJK-bTLIle24cRvmyPEI5iwQY", "ChIJPcV4d8-33IcRT7MDdfcUmRQ", "ChIJX7IOCcS33IcR4zdKrb8iHqU", "ChIJna0jxVLKj4ARcmzC8VyOlZ0"])
-    // }
-
-    useEffect(() => {
-        getMessages()
-    },[])
-
-    
 
     const getMessages = async () => {
         console.log('getting fresh')

@@ -7,10 +7,14 @@ const geofire = require('geofire-common');
 //writes post to firebase db
 const writeMessage = async(postInput, bar) => {
 
+    const [code, city, state, country] = bar.plus_code.compound_code.split(/[, ]+/);
+    
     console.log('creating post')
-
     const docRef = await addDoc(collection(db, "messages"), {
-        placeID: bar.place_id, 
+        placeID: bar.place_id,
+        city: city,
+        state: state,
+        country: country,
         bar: bar.name,
         text: postInput,
         score: 0,
@@ -29,8 +33,13 @@ const addNewBarWithMessage = async(postInput, bar) => {
     const lng = bar.geometry.location.lng;
     const hash = geofire.geohashForLocation([lat, lng]);
 
+    const [code, city, state, country] = bar.plus_code.compound_code.split(/[, ]+/);
+
     await setDoc(doc(db, "bars", bar.place_id), {
         name: bar.name,
+        city: city,
+        state: state,
+        country: country,
         lat: lat,
         lng: lng,
         geohash: hash,

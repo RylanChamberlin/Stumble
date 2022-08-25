@@ -41,5 +41,5 @@ export default (seconds) => {
         return Math.floor(interval) + " minute ago";
         
         }
-    return Math.floor(seconds) + " seconds ago";
+    return Math.floor(seconds ?? 1) + " seconds ago";
 }

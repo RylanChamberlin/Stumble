@@ -44,7 +44,6 @@ export default () => {
 
             console.log('feethcing google nearby api')
         }
-
         setIsLoading(false)
 
     }

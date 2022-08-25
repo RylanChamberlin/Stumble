@@ -4,6 +4,7 @@ import Loader from '../../../general/Loader';
 import useMessages from '../../../../hooks/useMessages';
 import PostBox from '../PostBox';
 import EmptyList from '../../../general/EmptyList';
+import { useIsFocused } from '@react-navigation/native';
 
 type Props = {
   itemID?: any
@@ -15,6 +16,13 @@ function RecentPostList(props: Props){
 
     const {isLoading, isError, data,  getMessages, getMore, isMoreLoading} = useMessages(props.itemID, props.order, props.field);
 
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+        isFocused && getMessages()
+      },[isFocused]);
+    
+
     const fetchMoreData = () => {
         !isMoreLoading && getMore();
     }
@@ -23,7 +31,7 @@ function RecentPostList(props: Props){
     const renderFooter = () => {return isMoreLoading ? <Loader/> : null}
     const onRefresh = () => { getMessages() }
     const keyExtractor = useCallback( (item) => item.key, []);
-    const listEmptyComponent = () => {return <EmptyList name={'You Have No Posts'}/>}
+    const listEmptyComponent = () => {return <EmptyList name={props.itemID ? "You Have No Posts" : 'No Posts Nearby'}/>}
 
     return (
         <FlatList

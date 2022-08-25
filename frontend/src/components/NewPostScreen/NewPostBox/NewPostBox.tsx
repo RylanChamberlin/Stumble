@@ -22,6 +22,7 @@ const NewPostbox: FC<NewPostboxProps>= ({bar}) => {
     
     const navigation = useNavigation<NavProp>()
     const [postInput, setPostInput] = useState('')
+    const [posting, setPosting] = useState(false)
     const [selected, setSelected] = useState(undefined);
 
     useEffect(() => {
@@ -32,13 +33,14 @@ const NewPostbox: FC<NewPostboxProps>= ({bar}) => {
             console.log('selected ' + bar.name)
             setSelected(bar)
         }
-
+        
         
     }, [location])
 
-    const postBar = () => {
+    const postBar = async() => {
         console.log(selected)
-        if(sendMessage(postInput, selected)){
+        setPosting(true);
+        if(await sendMessage(postInput, selected)){
 
             if(bar){
                 navigation.navigate('PostScreen', {
@@ -49,6 +51,8 @@ const NewPostbox: FC<NewPostboxProps>= ({bar}) => {
             }
             
         }   
+
+        setPosting(false)
     }
     
     return (
@@ -67,7 +71,7 @@ const NewPostbox: FC<NewPostboxProps>= ({bar}) => {
                 />
                 
             </View>
-            <TouchableOpacity style={[styles.button, styles.elevation]} onPress={() => postBar()} >
+            <TouchableOpacity style={[styles.button, styles.elevation]} onPress={() => postBar()} disabled={posting}>
                 <Text style={styles.buttonText}>POST</Text>
             </TouchableOpacity>
         </>
