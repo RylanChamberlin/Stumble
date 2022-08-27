@@ -26,6 +26,10 @@ export default (itemID = null, order = 'createdAt', field = 'placeID', version) 
     const [data, setData] = useState([])
     const [lastDoc, setLastDoc] = useState(undefined)
 
+    useEffect(() => {
+        getMessages()
+    },[])
+
 
     let messagesRef = collection(db, 'messages');
     

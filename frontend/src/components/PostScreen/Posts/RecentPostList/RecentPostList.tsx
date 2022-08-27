@@ -16,11 +16,11 @@ function RecentPostList(props: Props){
 
     const {isLoading, isError, data,  getMessages, getMore, isMoreLoading} = useMessages(props.itemID, props.order, props.field);
 
-    const isFocused = useIsFocused();
+    // const isFocused = useIsFocused();
 
-    useEffect(() => {
-        isFocused && getMessages()
-      },[isFocused]);
+    // useEffect(() => {
+    //     isFocused && getMessages()
+    //   },[isFocused]);
     
 
     const fetchMoreData = () => {
