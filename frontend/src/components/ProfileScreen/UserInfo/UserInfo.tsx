@@ -19,7 +19,7 @@ const UserInfo = () => {
     const [hasAvatar, setHasAvatar] = useState(false);
     const user = useAppSelector(state => state.location.info);
     const navigation = useNavigation<UserScreenProp>()
-
+   
     useEffect( () => {
 
         if (user?.photoURL) {

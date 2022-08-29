@@ -4,7 +4,7 @@ export default StyleSheet.create({
     container: {
     //   display: 'flex',
     //   margin: 20,
-        width: '80%'
+        width: '80%',
     },
     button: {
         backgroundColor: '#0782F9',
@@ -20,4 +20,16 @@ export default StyleSheet.create({
         fontWeight: '700',
         fontSize: 16,
       },
+
+      loading: {
+        
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        //backgroundColor: ''
+      }
   })

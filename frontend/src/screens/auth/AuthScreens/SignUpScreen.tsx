@@ -3,8 +3,8 @@ import React from 'react'
 
 import * as WebBrowser from 'expo-web-browser';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import RegisterForm from './Form/RegisterForm';
-import AuthButtonList from './AuthButtons/AuthButtonList';
+import RegisterForm from '../Form/RegisterForm';
+import AuthButtonList from '../AuthButtons/AuthButtonList';
 
 
 WebBrowser.maybeCompleteAuthSession();

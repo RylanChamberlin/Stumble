@@ -41,18 +41,16 @@ const AuthButtonList:FC<AuthButtonListProps> = ({googleButtonField, appleSignIn}
         //     }
         // }))
 
-        const docRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(docRef);
+        // const docRef = doc(db, "users", user.uid);
+        // const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
-        } else {
-            console.log("No such document!");
-            console.log(user.uid);
-            navigation.navigate('CreateUser', {
-                user: user
-               });
-        }
+        // if (docSnap.exists()) {
+        //     console.log("Document data:", docSnap.data());
+        // } else {
+        //     navigation.navigate('CreateUser', {
+        //         user: user
+        //        });
+        // }
 
     }
 

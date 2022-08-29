@@ -1,19 +1,10 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
-import React from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
-import { create } from 'react-test-renderer';
-import { auth, db } from '../../../../firebase';
-
-import { RootStackParamList } from '../../../../navigation/Nav';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { createUser } from '../../../../services/FirebaseCalls/createUser';
 import FormField from '../FormField';
 import Header from '../Header';
 import { useFormData } from '../useFormData';
 import styles from './styles';
-
-type NavProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 
 const RegisterForm = () => {
 
@@ -23,90 +14,15 @@ const RegisterForm = () => {
         email: '',
         password: '',
         repassword: ''
-  })
+    })
 
-    const navigation = useNavigation<NavProp>()
+    const [isLoading, setIsLoading] = useState(false)
 
-
-    function hasWhiteSpace(s: string) {
-        return /\s/g.test(s);
-      }
-
-    function hasOneWhiteSpace(s: string) {
-        const spaces = s.split(' ').length - 1;
-        if(spaces > 2)return true
-        return false
-      }
-
-    const handleRegister = async() => {
-
-        
-
-
-        if(formValues.username == ''){
-            return Alert.alert("Username is Empty")
-        }
-
-        if(hasWhiteSpace(formValues.username)){
-            return Alert.alert("No Spaces in Username is Allowed")
-        }
-
-        if(formValues.name == ''){
-            return Alert.alert("Display Name is Empty")
-        }
-
-        if(hasOneWhiteSpace(formValues.name)){
-            return Alert.alert("Only Two Spaces are Allowed in Name");
-        }
-
-        if(formValues.email == ''){
-            return Alert.alert("Email is Empty")
-        }
-        if(formValues.password == ''){
-            return Alert.alert("Password is Empty")
-        }
-        if(formValues.repassword == ''){
-            return Alert.alert("Password is Empty")
-        }
-        if(formValues.password !== formValues.repassword){
-            return Alert.alert("Passwords do not match")
-        }
-
-
-        const username = formValues.username.toLowerCase();
-        const q = query(collection(db, "users"), where("username", "==", username));
-        const querySnapshot = await getDocs(q);
-          
-        if(!querySnapshot.empty){
-            Alert.alert("Username is taken")
-            return;
-        }
-        else{
-            createAccount()
-        }
-            
+    const handleRegister = async () => {
+        setIsLoading(true)
+        await createUser(formValues)
+        setIsLoading(false)  
     }
-
-    const createAccount = async () => {
-    
-        createUserWithEmailAndPassword(auth, formValues.email, formValues.password)
-        .then((userCredentials: { user: any; }) => {
-            const user = userCredentials.user;
-            addUserToDB(user)
-            console.log('Registered with:', user.uid);
-        })
-        .catch((error: { message: string; }) => Alert.alert(error.message))
-    }
-
-    const addUserToDB = async(user : any) =>{
-        
-        await setDoc(doc(db, "users", user.uid), {
-            username: formValues.username.toLowerCase(),
-            name: formValues.name
-          });
-    }
-
-
 
     return (
         <View style={styles.container}>
@@ -165,9 +81,14 @@ const RegisterForm = () => {
                 handleFormValueChange={handleFormValueChange}
             />
 
-            <TouchableOpacity  onPress={handleRegister} style={styles.button}>
+            <TouchableOpacity  onPress={handleRegister} style={styles.button} disabled={isLoading}>
                 <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
+            {isLoading &&
+            <View style={styles.loading}>
+                <ActivityIndicator size='large' />
+            </View>
+            }
         </View>
     )
 }

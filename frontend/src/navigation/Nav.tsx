@@ -2,9 +2,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
 import BottomTab from "./BottomTab";
-import LoginScreen from "../screens/auth/LoginScreen";
-import SignUpScreen from "../screens/auth/SignUpScreen";
-import CreateNameScreen from "../screens/auth/CreateNameScreen";
+import LoginScreen from "../screens/auth/AuthScreens/LoginScreen";
+import SignUpScreen from "../screens/auth/AuthScreens/SignUpScreen";
+import CreateNameScreen from "../screens/auth/AuthScreens/CreateNameScreen";
 import PostScreen from "../screens/PostScreen";
 import ProfileFriendScreen from "../screens/Profile/ProfileFriendScreen";
 import AddFriendScreen from "../screens/AddFriendScreen";

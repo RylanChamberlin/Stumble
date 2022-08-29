@@ -8,7 +8,7 @@ import CheckInScreen from "../screens/CheckInScreen";
 import NewPostScreen from "../screens/NewPostScreen";
 
 import React, { FC} from "react";
-import CreateNameScreen from "../screens/auth/CreateNameScreen";
+import CreateNameScreen from "../screens/auth/AuthScreens/CreateNameScreen";
 
 
 export type RootStackParamList = {
