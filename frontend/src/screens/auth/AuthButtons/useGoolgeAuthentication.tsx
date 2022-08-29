@@ -1,5 +1,7 @@
 import { useIdTokenAuthRequest } from 'expo-auth-session/providers/google';
 import { maybeCompleteAuthSession } from 'expo-web-browser';
+import { GoogleAuthProvider } from 'firebase/auth';
+
 
 
 maybeCompleteAuthSession();
@@ -8,9 +10,9 @@ function login(id_token: string) {
   console.log('Signing in with Google...', { id_token });
 
   try {
-    // const credential = provider.credential(id_token);
+    const credential = GoogleAuthProvider.credential(id_token);
 
-    // return credential;
+    return credential;
   } catch (error) {
     throw error;
   }

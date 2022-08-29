@@ -1,6 +1,8 @@
 
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import React from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { auth } from '../../../../firebase';
 import FormField from '../FormField';
 import Header from '../Header';
 import { useFormData } from '../useFormData';
@@ -15,13 +17,13 @@ const LoginForm = () => {
     })
     
     const handleLogin = () => {
-        // auth
-        //   .signInWithEmailAndPassword(formValues.email, formValues.password)
-        //   .then((userCredentials: { user: any; }) => {
-        //     const user = userCredentials.user;
-        //     console.log("Logged in with:", user.email);
-        //   })
-        //   .catch((error: { message: string; }) => Alert.alert(error.message));
+        
+          signInWithEmailAndPassword(auth, formValues.email, formValues.password)
+          .then((userCredentials: { user: any; }) => {
+            const user = userCredentials.user;
+            console.log("Logged in with:", user.email);
+          })
+          .catch((error: { message: string; }) => Alert.alert(error.message));
       };
 
 

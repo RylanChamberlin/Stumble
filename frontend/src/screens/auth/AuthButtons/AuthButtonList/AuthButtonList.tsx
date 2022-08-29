@@ -10,6 +10,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { RootStackParamList } from "../../../../navigation/Nav"
 import useGoogleAuthentication from "../useGoolgeAuthentication"
 import loginWithCredential from "../loginWithCredential"
+import { doc, getDoc } from "firebase/firestore"
+import { db } from "../../../../firebase"
 
 type NavProp = NativeStackNavigationProp<RootStackParamList, 'BottomTab' | 'CreateUser'>;
 
@@ -21,6 +23,7 @@ type AuthButtonListProps = {
 const AuthButtonList:FC<AuthButtonListProps> = ({googleButtonField, appleSignIn}) => {
 
     const navigation = useNavigation<NavProp>();  
+
     const [appleAuthAvailable, authWithApple] = useAppleAuthentication();
     const [googleAuthLoading, authWithGoogle] = useGoogleAuthentication();
 
@@ -28,7 +31,8 @@ const AuthButtonList:FC<AuthButtonListProps> = ({googleButtonField, appleSignIn}
 
     const login = async(credential: any, data?: any) => {
     
-        const user = await loginWithCredential(credential, data);
+        const user = await loginWithCredential(credential, data)
+
 
         // db.collection("users").doc(user.uid).get().then(((doc: { exists: any }) => {
         //     console.log('checking exsistenceeeee\n\n\n')
@@ -36,6 +40,19 @@ const AuthButtonList:FC<AuthButtonListProps> = ({googleButtonField, appleSignIn}
         //         navigation.navigate('CreateUser');
         //     }
         // }))
+
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            console.log("Document data:", docSnap.data());
+        } else {
+            console.log("No such document!");
+            console.log(user.uid);
+            navigation.navigate('CreateUser', {
+                user: user
+               });
+        }
 
     }
 
@@ -51,8 +68,8 @@ const AuthButtonList:FC<AuthButtonListProps> = ({googleButtonField, appleSignIn}
   
     const loginWithApple = async() => {
         try {
-            // const [credential] = await authWithApple();
-            // await login(credential);
+            const [credential] = await authWithApple();
+            await login(credential);
         } catch (error) {
             console.error(error);
             Alert.alert('Error', 'Something went wrong. Please try again later.');

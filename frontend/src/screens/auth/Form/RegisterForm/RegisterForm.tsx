@@ -1,8 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import React from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { create } from 'react-test-renderer';
+import { auth, db } from '../../../../firebase';
 
 import { RootStackParamList } from '../../../../navigation/Nav';
 import FormField from '../FormField';
@@ -71,10 +74,10 @@ const RegisterForm = () => {
 
 
         const username = formValues.username.toLowerCase();
-        const usersRef = db.collection('users');
-        const snapshot = await usersRef.where("username", "==", username).get()
+        const q = query(collection(db, "users"), where("username", "==", username));
+        const querySnapshot = await getDocs(q);
           
-        if(!snapshot.empty){
+        if(!querySnapshot.empty){
             Alert.alert("Username is taken")
             return;
         }
@@ -85,18 +88,22 @@ const RegisterForm = () => {
     }
 
     const createAccount = async () => {
-        // await auth
-        // .createUserWithEmailAndPassword(formValues.email, formValues.password)
-        // .then((userCredentials: { user: any; }) => {
-        //         const user = userCredentials.user;
-        //         db.collection("users").doc(user.uid).set({
-        //             username: formValues.username.toLowerCase(),
-        //             name: formValues.name
-        //     });
+    
+        createUserWithEmailAndPassword(auth, formValues.email, formValues.password)
+        .then((userCredentials: { user: any; }) => {
+            const user = userCredentials.user;
+            addUserToDB(user)
+            console.log('Registered with:', user.uid);
+        })
+        .catch((error: { message: string; }) => Alert.alert(error.message))
+    }
 
-        //     console.log('Registered with:', user.uid);
-        // })
-        // .catch((error: { message: string; }) => Alert.alert(error.message))
+    const addUserToDB = async(user : any) =>{
+        
+        await setDoc(doc(db, "users", user.uid), {
+            username: formValues.username.toLowerCase(),
+            name: formValues.name
+          });
     }
 
 

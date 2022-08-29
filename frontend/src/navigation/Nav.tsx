@@ -14,7 +14,7 @@ import NewPostScreen from "../screens/NewPostScreen";
 export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
-  CreateUser: undefined;
+  CreateUser: undefined | { user?: any };
   PostScreen: { bar?: any } | undefined;
   BottomTab: undefined;
   UserInfo: undefined;

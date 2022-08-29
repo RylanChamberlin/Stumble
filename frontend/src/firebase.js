@@ -1,6 +1,6 @@
 
 import { initializeApp } from "firebase/app";
-import { getAuth} from "firebase/auth";
+import { getAuth, GoogleAuthProvider, OAuthProvider} from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -40,8 +40,8 @@ export const auth = getAuth();
 // const GeoPoint = firebase.firestore.GeoPoint;
 // const dbTime = firebase.firestore.FieldValue.serverTimestamp()
 
-// const provider = new firebase.auth.GoogleAuthProvider();
-// const appleProvider = new firebase.auth.OAuthProvider('apple.com')
+
+
 // const signInWithCredential = firebase.auth.signInWithCredential;
 
 

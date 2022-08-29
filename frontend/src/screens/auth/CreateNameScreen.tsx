@@ -1,13 +1,18 @@
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { FC } from "react";
 import { KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { auth, db } from "../../firebase";
 import { RootStackParamList } from "../../navigation/Nav";
 import FormField from "./Form/FormField"
 import { useFormData } from "./Form/useFormData"
 
 type NavProp = NativeStackNavigationProp<RootStackParamList, 'BottomTab'>;
 
-const CreateNameScreen = () => {
+type CreateNameScreenProps = NativeStackScreenProps<RootStackParamList, 'CreateUser'>;
+
+const CreateNameScreen: FC<CreateNameScreenProps> = ({route}) => {
 
     const navigation = useNavigation<NavProp>();  
     const [formValues, handleFormValueChange, setFormValues] = useFormData({
@@ -15,9 +20,9 @@ const CreateNameScreen = () => {
         name: '',
     })
 
-    const confirm = () => {
+    const confirm = async() => {
 
-
+        const uid = route.params?.user.uid
         //changes this to v9
 
         // db.collection("users").doc(auth.currentUser.uid).set({
@@ -25,7 +30,20 @@ const CreateNameScreen = () => {
         //     name: formValues.name
         // });
 
-        navigation.replace('BottomTab');
+        //needs to be fixed
+
+        try {
+            await setDoc(doc(db, "users", uid), {
+                username: formValues.username,
+                name: formValues.name
+              });
+              navigation.replace('BottomTab');
+        } catch (error) {
+            console.log(error)
+        }
+        
+          
+        
 
     }
 
