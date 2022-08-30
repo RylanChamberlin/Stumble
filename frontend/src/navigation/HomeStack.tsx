@@ -1,15 +1,15 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 
 import BottomTab from "./BottomTab";
-import PostScreen from "../screens/PostScreen";
 import ProfileFriendScreen from "../screens/Profile/ProfileFriendScreen";
-import AddFriendScreen from "../screens/AddFriendScreen";
-import CheckInScreen from "../screens/CheckInScreen";
-import NewPostScreen from "../screens/NewPostScreen";
+import AddFriendScreen from "../screens/Profile/AddFriendScreen";
+import CheckInScreen from "../screens/Friends/CheckInScreen";
+import NewPostScreen from "../screens/Posts/NewPostScreen";
 
 import React from "react";
 import CreateNameScreen from "../screens/auth/AuthScreens/CreateNameScreen";
 import { RootStackParamList } from "./types";
+import PostScreen from "../screens/Posts/PostScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

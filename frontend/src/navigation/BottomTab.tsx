@@ -1,27 +1,26 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons, FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons';
+import BarScreen from '../screens/Bars/BarScreen';
+import PostScreen from '../screens/Posts/PostScreen';
+import FriendScreen from '../screens/Friends/FriendScreen';
+import ProfileScreen from '../screens/Profile/ProfileScreen';
 
-import BarScreen from "../screens/BarScreen";
-import PostScreen from '../screens/PostScreen';
-import FriendScreen from '../screens/FriendScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import { RootTabParamList } from './types';
 
-const Tab = createBottomTabNavigator<RootTabParamList>();
+const Tab = createBottomTabNavigator();
 
 const BottomTab = () => {
 
   return (
     <Tab.Navigator 
-        initialRouteName="BarScreen"
+        initialRouteName="Home"
         screenOptions={{
             headerShown: false,
             tabBarActiveTintColor: '#e91e63',
         }}
     >
       <Tab.Screen 
-        name="BarScreen" 
+        name="Home" 
         component={BarScreen} 
         options={{
             tabBarLabel: 'Home',
@@ -32,7 +31,7 @@ const BottomTab = () => {
 
       />
       <Tab.Screen 
-        name="PostScreen" 
+        name="Posts" 
         component={PostScreen} 
         options={{
             tabBarLabel: 'Posts',
@@ -42,7 +41,7 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen 
-        name="FriendScreen" 
+        name="Friends" 
         component={FriendScreen} 
         options={{
             tabBarLabel: 'Friends',
@@ -53,7 +52,7 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen 
-        name="ProfileScreen" 
+        name="Profile" 
         component={ProfileScreen} 
         options={{
             tabBarLabel: 'Profile',

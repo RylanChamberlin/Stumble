@@ -1,10 +1,10 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Platform } from "react-native";
-import AppView from "../components/general/AppView";
-import NewPostBox from "../components/NewPostScreen/NewPostBox";
-import { RootStackParamList } from "../navigation/types";
+import AppView from "../../components/general/AppView";
+import NewPostBox from "../../components/NewPostScreen/NewPostBox";
+import { RootStackParamList } from "../../navigation/types";
 
 type NewPostScreenProps = NativeStackScreenProps<RootStackParamList, 'NewPostScreen'>;
 

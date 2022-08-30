@@ -1,10 +1,11 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FC, useState } from "react";
-import AppView from "../components/general/AppView";
-import Header from "../components/PostScreen/Header";
-import PopularPostList from "../components/PostScreen/Posts/PopularPostList";
-import RecentPostList from "../components/PostScreen/Posts/RecentPostList";
-import { RootStackParamList } from "../navigation/types";
+import AppView from "../../components/general/AppView";
+import Header from "../../components/PostScreen/Header";
+import PopularPostList from "../../components/PostScreen/Posts/PopularPostList";
+import RecentPostList from "../../components/PostScreen/Posts/RecentPostList";
+import { RootStackParamList } from "../../navigation/types";
+
 
 type PostScreenProps = NativeStackScreenProps<RootStackParamList, 'PostScreen'>;
 

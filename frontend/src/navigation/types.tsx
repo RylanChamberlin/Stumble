@@ -12,6 +12,7 @@ export type RootStackParamList = {
     NewPostScreen: {bar?: any} | undefined;
 }
 
+//not in use
 export type RootTabParamList = {
     BarScreen: undefined;
     PostScreen: undefined;
