@@ -12,12 +12,10 @@ type GoogleButtonProps = {
 const GoogleButton:FC<GoogleButtonProps> = ({onPress, request, title}) => {
 
     return (
-
         <TouchableOpacity style={styles.button} disabled={request} onPress={onPress}>
             <FontAwesome5 style={styles.icon} name="google" />
             <Text style={styles.text}>{title}</Text>
         </TouchableOpacity>
-
     );
 
 }

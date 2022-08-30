@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react"
+import { FC } from "react"
 import { Alert, View } from "react-native"
 import TextDivideLine from "../../../../components/general/TextDivideLine"
 import AppleButton from "../AppleButton"
@@ -28,28 +28,7 @@ const AuthButtonList:FC<AuthButtonListProps> = ({googleButtonField, appleSignIn}
    
 
     const login = async(credential: any, data?: any) => {
-    
         const user = await loginWithCredential(credential, data)
-
-
-        // db.collection("users").doc(user.uid).get().then(((doc: { exists: any }) => {
-        //     console.log('checking exsistenceeeee\n\n\n')
-        //     if(!doc.exists){
-        //         navigation.navigate('CreateUser');
-        //     }
-        // }))
-
-        // const docRef = doc(db, "users", user.uid);
-        // const docSnap = await getDoc(docRef);
-
-        // if (docSnap.exists()) {
-        //     console.log("Document data:", docSnap.data());
-        // } else {
-        //     navigation.navigate('CreateUser', {
-        //         user: user
-        //        });
-        // }
-
     }
 
     const loginWithGoogle = async() => {
