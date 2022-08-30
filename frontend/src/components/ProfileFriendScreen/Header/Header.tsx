@@ -3,7 +3,7 @@ import { AntDesign } from '@expo/vector-icons';
 import styles from "./styles";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../../../navigation/Nav";
+import { RootStackParamList } from "../../../navigation/types";
 
 type NavProp = NativeStackNavigationProp<RootStackParamList, 'BottomTab' | 'AddFriendScreen'>;
 

@@ -9,7 +9,7 @@ import { useAppSelector } from '../../../app/hooks';
 import { pickAvatar } from '../../../services/profileHelpers';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Loader from '../../general/Loader';
-import { RootStackParamList } from '../../../navigation/Nav';
+import { RootStackParamList } from '../../../navigation/types';
 
 type UserScreenProp = NativeStackNavigationProp<RootStackParamList, 'ProfileFriendScreen'>;
 

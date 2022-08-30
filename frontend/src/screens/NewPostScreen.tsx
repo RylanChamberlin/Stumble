@@ -3,9 +3,8 @@ import { StatusBar } from "expo-status-bar";
 import React, { FC, useState } from "react";
 import { Platform } from "react-native";
 import AppView from "../components/general/AppView";
-import SimpleHeader from "../components/general/SimpleHeader";
 import NewPostBox from "../components/NewPostScreen/NewPostBox";
-import { RootStackParamList } from "../navigation/Nav";
+import { RootStackParamList } from "../navigation/types";
 
 type NewPostScreenProps = NativeStackScreenProps<RootStackParamList, 'NewPostScreen'>;
 

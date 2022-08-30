@@ -4,7 +4,7 @@ import AppView from "../components/general/AppView";
 import Header from "../components/PostScreen/Header";
 import PopularPostList from "../components/PostScreen/Posts/PopularPostList";
 import RecentPostList from "../components/PostScreen/Posts/RecentPostList";
-import { RootStackParamList } from "../navigation/Nav";
+import { RootStackParamList } from "../navigation/types";
 
 type PostScreenProps = NativeStackScreenProps<RootStackParamList, 'PostScreen'>;
 

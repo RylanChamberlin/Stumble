@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useAppSelector } from "../../../app/hooks";
 import useNearby from "../../../hooks/useNearby";
-import { RootStackParamList } from "../../../navigation/Nav";
+import { RootStackParamList } from "../../../navigation/types";
 import { sendMessage } from "../../../services/sendPosts";
 import Dropdown from "../Dropdown";
 import styles from "./styles";

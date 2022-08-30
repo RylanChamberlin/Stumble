@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FC } from "react";
 import { Text, TouchableOpacity, View } from "react-native"
-import { RootStackParamList } from "../../../../navigation/Nav";
+import { RootStackParamList } from "../../../../navigation/types";
 import styles from "./styles"
 
 type NavProp = NativeStackNavigationProp<RootStackParamList, 'Login' | 'SignUp'>;

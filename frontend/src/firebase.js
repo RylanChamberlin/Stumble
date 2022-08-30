@@ -23,27 +23,3 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth();
 
-// Initialize Firebase
-// let app;
-// if (firebase.apps.length === 0) {
-//   app = firebase.initializeApp(firebaseConfig);
-// } else {
-//   app = firebase.app()
-// }
-
-// const auth = firebase.auth();
-// const db = firebase.firestore();
-// const database = firebase.database()
-// const storage = firebase.storage()
-// const storageRef = firebase.storage().ref();
-// const FieldValue = firebase.firestore.FieldValue;
-// const GeoPoint = firebase.firestore.GeoPoint;
-// const dbTime = firebase.firestore.FieldValue.serverTimestamp()
-
-
-
-// const signInWithCredential = firebase.auth.signInWithCredential;
-
-
-// export { auth, db, database, FieldValue, dbTime, GeoPoint, storage, storageRef, provider, signInWithCredential, appleProvider};
-// export {  }

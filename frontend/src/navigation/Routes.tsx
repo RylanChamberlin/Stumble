@@ -12,8 +12,6 @@ import CreateNameScreen from '../screens/auth/AuthScreens/CreateNameScreen';
 import { checkIfUIDExists } from '../services/FirebaseCalls/createUser';
 
 
-
-
 const Routes = () => {
 
     const [user, setUser ] = useState<any>();
@@ -45,9 +43,6 @@ const Routes = () => {
         dispatch(storeUserInfo(await fetchUserInfo(user.uid)));
         dispatch(storeUserFriends(await fetchFriends(user.uid)));
     }
-
-  
-  
 
     if (loading ) {
         return <Loader/>;

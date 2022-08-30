@@ -3,8 +3,8 @@ import { AntDesign } from '@expo/vector-icons';
 import styles from "./styles";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../../../navigation/Nav";
 import { FC } from "react";
+import { RootStackParamList } from "../../../navigation/types";
 
 type NavProp = NativeStackNavigationProp<RootStackParamList, 'PostScreen' | 'BottomTab'>;
 
