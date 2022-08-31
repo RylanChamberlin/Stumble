@@ -16,7 +16,7 @@ const Routes = () => {
 
     const [user, setUser ] = useState<any>();
     const [loading, setLoading] = useState(true);
-    const [hasUserName, setHasUsername] = useState(false);
+    const [hasUserName, setHasUsername] = useState(true);
     const dispatch = useAppDispatch()
 
    
@@ -33,10 +33,15 @@ const Routes = () => {
 
     // Handle user state changes
     const onAuthStateChanged = async(user: any) => {
-        setUser(user);
-        setHasUsername(await checkIfUIDExists(user.uid))
+       
+        setUser(user); 
+        console.log(user)
+        if(user){
+                setHasUsername(await checkIfUIDExists(user.uid))
+            }
         setLoading(false);
         console.log('auth over')
+
     }
 
     const getUserData = async() => {
@@ -48,7 +53,7 @@ const Routes = () => {
         return <Loader/>;
     }
 
-    if (!hasUserName){
+    if (!hasUserName && user){
         return <CreateNameScreen uid={user.uid} setHasUsername={setHasUsername}/>
     }
 
