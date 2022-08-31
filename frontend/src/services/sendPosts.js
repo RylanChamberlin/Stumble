@@ -7,9 +7,27 @@ const geofire = require('geofire-common');
 //writes post to firebase db
 const writeMessage = async(postInput, bar) => {
 
-    const [code, city, state, country] = bar.plus_code.compound_code.split(/[, ]+/);
-    
     console.log('creating post')
+    const docRef = await addDoc(collection(db, "messages"), {
+        placeID: bar.place_id,
+        city: bar.city,
+        state: bar.state,
+        country: bar.country,
+        bar: bar.name,
+        text: postInput,
+        score: 0,
+        voteCount: 0,
+        createdAt: serverTimestamp(),
+        uid: auth.currentUser.uid,
+        });
+
+    console.log("Document written with ID: ", docRef.id);
+    
+}
+
+const writeMessageWithApiData = async(postInput, bar) => {
+    const [code, city, state, country] = bar.plus_code.compound_code.split(/[, ]+/);
+    console.log('creating first post')
     const docRef = await addDoc(collection(db, "messages"), {
         placeID: bar.place_id,
         city: city,
@@ -21,10 +39,9 @@ const writeMessage = async(postInput, bar) => {
         voteCount: 0,
         createdAt: serverTimestamp(),
         uid: auth.currentUser.uid,
-      });
-
+    });
+    
     console.log("Document written with ID: ", docRef.id);
-
 }
 
 const addNewBarWithMessage = async(postInput, bar) => {
@@ -48,7 +65,7 @@ const addNewBarWithMessage = async(postInput, bar) => {
         topPost: ''
       });
 
-    writeMessage(postInput, bar);
+    writeMessageWithApiData(postInput, bar);
 
     console.log("Making new document!");
 }
