@@ -20,8 +20,6 @@ type AuthButtonListProps = {
 
 const AuthButtonList:FC<AuthButtonListProps> = ({googleButtonField, appleSignIn}) => {
 
-    const navigation = useNavigation<NavProp>();  
-
     const [appleAuthAvailable, authWithApple] = useAppleAuthentication();
     const [googleAuthLoading, authWithGoogle] = useGoogleAuthentication();
 
