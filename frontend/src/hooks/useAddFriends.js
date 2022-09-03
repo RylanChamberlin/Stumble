@@ -44,7 +44,7 @@ export default () => {
         const queryNames = query(userRef, where('name', '>=', name), limit(2));
         const namesSnapshot = await getDocs(queryNames);
 
-        const queryUsernames = query(userRef, where('usernamecc', '>=', name), limit(2));
+        const queryUsernames = query(userRef, where('username', '>=', name), limit(2));
         const usernamesSnapshot = await getDocs(queryUsernames);
     
         let names = namesSnapshot.docs.map(doc => {
