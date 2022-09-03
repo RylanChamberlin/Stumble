@@ -4,6 +4,7 @@ import Loader from '../../../general/Loader';
 import useMessages from '../../../../hooks/useMessages';
 import PostBox from '../PostBox';
 import EmptyList from '../../../general/EmptyList';
+import { useIsFocused } from '@react-navigation/native';
 
 type Props = {
   itemID?: any
@@ -13,37 +14,44 @@ type Props = {
 
 function RecentPostList(props: Props){
 
-  const {isLoading, isError, data,  getMessages, getMore, isMoreLoading} = useMessages(props.itemID, props.order, props.field);
+    const {isLoading, isError, data,  getMessages, getMore, isMoreLoading} = useMessages(props.itemID, props.order, props.field);
 
-  const fetchMoreData = () => {
-    !isMoreLoading && getMore();
-  }
+    // const isFocused = useIsFocused();
 
-  const renderItem = useCallback(({ item, index }) => {return (<PostBox post = {item}/>)},[]);
-  const renderFooter = () => {return isMoreLoading ? <Loader/> : null}
-  const onRefresh = () => { getMessages() }
-  const keyExtractor = useCallback( (item) => item.key, []);
-  const listEmptyComponent = () => {return <EmptyList name={'You Have No Posts'}/>}
-
-  return (
-    <FlatList
-    contentContainerStyle={{marginBottom: 300}}
-    data={data}
-    renderItem={renderItem}
-    refreshControl={
-      <RefreshControl
-        refreshing={isLoading}
-        onRefresh={onRefresh}
-      />
-    }
-    ListEmptyComponent={listEmptyComponent}
-    keyExtractor={keyExtractor}
-    ListFooterComponent={renderFooter}
-    showsVerticalScrollIndicator={false}
-    onEndReachedThreshold={0.2}
-    onEndReached={fetchMoreData}
+    // useEffect(() => {
+    //     isFocused && getMessages()
+    //   },[isFocused]);
     
-/>  
+
+    const fetchMoreData = () => {
+        !isMoreLoading && getMore();
+    }
+
+    const renderItem = useCallback(({ item, index }) => {return (<PostBox post = {item}/>)},[]);
+    const renderFooter = () => {return isMoreLoading ? <Loader/> : null}
+    const onRefresh = () => { getMessages() }
+    const keyExtractor = useCallback( (item) => item.key, []);
+    const listEmptyComponent = () => {return <EmptyList name={props.itemID ? "You Have No Posts" : 'No Posts Nearby'}/>}
+
+    return (
+        <FlatList
+            contentContainerStyle={{marginBottom: 300}}
+            data={data}
+            renderItem={renderItem}
+            refreshControl={
+        <RefreshControl
+            refreshing={isLoading}
+            onRefresh={onRefresh}
+        />
+        }
+            ListEmptyComponent={listEmptyComponent}
+            keyExtractor={keyExtractor}
+            ListFooterComponent={renderFooter}
+            showsVerticalScrollIndicator={false}
+            onEndReachedThreshold={0.2}
+            onEndReached={fetchMoreData}
+    
+    />  
   )
 }
 

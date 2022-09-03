@@ -1,7 +1,10 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
-import { db } from '../firebase';
+
 import * as Location from 'expo-location';
+import { collection, endAt, getDocs, getFirestore, orderBy, query, startAt } from 'firebase/firestore';
+import { db } from '../firebase';
+
 const geofire = require('geofire-common');
 
 export type Bar = {
@@ -31,51 +34,34 @@ export const fetchBars = createApi({
             }
             let location = await Location.getCurrentPositionAsync({});
 
-            const center = [location.coords.latitude, location.coords.longitude];
-            const radiusInM = 16 * 1000;
-
-            // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
-            // a separate query for each pair. There can be up to 9 pairs of bounds
-            // depending on overlap, but in most cases there are 4.
-
             console.log('fetching bars')
+
+            const { latitude, longitude } = location.coords || {};
+            if (latitude && longitude) {
+            const radiusInM = 16 * 1000;
+            const center = [latitude, longitude];
             const bounds = geofire.geohashQueryBounds(center, radiusInM);
-            const promises = [];
+            const matchingDocs: any = [];
+            
             for (const b of bounds) {
-                const q = db.collection('bars')
-                    .orderBy('geohash')
-                    .startAt(b[0])
-                    .endAt(b[1])
-                promises.push(q.get());
+                const q = query(
+                    collection(db, "bars"),
+                    orderBy("geohash"),
+                    startAt(b[0]),
+                    endAt(b[1])
+                );
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    matchingDocs.push({
+                        ...doc.data(),
+                        place_id: doc.id,
+                    });
+                });
             }
-            // Collect all the query results together into a single list
-            const data = Promise.all(promises).then((snapshots) => {
-                const matchingDocs = [];
 
-                for (const snap of snapshots) {
-                    for (const doc of snap.docs) {
-                        const lat = doc.get('lat');
-                        const lng = doc.get('lng');
-
-                        // We have to filter out a few false positives due to GeoHash
-                        // accuracy, but most will match
-                        const distanceInKm = geofire.distanceBetween([lat, lng], center);
-                        const distanceInM = distanceInKm * 1000;
-                        if (distanceInM <= radiusInM) {
-                            matchingDocs.push({
-                                ...doc.data(),
-                                place_id: doc.id,
-                            });
-                        }
-                    }
-                }
-                return matchingDocs;
-
-                }
-             )
-
-            return {data: data}
-
+            return {data: matchingDocs}
+            }
+            
           } catch (e) {
             return { error: e }
           }

@@ -1,8 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import AppView from "../components/general/AppView";
-import Header from "../components/BarScreen/Header";
-import BarList from "../components/BarScreen/BarList";
-import { auth } from "../firebase";
+import BarList from "../../components/BarScreen/BarList";
+import Header from "../../components/BarScreen/Header";
+import AppView from "../../components/general/AppView";
+import { auth } from "../../firebase";
+
 
 const BarScreen = () => {
 
@@ -13,13 +14,12 @@ const BarScreen = () => {
     return (
         <AppView>
             <View style={styles.logo}>
-                {/* <TouchableOpacity onPress={handleSignOut}>
+                <TouchableOpacity onPress={handleSignOut}>
                     <Text style={{color: '#ffff'}}>{auth.currentUser?.email}</Text>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
             </View>
             <Header/>
             <BarList/>
-            
         </AppView>
     );
 }

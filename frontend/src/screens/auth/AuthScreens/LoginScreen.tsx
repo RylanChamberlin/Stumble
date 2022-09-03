@@ -5,11 +5,10 @@ import {
 
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import LoginForm from "./Form/LoginForm";
-import AuthButtonList from "./AuthButtons/AuthButtonList";
+import LoginForm from "../Form/LoginForm";
+import AuthButtonList from "../AuthButtons/AuthButtonList";
 
 const LoginScreen = () => {
-
 
   return (
   <SafeAreaView style={styles.container }>

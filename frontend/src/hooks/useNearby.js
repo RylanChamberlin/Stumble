@@ -1,12 +1,15 @@
 
 import {GOOGLE_KEY} from '@env'
+
+import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { useState } from 'react';
+import { auth, db } from '../firebase';
 import { useAppSelector } from '../app/hooks';
-import { auth, db, dbTime } from '../firebase';
+
 
 export default () => {
 
-    const location = useAppSelector(state => state.location.coords)
+    const location = useAppSelector(state => state.location.coords);
 
     const [isError, setIsError] = useState(false);
     const [data, setData] = useState([]);
@@ -41,13 +44,12 @@ export default () => {
 
             console.log('feethcing google nearby api')
         }
-
         setIsLoading(false)
 
     }
 
 
-    const checkIn = (bar) => {
+    const checkIn = async(bar) => {
         console.log(bar)
         let check = {
             lat: bar.geometry.location.lat,
@@ -55,10 +57,17 @@ export default () => {
             locationID: bar.place_id,
             locationName: bar.name
         }
-        db.collection('users').doc(auth.currentUser.uid).update({
-            checkIn: check,
-            checkInTime: dbTime
-        });
+        try {
+            
+            const userRef = doc(db, "users", auth.currentUser.uid);
+            await updateDoc(userRef, {
+                checkIn: check,
+                checkInTime: serverTimestamp()
+            });
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+
     }
 
    

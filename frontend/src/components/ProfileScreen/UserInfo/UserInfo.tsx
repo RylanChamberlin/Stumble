@@ -9,7 +9,7 @@ import { useAppSelector } from '../../../app/hooks';
 import { pickAvatar } from '../../../services/profileHelpers';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Loader from '../../general/Loader';
-import { RootStackParamList } from '../../../navigation/Nav';
+import { RootStackParamList } from '../../../navigation/types';
 
 type UserScreenProp = NativeStackNavigationProp<RootStackParamList, 'ProfileFriendScreen'>;
 
@@ -19,10 +19,8 @@ const UserInfo = () => {
     const [hasAvatar, setHasAvatar] = useState(false);
     const user = useAppSelector(state => state.location.info);
     const navigation = useNavigation<UserScreenProp>()
-
+   
     useEffect( () => {
-
-        
 
         if (user?.photoURL) {
             setAvatar(user.photoURL);

@@ -5,7 +5,7 @@ import { Text, TouchableOpacity, View } from "react-native"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { storeUserInfo } from "../../../features/Location/locationSlice"
 import useNearby from "../../../hooks/useNearby"
-import { RootStackParamList } from "../../../navigation/Nav"
+import { RootStackParamList } from "../../../navigation/types"
 import { fetchUserInfo } from "../../../services/fetchUserInfo"
 import NearbyBarList from "../NearbyBarList"
 import styles from "./styles"
@@ -22,13 +22,13 @@ const CheckInBox = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        searchNearbyPhone(50);
+        searchNearbyPhone(150);
     }, [location])
 
     const barCheckIn = async() => {
         checkIn(selectedBar) 
-        navigation.navigate("BottomTab")
-        dispatch(storeUserInfo(await fetchUserInfo()));
+        navigation.goBack()
+        dispatch(storeUserInfo(await fetchUserInfo(user.uid)));
     }
 
     return (

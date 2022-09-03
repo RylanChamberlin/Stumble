@@ -1,7 +1,6 @@
 import styles from "./styles"
 import { AppleAuthenticationButton, AppleAuthenticationButtonType, AppleAuthenticationButtonStyle } from 'expo-apple-authentication';
 import { FC } from "react";
-import { View } from "react-native";
 
 type AppleButtonProps = {
     appleAuthAvailable: boolean

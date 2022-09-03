@@ -34,7 +34,8 @@ export default StyleSheet.create({
         padding: 15,
         backgroundColor: '#f2f1f1',
         borderWidth: 1,
-        borderRadius: 10
+        borderRadius: 10,
+        marginTop: 10
     },
    
     button:{

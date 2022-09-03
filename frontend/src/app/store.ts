@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { fetchBars } from '../services/bars'
-import { fetchPosts } from '../services/posts'
 import locationReducer from '../features/Location/locationSlice'
 
 
@@ -8,7 +7,6 @@ export const store = configureStore({
   reducer: {
     location: locationReducer,
    [fetchBars.reducerPath]: fetchBars.reducer,
-   [fetchPosts.reducerPath]: fetchPosts.reducer
   },
 
   
@@ -19,8 +17,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => 
     getDefaultMiddleware({
         serializableCheck: false, //disables so time object from firebase db can pass
-    }).concat(fetchBars.middleware).concat(fetchPosts.middleware),
-    //getDefaultMiddleware(),
+    }).concat(fetchBars.middleware)
 })
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

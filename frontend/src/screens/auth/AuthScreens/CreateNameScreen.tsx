@@ -1,39 +1,34 @@
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { auth, db } from "../../firebase"
-import { RootStackParamList } from "../../navigation/Nav";
-import FormField from "./Form/FormField"
-import { useFormData } from "./Form/useFormData"
+import { Dispatch, SetStateAction, useState } from "react";
+import { ActivityIndicator, KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import AppView from "../../../components/general/AppView";
+import { createUsername } from "../../../services/FirebaseCalls/createUser";
+import FormField from "../Form/FormField"
+import { useFormData } from "../Form/useFormData"
 
-type NavProp = NativeStackNavigationProp<RootStackParamList, 'BottomTab'>;
 
-const CreateNameScreen = () => {
+const CreateNameScreen = (props: { uid: string; setHasUsername: Dispatch<SetStateAction<boolean>> }) => {
 
-    const navigation = useNavigation<NavProp>();  
     const [formValues, handleFormValueChange, setFormValues] = useFormData({
         username: '',
         name: '',
     })
 
-    const confirm = () => {
+    const [isLoading, setIsLoading] = useState(false)
 
+    const confirm = async() => {
 
-        db.collection("users").doc(auth.currentUser.uid).set({
-            username: formValues.username,
-            name: formValues.name
-        });
-
-        navigation.replace('BottomTab');
-
+        setIsLoading(true)
+        await createUsername(formValues, props.uid, props.setHasUsername)  
+        setIsLoading(false)      
     }
 
     return (
-        <SafeAreaView style={styles.outsidecontainer}>
+        <AppView>
+       
             <KeyboardAvoidingView style={styles.keyboardContainer} behavior="padding">
                 <View style={styles.container}>
                     <Text style={styles.title}>Welcome!</Text>
-                    <Text style={styles.text}>Please Enter Your Name and Chose a Username Below</Text>
+                    <Text style={styles.text}>Please Enter Your Name and Choose a Username Below</Text>
                     <FormField
                         formKey='name'
                         placeholder='Name'
@@ -52,19 +47,23 @@ const CreateNameScreen = () => {
                     
                 
 
-                    <TouchableOpacity onPress={confirm}  style={styles.button}>
+                    <TouchableOpacity onPress={confirm}  style={styles.button} disabled={isLoading}>
                         <Text style={styles.buttonText}>Confirm</Text>
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
-        </SafeAreaView>
+
+            {isLoading &&
+            <View style={styles.loading}>
+                <ActivityIndicator size='large' />
+            </View>
+            }
+        </AppView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        // display: 'flex',
-        // margin: 20,
         width: '80%'
     },
 
@@ -119,6 +118,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
       },
+
+
+      loading: {
+        
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        //backgroundColor: ''
+      }
   })
 
 export default CreateNameScreen

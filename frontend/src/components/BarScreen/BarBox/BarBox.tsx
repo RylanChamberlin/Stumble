@@ -4,7 +4,7 @@ import styles from "./styles";
 import { Bar } from "../../../services/bars";
 import { FC } from "react";
 import { NativeStackNavigationProp} from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../../navigation/Nav";
+import { RootStackParamList } from "../../../navigation/types";
 
 
 type BarBoxProps = { 

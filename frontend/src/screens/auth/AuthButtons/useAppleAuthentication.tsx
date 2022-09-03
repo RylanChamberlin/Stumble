@@ -1,8 +1,9 @@
 import { isAvailableAsync, AppleAuthenticationScope, signInAsync } from 'expo-apple-authentication';
 import { digestStringAsync, CryptoDigestAlgorithm } from 'expo-crypto';
+import { OAuthProvider } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 import { Alert, Platform } from 'react-native';
-import { appleProvider } from '../../../firebase';
+
 
 async function login() {
   console.log('Signing in with Apple...');
@@ -25,11 +26,12 @@ async function login() {
       throw new Error('No identity token provided.');
     }
 
+    const provider = new OAuthProvider('apple.com');
     
-    appleProvider.addScope('email');
-    appleProvider.addScope('fullName');
+    provider.addScope('email');
+    provider.addScope('fullName');
 
-    const credential = appleProvider.credential({
+    const credential = provider.credential({
       idToken: identityToken,
       rawNonce,
     });

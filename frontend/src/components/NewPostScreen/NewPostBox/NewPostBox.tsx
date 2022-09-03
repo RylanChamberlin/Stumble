@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useAppSelector } from "../../../app/hooks";
 import useNearby from "../../../hooks/useNearby";
-import { RootStackParamList } from "../../../navigation/Nav";
+import { RootStackParamList } from "../../../navigation/types";
 import { sendMessage } from "../../../services/sendPosts";
 import Dropdown from "../Dropdown";
 import styles from "./styles";
@@ -22,33 +22,37 @@ const NewPostbox: FC<NewPostboxProps>= ({bar}) => {
     
     const navigation = useNavigation<NavProp>()
     const [postInput, setPostInput] = useState('')
+    const [posting, setPosting] = useState(false)
     const [selected, setSelected] = useState(undefined);
 
     useEffect(() => {
 
         if(!bar){
-            searchNearbyPhone(300);
+            searchNearbyPhone(100);
         }else{
             console.log('selected ' + bar.name)
             setSelected(bar)
         }
-
+        
         
     }, [location])
 
-    const postBar = () => {
+    const postBar = async() => {
         console.log(selected)
-        if(sendMessage(postInput, selected)){
+        setPosting(true);
+        if(await sendMessage(postInput, selected)){
 
             if(bar){
                 navigation.navigate('PostScreen', {
                     bar: bar
                   });
             }else{
-                navigation.navigate('BottomTab');
+                navigation.goBack();
             }
             
         }   
+
+        setPosting(false)
     }
     
     return (
@@ -67,7 +71,7 @@ const NewPostbox: FC<NewPostboxProps>= ({bar}) => {
                 />
                 
             </View>
-            <TouchableOpacity style={[styles.button, styles.elevation]} onPress={() => postBar()} >
+            <TouchableOpacity style={[styles.button, styles.elevation]} onPress={() => postBar()} disabled={posting}>
                 <Text style={styles.buttonText}>POST</Text>
             </TouchableOpacity>
         </>

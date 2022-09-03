@@ -1,16 +1,15 @@
-import { FC, useEffect } from "react"
+import { FC } from "react"
 import { Alert, View } from "react-native"
 import TextDivideLine from "../../../../components/general/TextDivideLine"
 import AppleButton from "../AppleButton"
 import GoogleButton from "../GoogleButton"
 import useAppleAuthentication from "../useAppleAuthentication"
 import styles from "./styles"
-import { auth, db } from "../../../../firebase"
 import { useNavigation } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
-import { RootStackParamList } from "../../../../navigation/Nav"
 import useGoogleAuthentication from "../useGoolgeAuthentication"
 import loginWithCredential from "../loginWithCredential"
+import { RootStackParamList } from "../../../../navigation/types"
 
 type NavProp = NativeStackNavigationProp<RootStackParamList, 'BottomTab' | 'CreateUser'>;
 
@@ -21,23 +20,13 @@ type AuthButtonListProps = {
 
 const AuthButtonList:FC<AuthButtonListProps> = ({googleButtonField, appleSignIn}) => {
 
-    const navigation = useNavigation<NavProp>();  
     const [appleAuthAvailable, authWithApple] = useAppleAuthentication();
     const [googleAuthLoading, authWithGoogle] = useGoogleAuthentication();
 
    
 
     const login = async(credential: any, data?: any) => {
-    
-        const user = await loginWithCredential(credential, data);
-
-        db.collection("users").doc(user.uid).get().then(((doc: { exists: any }) => {
-            console.log('checking exsistenceeeee\n\n\n')
-            if(!doc.exists){
-                navigation.navigate('CreateUser');
-            }
-        }))
-
+        const user = await loginWithCredential(credential, data)
     }
 
     const loginWithGoogle = async() => {

@@ -17,6 +17,7 @@ const SearchFriend: FC<SearchFriendProps> = ({query, setQuery, placeholder}) => 
             value={query} 
             onPressIn={() => {setQuery('')}}
             onChangeText={(text) => {setQuery(text)}}
+            autoCapitalize='none'
         />
     )
 }

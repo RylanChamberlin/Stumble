@@ -3,8 +3,8 @@ import React, { Dispatch, FC, SetStateAction } from 'react'
 import styles from './styles'
 import ButtonSwitch from '../../general/ButtonSwitch'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../../../navigation/Nav'
 import { useNavigation } from '@react-navigation/native'
+import { RootStackParamList } from '../../../navigation/types'
 
 type NavProp = NativeStackNavigationProp<RootStackParamList, 'CheckInScreen'>;
 
