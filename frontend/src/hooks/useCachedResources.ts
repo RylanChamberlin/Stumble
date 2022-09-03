@@ -1,7 +1,7 @@
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../app/hooks';
-import { storeLocation, storeUserFriends, storeUserInfo } from '../features/Location/locationSlice';
+import { storeLocation } from '../features/Location/locationSlice';
 import { fetchLocation } from '../services/fetchLocation';
 
 

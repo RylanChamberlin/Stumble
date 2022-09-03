@@ -37,7 +37,7 @@ const Routes = () => {
         setUser(user); 
         console.log(user)
         if(user){
-                setHasUsername(await checkIfUIDExists(user.uid))
+            setHasUsername(await checkIfUIDExists(user.uid))
             }
         setLoading(false);
         console.log('auth over')

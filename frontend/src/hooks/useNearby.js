@@ -1,7 +1,7 @@
 
 import {GOOGLE_KEY} from '@env'
 
-import { doc, getFirestore, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { useState } from 'react';
 import { auth, db } from '../firebase';
 import { useAppSelector } from '../app/hooks';
