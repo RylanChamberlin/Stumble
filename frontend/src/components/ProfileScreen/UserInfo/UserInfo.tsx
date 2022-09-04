@@ -23,11 +23,6 @@ const UserInfo = () => {
                 </View>
                
             </View>
-
-            <Text>Check In Location:</Text>
-            <TouchableOpacity>
-                <Text style={styles.checkinSpot}>{user.checkIn ? user.checkIn.locationName: 'Nowhere Right Now'}</Text>
-            </TouchableOpacity>
         </View>
     </View>
 

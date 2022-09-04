@@ -30,6 +30,6 @@ export default () => {
 
     }
 
-    return {isLoading, data, isError, searchNearbyPhone, checkIn}
+    return {isLoading, data, isError, searchNearbyPhone}
 
 };
