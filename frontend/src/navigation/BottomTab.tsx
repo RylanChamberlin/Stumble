@@ -1,9 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MaterialCommunityIcons, FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import BarScreen from '../screens/Bars/BarScreen';
 import PostScreen from '../screens/Posts/PostScreen';
-import FriendScreen from '../screens/Friends/FriendScreen';
 import ProfileScreen from '../screens/Profile/ProfileScreen';
 
 
@@ -37,17 +36,6 @@ const BottomTab = () => {
             tabBarLabel: 'Posts',
             tabBarIcon: ({ color, size }) => (
                 <MaterialIcons name="forum" size={size+1} color={color} />
-            ),
-        }}
-      />
-      <Tab.Screen 
-        name="Friends" 
-        component={FriendScreen} 
-        options={{
-            tabBarLabel: 'Friends',
-            tabBarIcon: ({ color, size }) => (
-                <FontAwesome5 name="user-friends" size={size} color={color} />
-                
             ),
         }}
       />
