@@ -1,88 +1,76 @@
-// import { useState } from "react";
+import { collection, getDocs, limit, orderBy, query, startAfter, startAt, where } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { db } from "../firebase";
 
 
-// // interface FriendObject {
-// //     isFriend: boolean;
-// //     key: string;
-// //     name: string;
-// //     username: string;
-// // }
+export default () => {
 
-// // interface FriendData {
-// //     data: FriendObject | undefined | null | any; //temp fix so it would work in flatlist
-// //     loading: boolean;
-// //     error: any;
-// // }
+    const [isLoading, setIsLoading] = useState(false)
+    const [isMoreLoading, setIsMoreLoading] = useState(false)
+    const [isError, setIsError] = useState(false)
+    const [data, setData] = useState([])
+    const [lastDoc, setLastDoc] = useState(undefined)
 
-// // export default (): [FriendData, () => void] => {
-   
-// //     const [result, setResult] = useState<FriendData>({
-// //         data: null,
-// //         loading: false,
-// //         error: null
-// //     })
-
-// export default () => {
-   
-//     const [result, setResult] = useState({
-//         data: null,
-//         loading: false,
-//         error: null
-//     });
-
-//     const getBars = async () => {
+    useEffect(() => {
+        getBars()
+    },[])
 
 
-//         setResult({
-//             data: null,
-//             loading: true,
-//             error: null
-//         })
-
-//         const barRef = db.collection('bars')
-        
-//         try{
-//             const subscriber = barRef
-//                 .onSnapshot(querySnapshot => {
-//                     console.log('listening bars')
-//                     const users = [];
-//                     querySnapshot.forEach(documentSnapshot => {
-//                         users.push({
-//                             ...documentSnapshot.data(),
-//                             key: documentSnapshot.id,
-                            
-//                         });
-                      
-//                     });
-//                     setResult({
-//                         data: users,
-//                         loading: false,
-//                         error: null
-//                     })
-
-                    
-//                 });   
-                            
-//                 return () => subscriber(); 
-
-       
-//         }catch(error){
-//             setResult({
-//                 data: null,
-//                 loading: false,
-//                 error: error
-//             });
-//         }
-
-       
-       
-//     };
-
-
-
+    let barsRef = collection(db, 'bars');
+    barsRef = query(barsRef, where("city", '==' , "Columbia"), where("state", '==' , "MO"))
     
+    const getBars = async () => {
+        console.log('getting fresh bars')
+       
+        setIsLoading(true);
 
-//     return [result, getBars];
+        const q = query(barsRef, orderBy("postCount", "desc"), limit(8));
+        const querySnapshot = await getDocs(q);
+
+        if(!querySnapshot.empty){
+            let newBars = [];
+            setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
+            querySnapshot.forEach((doc) => { 
+                newBars.push({...doc.data(), place_id: doc.id,});
+            });
+            setData(newBars);
+        } else {
+            setLastDoc(null);
+        }
+        setIsLoading(false);
+           
+    }
+        
+
+    const getMore = async () => {
+        
+        if (lastDoc) {
+            console.log('getting more bars.....')
+            setIsMoreLoading(true);
+            const q = query(barsRef, orderBy("postCount", "desc"), startAfter(lastDoc), limit(8));
+            const querySnapshot = await getDocs(q);
+
+            if(!querySnapshot.empty){
+                let newBars = data;
+                setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
+                querySnapshot.forEach((doc) => {     
+                    newBars.push({...doc.data(), place_id: doc.id,});
+                });
+                setData(newBars);
+
+                if (querySnapshot.docs.length < 8) setLastDoc(null);
+
+                } else {
+                    setLastDoc(null);
+                }
+        
+            setIsMoreLoading(false);
+        }else{
+            console.log('all out bars')
+        }
+    }   
 
 
-// };
+    return {isLoading, isError, data, getBars, getMore, isMoreLoading}
+
+};

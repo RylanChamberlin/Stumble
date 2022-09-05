@@ -1,44 +1,41 @@
 import {FlatList, RefreshControl} from 'react-native'
-import React, { useCallback, useEffect, useMemo, useState} from 'react'
+import React, { useCallback} from 'react'
 import BarBox from "../BarBox"; 
-import { useGetBarsByLocationQuery } from '../../../services/bars';
 import EmptyList from '../../general/EmptyList';
 import Loader from '../../general/Loader';
+import useBars from '../../../hooks/useBars';
 
 const BarList = () => {
 
-    const { data, error, isLoading, isFetching, isSuccess, refetch } = useGetBarsByLocationQuery();
-    const [bars, setBars] = useState([])
+    const {isLoading, isError, data,  getBars, getMore, isMoreLoading} = useBars();
+
+    const fetchMoreData = () => {
+        !isMoreLoading && getMore();
+    }
 
     const renderItem = useCallback (({ item }) => <BarBox bar={item}/>,[]);
-    const onRefresh = useCallback(() => {refetch()}, []);
+    const renderFooter = () => {return isMoreLoading ? <Loader/> : null}
+    const onRefresh = useCallback(() => {getBars()}, []);
+    const keyExtractor = useCallback( (item) => item.place_id, []);
     const listEmptyComponent = () => {return <EmptyList name={'No Bars Found Nearby'}/>}
-
-    useEffect(() => {
-       setBars(data)
-    },[data])
-
-    const getSortedPostCount = (data: any[]) => [...data].sort((a, b) => parseInt(b.postCount) - parseInt(a.postCount));
-    const sortedItems = useMemo(() => {
-        if(bars) {
-          return getSortedPostCount(bars);
-        }
-        return bars;
-      }, [bars]);
-
-
-    if(!bars){
-        return <Loader/>
-    }
 
     return (
         <FlatList
-            data={sortedItems} 
-            ListEmptyComponent={listEmptyComponent}
+            contentContainerStyle={{marginBottom: 300}}
+            data={data}
             renderItem={renderItem}
-            refreshControl={<RefreshControl refreshing={isFetching} onRefresh={onRefresh}/>}
+            refreshControl={
+                <RefreshControl
+                    refreshing={isLoading}
+                    onRefresh={onRefresh}
+                />
+            }
+            ListEmptyComponent={listEmptyComponent}
+            keyExtractor={keyExtractor}
+            ListFooterComponent={renderFooter}
             showsVerticalScrollIndicator={false}
-            keyExtractor={(bar) => bar.place_id}    
+            onEndReachedThreshold={0.2}
+            onEndReached={fetchMoreData}   
         />
     )
 }
