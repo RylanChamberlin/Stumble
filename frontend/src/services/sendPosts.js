@@ -9,7 +9,7 @@ const writeMessage = async(postInput, bar) => {
 
     console.log('creating post')
     const docRef = await addDoc(collection(db, "messages"), {
-        placeID: bar.place_id,
+        placeID: bar.id,
         city: bar.city,
         state: bar.state,
         country: bar.country,
@@ -28,6 +28,7 @@ const writeMessage = async(postInput, bar) => {
 const writeMessageWithApiData = async(postInput, bar) => {
     const [code, city, state, country] = bar.plus_code.compound_code.split(/[, ]+/);
     console.log('creating first post')
+    
     const docRef = await addDoc(collection(db, "messages"), {
         placeID: bar.place_id,
         city: city,
@@ -81,14 +82,14 @@ export const sendMessage = async(postInput, bar) => {
         return false;
     }
     else{
-
-        console.log(bar.name)
+       
         const docRef = doc(db, "bars", bar.place_id)
         const docSnap = await getDoc(docRef);
-
-        
+    
         if (docSnap.exists()) {
-            writeMessage(postInput, bar);
+            let data = docSnap.data()
+            data.id = docSnap.id;
+            writeMessage(postInput, data);
         } else {
             console.log('adding bar')
             addNewBarWithMessage(postInput, bar);
