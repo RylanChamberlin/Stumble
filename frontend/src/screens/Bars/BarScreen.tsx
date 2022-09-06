@@ -14,11 +14,10 @@ const BarScreen = () => {
     return (
         <AppView>
             <View style={styles.logo}>
-                <TouchableOpacity onPress={handleSignOut}>
+                {/* <TouchableOpacity onPress={handleSignOut}>
                     <Text style={{color: '#ffff'}}>{auth.currentUser?.email}</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
-            <Header/>
             <BarList/>
         </AppView>
     );

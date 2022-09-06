@@ -1,9 +1,10 @@
-import {FlatList, RefreshControl} from 'react-native'
+import {FlatList, RefreshControl, Text} from 'react-native'
 import React, { useCallback} from 'react'
 import BarBox from "../BarBox"; 
 import EmptyList from '../../general/EmptyList';
 import Loader from '../../general/Loader';
 import useBars from '../../../hooks/useBars';
+import Header from '../Header';
 
 const BarList = () => {
 
@@ -32,6 +33,7 @@ const BarList = () => {
             }
             ListEmptyComponent={listEmptyComponent}
             keyExtractor={keyExtractor}
+            ListHeaderComponent={()=> <Header/>}
             ListFooterComponent={renderFooter}
             showsVerticalScrollIndicator={false}
             onEndReachedThreshold={0.2}
