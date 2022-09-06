@@ -18,6 +18,9 @@ type NewPostboxProps = {
 const NewPostbox: FC<NewPostboxProps>= ({bar}) => {
 
     const location = useAppSelector(state => state.location.coords);
+
+
+   
     const {data: data, isLoading, searchNearbyPhone} = useNearby();
     
     const navigation = useNavigation<NavProp>()
@@ -33,7 +36,7 @@ const NewPostbox: FC<NewPostboxProps>= ({bar}) => {
             console.log('selected ' + bar.name)
             setSelected(bar)
         }
-        
+    
         
     }, [location])
 

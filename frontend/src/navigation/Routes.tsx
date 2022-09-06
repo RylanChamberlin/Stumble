@@ -34,7 +34,6 @@ const Routes = () => {
     const onAuthStateChanged = async(user: any) => {
        
         setUser(user); 
-        console.log(user)
         if(user){
             setHasUsername(await checkIfUIDExists(user.uid))
             }

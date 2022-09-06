@@ -30,6 +30,34 @@ export default () => {
 
     }
 
-    return {isLoading, data, isError, searchNearbyPhone}
+    const searchClosestToPhone = (coords)  => {
+        if(coords) {
+            return new Promise((resolve) => {
+                const latitude = coords.latitude;
+                const longitude = coords.longitude;
+                const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude}%2C${longitude}&rankby=distance&type=bar&key=${GOOGLE_KEY}`
+                fetch(url)
+                    .then(res => res.json())
+                    .then((resJson) => {
+                    if (resJson
+                        && resJson
+                        && resJson.results
+                        && resJson.results[0]
+                        && resJson.results[0].plus_code
+                        && resJson.results[0].plus_code.compound_code) {
+                        resolve(resJson.results[0].plus_code.compound_code)
+                    } else {
+                        resolve()
+                    }
+                    })
+                    .catch((e) => {
+                        console.log('Error in getNearbyPlaceFromCoordinates', e)
+                        resolve()
+                    })
+                })
+            }
+      }
+
+    return {isLoading, data, isError, searchClosestToPhone, searchNearbyPhone}
 
 };

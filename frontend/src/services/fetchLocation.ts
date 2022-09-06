@@ -11,5 +11,5 @@ export const fetchLocation = async() => {
         console.log('getting location')
 
         return await Location.getCurrentPositionAsync({});
-
+        
 }

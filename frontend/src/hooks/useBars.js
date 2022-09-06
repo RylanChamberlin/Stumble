@@ -1,5 +1,6 @@
 import { collection, getDocs, limit, orderBy, query, startAfter, startAt, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useAppSelector } from "../app/hooks";
 import { db } from "../firebase";
 
 
@@ -10,6 +11,7 @@ export default () => {
     const [isError, setIsError] = useState(false)
     const [data, setData] = useState([])
     const [lastDoc, setLastDoc] = useState(undefined)
+    const place = useAppSelector(state => state.location.place)
 
     useEffect(() => {
         getBars()
@@ -17,7 +19,7 @@ export default () => {
 
 
     let barsRef = collection(db, 'bars');
-    barsRef = query(barsRef, where("city", '==' , "Columbia"), where("state", '==' , "MO"))
+    barsRef = query(barsRef, where("city", '==' , place.city), where("state", '==' , place.state))
     
     const getBars = async () => {
         console.log('getting fresh bars')

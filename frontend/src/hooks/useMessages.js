@@ -1,5 +1,6 @@
 import { collection, getDocs, limit, orderBy, query, startAfter, startAt, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useAppSelector } from "../app/hooks";
 import { db } from "../firebase";
 
 // export type dateTime = {
@@ -18,13 +19,14 @@ import { db } from "../firebase";
 //   }
 
 
-export default (itemID = null, order = 'createdAt', field = 'placeID', version) => {
+export default (itemID = null, order = 'createdAt', field = 'placeID') => {
 
     const [isLoading, setIsLoading] = useState(false)
     const [isMoreLoading, setIsMoreLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [data, setData] = useState([])
     const [lastDoc, setLastDoc] = useState(undefined)
+    const place = useAppSelector(state => state.location.place)
 
     useEffect(() => {
         getMessages()
@@ -37,7 +39,7 @@ export default (itemID = null, order = 'createdAt', field = 'placeID', version) 
     if(itemID != null) {
         messagesRef = query(messagesRef, where(field, '==' , itemID))
     }else{
-        messagesRef = query(messagesRef, where("city", '==' , "Columbia"), where("state", '==' , "MO"))
+        messagesRef = query(messagesRef, where("city", '==' , place.city), where("state", '==' , place.state))
     }
 
     const getMessages = async () => {

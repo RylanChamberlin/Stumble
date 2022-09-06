@@ -4,17 +4,18 @@ import type { RootState } from '../../app/store'
 
 // Define a type for the slice state
 interface LocationState {
-  coords: any
-  info: any
-  friends: any
-  friendsInfo: any
+    place: any
+    coords: any
+    info: any
+    friends: any
+    friendsInfo: any
 }
 
 // Define the initial state using that type
 const initialState: LocationState = {
   coords: null,
   info: null,
-
+  place: null,
   friends: null,
   friendsInfo: null,
 
@@ -28,6 +29,9 @@ export const locationSlice = createSlice({
     storeLocation: (state, action: PayloadAction<any>) => {
       state.coords = action.payload
     },
+    storePlace: (state, action: PayloadAction<any>) => {
+        state.place = action.payload
+      },
     storeUserInfo: (state, action: PayloadAction<any>) => {
       state.info = action.payload
     },
@@ -40,11 +44,12 @@ export const locationSlice = createSlice({
   },
 })
 
-export const { storeLocation, storeUserInfo, storeUserFriends, storeUserFriendsInfo  } = locationSlice.actions
+export const { storeLocation, storeUserInfo, storeUserFriends, storeUserFriendsInfo, storePlace  } = locationSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 //export const selectCount = (state: RootState) => state.counter.value
 export const selectLocation = (state: RootState) => state.location.coords
+export const selectPlace = (state: RootState) => state.location.place
 export const selectInfo = (state: RootState) => state.location.info
 export const selectFriends = (state: RootState) => state.location.friends
 export const selectFriendsInfo = (state: RootState) => state.location.friendsInfo

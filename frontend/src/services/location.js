@@ -12,6 +12,8 @@ export default async() => {
     }else{
         let location = await Location.getCurrentPositionAsync({});
         setLocation(location);
+
+        
     }
 
     
