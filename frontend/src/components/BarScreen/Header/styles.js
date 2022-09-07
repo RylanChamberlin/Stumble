@@ -14,6 +14,15 @@ export default StyleSheet.create({
         shadowOffset: {width: 5, height: 5}, //gives shadow offset
         shadowOpacity: .6,
     },
+
+    city: {
+        fontSize: 25,
+        color: 'white',
+        shadowColor: "black",
+        shadowOffset: {width: 5, height: 5}, //gives shadow offset
+        shadowOpacity: .6,
+    },
+
     locationBox:{
         flexDirection: 'row',
         shadowColor: "black",
