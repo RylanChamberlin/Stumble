@@ -9,6 +9,7 @@ import { fetchUserInfo } from '../services/fetchUserInfo';
 import { auth } from '../firebase';
 import CreateNameScreen from '../screens/auth/AuthScreens/CreateNameScreen';
 import { checkIfUIDExists } from '../services/FirebaseCalls/createUser';
+import { Text } from 'react-native';
 
 
 const Routes = () => {
@@ -47,7 +48,7 @@ const Routes = () => {
     }
 
     if (loading ) {
-        return <Loader/>;
+        return <><Loader/><Text>fsds</Text></>;
     }
 
     if (!hasUserName && user){
