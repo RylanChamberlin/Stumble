@@ -36,15 +36,25 @@ const Routes = () => {
        
         setUser(user); 
         if(user){
-            setHasUsername(await checkIfUIDExists(user.uid))
+
+            try {
+                setHasUsername(await checkIfUIDExists(user.uid))
+            }catch(err){
+                console.log(err)
             }
+        }
         setLoading(false);
         console.log('auth over')
 
     }
 
     const getUserData = async() => {
-        dispatch(storeUserInfo(await fetchUserInfo(user.uid)));
+        try {
+            dispatch(storeUserInfo(await fetchUserInfo(user.uid)));
+        }catch(err){
+            console.log(err)
+        }
+        
     }
 
     if (loading ) {
