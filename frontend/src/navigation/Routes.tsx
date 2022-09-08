@@ -48,7 +48,7 @@ const Routes = () => {
     }
 
     if (loading ) {
-        return <><Loader/><Text>fsds</Text></>;
+        return <><Loader/><Text style={{color: "blue", fontSize: 40}}>fsds</Text></>;
     }
 
     if (!hasUserName && user){
