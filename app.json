@@ -19,7 +19,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.stumbler.stumble"
+      "bundleIdentifier": "com.stumbler.stumble",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
