@@ -31,7 +31,7 @@ const NewPostbox: FC<NewPostboxProps>= ({bar}) => {
     useEffect(() => {
 
         if(!bar){
-            searchNearbyPhone(1000);
+            searchNearbyPhone(100);
         }else{
             console.log('selected ' + bar.name)
             setSelected(bar)
