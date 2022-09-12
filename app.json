@@ -3,7 +3,7 @@
     "name": "Stumble",
     "slug": "stumble-app",
     "privacy": "hidden",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "scheme": "com.stumbler.stumble",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
