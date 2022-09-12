@@ -4,6 +4,7 @@
     "slug": "stumble-app",
     "privacy": "hidden",
     "version": "1.0.1",
+    "scheme": "com.stumbler.stumble",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
