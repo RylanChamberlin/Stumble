@@ -21,6 +21,7 @@ function login(id_token: string) {
 export default function useGoogleAuthentication() {
   const [request, _, promptAsync] = useIdTokenAuthRequest({
     clientId: '1025146739011-0pfdqkidkodgjqtmvuoaspt21en6o9d6.apps.googleusercontent.com',
+    iosClientId: '1025146739011-i7k6r5giobglnu4pbqlp5smijhgsgv6c.apps.googleusercontent.com'
   });
 
   async function prompt() {
