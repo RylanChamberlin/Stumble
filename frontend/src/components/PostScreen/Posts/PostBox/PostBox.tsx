@@ -26,7 +26,7 @@ export type Post = {
 
 const PostBox: FC<PostBoxProps> = ({post}) => {
 
-    const {userLike, userDislike, voteCount , incrementVote, decrementVote} = useVotes(post);
+    const {userLike, userDislike, voteCount, isLoadingDownvote, isLoadingUpvote , incrementVote, decrementVote} = useVotes(post);
 
     return(
         <View style={[styles.container, styles.elevation]}>
@@ -39,12 +39,12 @@ const PostBox: FC<PostBoxProps> = ({post}) => {
             </View>
 
             <View style={styles.voteContainer}>
-                <TouchableOpacity onPress={incrementVote}>
+                <TouchableOpacity onPress={incrementVote} disabled={isLoadingUpvote}>
                     <Entypo name="plus" size={24} color={ userLike ? "red" : "black"}/>
                 </TouchableOpacity>
                  <Text style={styles.voteCount}>{voteCount}</Text>
 
-                <TouchableOpacity onPress={decrementVote}>
+                <TouchableOpacity onPress={decrementVote} disabled={isLoadingDownvote}>
                     <Entypo name="minus" size={24} color={userDislike ? "red" : "black"}/>
                 </TouchableOpacity>
             </View>

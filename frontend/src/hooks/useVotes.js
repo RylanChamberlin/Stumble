@@ -10,6 +10,8 @@ export default (item) => {
     const [voteCount, setVoteCount] = useState(item.voteCount)
     const [userLike, setUserLike] = useState(false)
     const [userDislike, setUserDislike] = useState(false)
+    const [isLoadingUpvote, setIsLoadingUpvote] = useState(false);
+    const [isLoadingDownvote, setIsLoadingDownvote] = useState(false);
     const userRef = doc(db, "messages", item.key, "upvotes" , auth.currentUser.uid);
 
     useEffect(() => {
@@ -37,6 +39,7 @@ export default (item) => {
     },[])
 
     const incrementVote = async() => {
+        setIsLoadingUpvote(true)
 
         console.log('incrementVote')
 
@@ -62,10 +65,12 @@ export default (item) => {
             setUserDislike(false)
 
             console.log('upvoted')
+            setIsLoadingUpvote(false)
             
             }
     }
     const decrementVote = async() => { 
+        setIsLoadingDownvote(true)
         
         if(userDislike == false){
             console.log('downvoted')
@@ -86,11 +91,11 @@ export default (item) => {
             
             setUserLike(false)
             setUserDislike(true)
-
+            setIsLoadingDownvote(false)
         }
 
     }
     
-    return {userLike, userDislike, voteCount, incrementVote, decrementVote}
+    return {userLike, userDislike, voteCount, incrementVote, decrementVote, isLoadingUpvote, isLoadingDownvote}
 
 };
