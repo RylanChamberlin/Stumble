@@ -21,7 +21,7 @@ type AuthButtonListProps = {
 const AuthButtonList:FC<AuthButtonListProps> = ({googleButtonField, appleSignIn}) => {
 
     const [appleAuthAvailable, authWithApple] = useAppleAuthentication();
-    const [googleAuthLoading, authWithGoogle] = useGoogleAuthentication();
+    //const [googleAuthLoading, authWithGoogle] = useGoogleAuthentication();
 
    
 
@@ -29,15 +29,15 @@ const AuthButtonList:FC<AuthButtonListProps> = ({googleButtonField, appleSignIn}
         const user = await loginWithCredential(credential, data)
     }
 
-    const loginWithGoogle = async() => {
-        try {
-            const [credential, data] = await authWithGoogle();
-            await login(credential, data);
-        } catch (error: any) {
-            console.error(error);
-            Alert.alert('Error', 'Something went wrong. Please try again later.');
-        }
-    }
+    // const loginWithGoogle = async() => {
+    //     try {
+    //         const [credential, data] = await authWithGoogle();
+    //         await login(credential, data);
+    //     } catch (error: any) {
+    //         console.error(error);
+    //         Alert.alert('Error', 'Something went wrong. Please try again later.');
+    //     }
+    // }
   
     const loginWithApple = async() => {
         try {
@@ -52,7 +52,7 @@ const AuthButtonList:FC<AuthButtonListProps> = ({googleButtonField, appleSignIn}
     return(
         <View style={styles.container}>
             <TextDivideLine title='OR'/>
-            <GoogleButton onPress= {loginWithGoogle} request={!googleAuthLoading} title={googleButtonField}/>
+            {/* <GoogleButton onPress= {loginWithGoogle} request={!googleAuthLoading} title={googleButtonField}/> */}
             <AppleButton appleAuthAvailable={appleAuthAvailable} onPress={loginWithApple} signIn={appleSignIn}/>
         </View>
         )

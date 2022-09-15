@@ -10,15 +10,15 @@ export default async function loginWithCredential(credential: AuthCredential, da
     console.log('Signed in with credential. Updating profile details...');
 
 
-    if (data?.email && !user.email) {
-    console.log('updated Email')
-    await updateEmail(user, data.email);
-    }
+    // if (data?.email && !user.email) {
+    // console.log('updated Email')
+    // await updateEmail(user, data.email);
+    // }
 
-    if (data?.displayName && !user.displayName) {
-    console.log('updated Name')
-    await updateProfile(user, { displayName: data.displayName });
-    }
+    // if (data?.displayName && !user.displayName) {
+    // console.log('updated Name')
+    // await updateProfile(user, { displayName: data.displayName });
+    // }
 
     return user;
 }
