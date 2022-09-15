@@ -8,7 +8,7 @@ type Props = {
 
 const AppView: FC<Props> = props => {
 
-    const image = require('../../../assets/images/sunset.jpg');
+    const image = require('../../../../../assets/sunset.jpg');
 
     return (
 
