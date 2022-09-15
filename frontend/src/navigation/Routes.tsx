@@ -52,7 +52,7 @@ const Routes = () => {
     const getUserData = async() => {
         try {
             dispatch(storeUserInfo(await fetchUserInfo(user.uid)));
-            dispatch(storeUserFriends(await fetchFriends(user.uid)));
+           // dispatch(storeUserFriends(await fetchFriends(user.uid)));
         }catch(err){
             console.log(err)
         }

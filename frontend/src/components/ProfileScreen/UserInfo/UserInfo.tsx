@@ -1,6 +1,6 @@
 
 
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import styles from './styles'
 import { useNavigation } from '@react-navigation/native';
@@ -33,7 +33,8 @@ const UserInfo = () => {
 
      // navigates to user friends
      const clickFriends = () => {
-        navigation.navigate('ProfileFriendScreen')
+        //navigation.navigate('ProfileFriendScreen')
+        Alert.alert("Coming Soon");
     }
 
     if(!user) return (<Loader/>)
@@ -41,10 +42,10 @@ const UserInfo = () => {
     return (
     <>
     <View style={styles.container}>
-        <TouchableOpacity style={styles.imageContainer} onPress={() => pickAvatar(setAvatar)}>
+        {/* <TouchableOpacity style={styles.imageContainer} onPress={() => pickAvatar(setAvatar)}>
             <Image source={{uri: avatar}} style={styles.image}/>
             {!hasAvatar && <Ionicons name="ios-add" size={40} color="#FFF"></Ionicons>}
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <View style={styles.textContainer}>
             <View style={styles.sectionContainer}>
@@ -55,10 +56,10 @@ const UserInfo = () => {
                
             </View>
 
-            <Text>Check In Location:</Text>
+            {/* <Text>Check In Location:</Text>
             <TouchableOpacity>
                 <Text style={styles.checkinSpot}>{user.checkIn ? user.checkIn.locationName: 'Nowhere Right Now'}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
 
         <TouchableOpacity onPress={() => {clickFriends()}} style={styles.friendButton}>
