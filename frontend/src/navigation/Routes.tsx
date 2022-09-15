@@ -4,8 +4,9 @@ import HomeStack from './HomeStack';
 import AuthStack from './AuthStack';
 import Loader from '../components/general/Loader';
 import { useAppDispatch } from '../app/hooks';
-import { storeUserInfo } from '../features/Location/locationSlice';
+import { storeUserFriends, storeUserInfo } from '../features/Location/locationSlice';
 import { fetchUserInfo } from '../services/fetchUserInfo';
+import { fetchFriends } from '../services/userFetchData';
 import { auth } from '../firebase';
 import CreateNameScreen from '../screens/auth/AuthScreens/CreateNameScreen';
 import { checkIfUIDExists } from '../services/FirebaseCalls/createUser';
@@ -51,10 +52,12 @@ const Routes = () => {
     const getUserData = async() => {
         try {
             dispatch(storeUserInfo(await fetchUserInfo(user.uid)));
+            dispatch(storeUserFriends(await fetchFriends(user.uid)));
         }catch(err){
             console.log(err)
         }
         
+
     }
 
     if (loading ) {
