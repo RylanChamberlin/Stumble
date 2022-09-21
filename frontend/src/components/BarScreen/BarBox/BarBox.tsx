@@ -1,14 +1,13 @@
 import {View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "./styles";
-import { Bar } from "../../../services/bars";
 import { FC } from "react";
 import { NativeStackNavigationProp} from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../navigation/types";
 
 
 type BarBoxProps = { 
-    bar: Bar,
+    bar: any,
  }; 
 
 type BarBoxNavigationProps = NativeStackNavigationProp<RootStackParamList, 'PostScreen'>;
