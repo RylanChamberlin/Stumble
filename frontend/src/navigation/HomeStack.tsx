@@ -14,7 +14,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const HomeStack = () => {
 
-  const BOTTOM_TAB_TAG = 'BottomTab'
   const PROFILE_FRIEND_SCREEN_TAG = 'ProfileFriendScreen';
   const ADD_FRIEND_SCREEN_TAG = 'AddFriendScreen'
   const CHECK_IN_SCREEN_TAG = 'CheckInScreen'
@@ -23,7 +22,7 @@ const HomeStack = () => {
   
   return (
     <Stack.Navigator> 
-        <Stack.Screen name={BOTTOM_TAB_TAG} component={BottomTab}  options={{ headerShown: false }}/>
+        <Stack.Screen name={"Root"} component={BottomTab}  options={{ headerShown: false }}/>
         <Stack.Screen name={PROFILE_FRIEND_SCREEN_TAG} component={ProfileFriendScreen} options={{ headerShown: false }} />
         <Stack.Screen name={ADD_FRIEND_SCREEN_TAG} component={AddFriendScreen} options={{ headerShown: false }} />
         <Stack.Screen name={SINGLE_POST_TAG} component={SinglePostScreen} options={{ headerShown: false }}/>
