@@ -3,7 +3,7 @@ export type RootStackParamList = {
     Login: undefined;
     SignUp: undefined;
     CreateUser: undefined | { user?: any };
-    PostScreen: { bar?: any } | undefined;
+    SinglePostScreen: { bar?: any } | undefined;
     BottomTab: undefined;
     UserInfo: undefined;
     ProfileFriendScreen: undefined;
@@ -12,7 +12,6 @@ export type RootStackParamList = {
     NewPostScreen: {bar?: any} | undefined;
 }
 
-//not in use
 export type RootTabParamList = {
     BarScreen: undefined;
     PostScreen: undefined;

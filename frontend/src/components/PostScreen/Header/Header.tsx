@@ -25,10 +25,10 @@ export const Header: FC<Props> = ({bar, left, setLeft}) => {
     });
   }
 
-  const singleBar = (title: string) => {
+    const singleBar = (title: string) => {
    
     const goBack = () => {
-      navigation.navigate("BottomTab");
+      navigation.goBack();
     }
 
     return(

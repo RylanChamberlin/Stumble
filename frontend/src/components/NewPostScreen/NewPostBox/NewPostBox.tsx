@@ -1,16 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FC, useEffect, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useAppSelector } from "../../../app/hooks";
 import useNearby from "../../../hooks/useNearby";
-import { RootStackParamList } from "../../../navigation/types";
 import { sendMessage } from "../../../services/sendPosts";
 import Dropdown from "../Dropdown";
 import styles from "./styles";
 
-
-type NavProp = NativeStackNavigationProp<RootStackParamList, 'PostScreen'>;
 type NewPostboxProps = {
     bar?: any
 }
@@ -23,7 +19,7 @@ const NewPostbox: FC<NewPostboxProps>= ({bar}) => {
    
     const {data: data, isLoading, searchNearbyPhone} = useNearby();
     
-    const navigation = useNavigation<NavProp>()
+    const navigation = useNavigation()
     const [postInput, setPostInput] = useState('')
     const [posting, setPosting] = useState(false)
     const [selected, setSelected] = useState(undefined);
@@ -43,18 +39,8 @@ const NewPostbox: FC<NewPostboxProps>= ({bar}) => {
     const postBar = async() => {
         console.log(selected)
         setPosting(true);
-        if(await sendMessage(postInput, selected)){
-
-            if(bar){
-                navigation.navigate('PostScreen', {
-                    bar: bar
-                  });
-            }else{
-                navigation.goBack();
-            }
-            
-        }   
-
+        await sendMessage(postInput, selected)   
+        navigation.goBack();
         setPosting(false)
     }
     

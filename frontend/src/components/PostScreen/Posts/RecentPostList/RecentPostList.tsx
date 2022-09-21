@@ -1,5 +1,5 @@
-import {ActivityIndicator, FlatList, RefreshControl, Text } from 'react-native'
-import React, { useCallback , useEffect, useState } from 'react'
+import {FlatList, RefreshControl } from 'react-native'
+import React, { useCallback , useEffect } from 'react'
 import Loader from '../../../general/Loader';
 import useMessages from '../../../../hooks/useMessages';
 import PostBox from '../PostBox';
@@ -8,8 +8,8 @@ import { useIsFocused } from '@react-navigation/native';
 
 type Props = {
   itemID?: any
-  order: string
-  field: string
+  order?: string
+  field?: string
 }
 
 function RecentPostList(props: Props){
@@ -18,19 +18,19 @@ function RecentPostList(props: Props){
 
     // const isFocused = useIsFocused();
 
-    // useEffect(() => {
-    //     isFocused && getMessages()
-    //   },[isFocused]);
+    useEffect(() => {
+        console.log(props)
+      },[]);
     
 
     const fetchMoreData = () => {
         !isMoreLoading && getMore();
     }
 
-    const renderItem = useCallback(({ item, index }) => {return (<PostBox post = {item}/>)},[]);
+    const renderItem = useCallback(({ item, index }: any) => {return (<PostBox post = {item}/>)},[]);
     const renderFooter = () => {return isMoreLoading ? <Loader/> : null}
     const onRefresh = () => { getMessages() }
-    const keyExtractor = useCallback( (item) => item.key, []);
+    const keyExtractor = useCallback( (item: any) => item.key, []);
     const listEmptyComponent = () => {return <EmptyList name={props.itemID ? "You Have No Posts" : 'No Posts Nearby'}/>}
 
     return (

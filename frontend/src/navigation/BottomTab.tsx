@@ -5,22 +5,23 @@ import BarScreen from '../screens/Bars/BarScreen';
 import PostScreen from '../screens/Posts/PostScreen';
 import FriendScreen from '../screens/Friends/FriendScreen';
 import ProfileScreen from '../screens/Profile/ProfileScreen';
+import { RootTabParamList } from './types';
 
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<RootTabParamList>();
 
 const BottomTab = () => {
 
   return (
     <Tab.Navigator 
-        initialRouteName="Home"
+        initialRouteName="BarScreen"
         screenOptions={{
             headerShown: false,
             tabBarActiveTintColor: '#e91e63',
         }}
     >
       <Tab.Screen 
-        name="Home" 
+        name="BarScreen" 
         component={BarScreen} 
         options={{
             tabBarLabel: 'Home',
@@ -31,7 +32,7 @@ const BottomTab = () => {
 
       />
       <Tab.Screen 
-        name="Posts" 
+        name="PostScreen" 
         component={PostScreen} 
         options={{
             tabBarLabel: 'Posts',
@@ -41,7 +42,7 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen 
-        name="Friends" 
+        name="FriendScreen" 
         component={FriendScreen} 
         options={{
             tabBarLabel: 'Friends',
@@ -52,7 +53,7 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen 
-        name="Profile" 
+        name="ProfileScreen" 
         component={ProfileScreen} 
         options={{
             tabBarLabel: 'Profile',

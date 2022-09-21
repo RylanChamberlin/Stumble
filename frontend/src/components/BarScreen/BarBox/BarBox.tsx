@@ -10,7 +10,7 @@ type BarBoxProps = {
     bar: any,
  }; 
 
-type BarBoxNavigationProps = NativeStackNavigationProp<RootStackParamList, 'PostScreen'>;
+type BarBoxNavigationProps = NativeStackNavigationProp<RootStackParamList, 'SinglePostScreen'>;
 
 const BarBox: FC<BarBoxProps> = ({bar}) => {
 
@@ -18,7 +18,8 @@ const BarBox: FC<BarBoxProps> = ({bar}) => {
     
     // navigates to comments on the selected bar
     const clickBar = () => {
-        navigation.navigate('PostScreen', {
+
+        navigation.navigate('SinglePostScreen', {
             bar: bar
           });
     }
