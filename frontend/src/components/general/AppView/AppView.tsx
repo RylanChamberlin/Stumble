@@ -4,6 +4,7 @@ import styles from './styles';
 
 type Props = {
     style?: any
+    children: React.ReactNode
 }
 
 const AppView: FC<Props> = props => {
