@@ -7,7 +7,6 @@ import CheckInScreen from "../screens/Friends/CheckInScreen";
 import NewPostScreen from "../screens/Posts/NewPostScreen";
 
 import React from "react";
-import CreateNameScreen from "../screens/auth/AuthScreens/CreateNameScreen";
 import { RootStackParamList } from "./types";
 import PostScreen from "../screens/Posts/PostScreen";
 
@@ -29,7 +28,6 @@ const HomeStack = () => {
         <Stack.Screen name={POST_TAG} component={PostScreen} options={{ headerShown: false }} />
         <Stack.Screen name={PROFILE_FRIEND_SCREEN_TAG} component={ProfileFriendScreen} options={{ headerShown: false }} />
         <Stack.Screen name={ADD_FRIEND_SCREEN_TAG} component={AddFriendScreen} options={{ headerShown: false }} />
-        <Stack.Screen name={CREATE_USER} component={CreateNameScreen}  options={{ headerShown: false }}/> 
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
             <Stack.Screen name={CHECK_IN_SCREEN_TAG} component={CheckInScreen} options={{ title: 'Check In' }}/>
             <Stack.Screen name={NEW_POST_TAG} component={NewPostScreen} options={{ title: 'New Post' }} />
