@@ -3,7 +3,7 @@
     "name": "Stumble",
     "slug": "stumble-app",
     "privacy": "hidden",
-    "version": "1.0.3",
+    "version": "1.0.5",
     "scheme": "com.stumbler.stumble",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -36,6 +36,9 @@
       "eas": {
         "projectId": "42bd30b4-016f-4ff7-8da2-4446fb30c7e1"
       }
-    }
+    },
+    "packagerOpts": {
+        "sourceExts": ["cjs"]
+      }
   }
 }
