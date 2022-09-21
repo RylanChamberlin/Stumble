@@ -5,7 +5,6 @@ import styles from './styles'
 import { useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import MapList from '../MapList';
-import { useGetBarsByLocationQuery } from '../../../../services/bars';
 import { useAppSelector } from '../../../../app/hooks';
 import Loader from '../../../general/Loader';
 import useUsers from '../../../../hooks/useUsers';

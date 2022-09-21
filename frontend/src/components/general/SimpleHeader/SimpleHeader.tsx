@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { FC } from "react";
 import { RootStackParamList } from "../../../navigation/types";
 
-type NavProp = NativeStackNavigationProp<RootStackParamList, 'PostScreen' | 'BottomTab'>;
+
 
 type SimpleHeader = {
     title: string
@@ -15,17 +15,13 @@ type SimpleHeader = {
 
 const SimpleHeader: FC<SimpleHeader>= ({title, bar}) => {
 
-    const navigation = useNavigation<NavProp>()
+    const navigation = useNavigation()
 
     const goBack = () => {
 
-        if(bar) {
-            navigation.navigate('PostScreen', {
-                bar: bar
-              });
-        }else{
-            navigation.navigate('BottomTab')
-        }
+        
+        navigation.goBack()
+        
         
     }
     return (

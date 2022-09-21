@@ -8,7 +8,7 @@ import NewFriendItem from "../NewFriendItem"
 const FriendRequestList = () => {
 
     const {list} = useAcceptFriends()
-    const renderItem = useCallback (({ item }) => <NewFriendItem item={item}/>,[]);
+    const renderItem = useCallback (({ item }: any) => <NewFriendItem item={item}/>,[]);
     const listEmptyComponent = () => {return <EmptyList name={'No New Friend Requests'}/>}
 
     return (

@@ -1,7 +1,7 @@
 import {Text, TouchableOpacity, View } from "react-native";
 import { Entypo } from '@expo/vector-icons'; 
 import styles from "./styles";
-import { FC, Props } from "react";
+import { FC} from "react";
 import useVotes from "../../../../hooks/useVotes";
 import timeSince from "../../../../services/timeSince";
 

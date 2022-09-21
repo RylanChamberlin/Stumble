@@ -9,8 +9,8 @@ const FeedList= () => {
 
   const {isLoading, isError, data} = useUsers();
 
-  const renderItem = useCallback (({ item }) => <FriendBox item = {item}/>,[]);
-  const keyExtractor = useCallback( (item) => item.uid, []);
+  const renderItem = useCallback (({ item }: any) => <FriendBox item = {item}/>,[]);
+  const keyExtractor = useCallback( (item: any) => item.uid, []);
   const listEmptyComponent = () => {return <EmptyList name={'Your Feed is Empty'}/>}
 
   if (isLoading) {

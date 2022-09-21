@@ -14,10 +14,10 @@ const BarList = () => {
         !isMoreLoading && getMore();
     }
 
-    const renderItem = useCallback (({ item }) => <BarBox bar={item}/>,[]);
+    const renderItem = useCallback (({ item }: any) => <BarBox bar={item}/>,[]);
     const renderFooter = () => {return isMoreLoading ? <Loader/> : null}
     const onRefresh = useCallback(() => {getBars()}, []);
-    const keyExtractor = useCallback( (item) => item.place_id, []);
+    const keyExtractor = useCallback( (item: any) => item.place_id, []);
     const listEmptyComponent = () => {return <EmptyList name={'No Bars Found Nearby'}/>}
 
     return (

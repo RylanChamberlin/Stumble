@@ -23,7 +23,7 @@ const FriendList = () => {
           setFilter(filteredData)
       };
 
-    const renderItem = useCallback (({ item }) => <FriendItem name = {item.name} username = {item.username} photoURL={item.photoURL}/>,[]);
+    const renderItem = useCallback (({ item }: any) => <FriendItem name = {item.name} username = {item.username} photoURL={item.photoURL}/>,[]);
     const onRefresh = useCallback(() => {}, []);
     const listEmptyComponent = () => {return <EmptyList name={'You Have No Friends'}/>}
 

@@ -27,10 +27,10 @@ function PopularPostList(props: Props){
     !isMoreLoading && getMore();
   }
 
-  const renderItem = useCallback(({ item, index }) => {return (<PostBox post = {item}/>)},[]);
+  const renderItem = useCallback(({ item, index }: any) => {return (<PostBox post = {item}/>)},[]);
   const renderFooter = () => {return isMoreLoading ? <Loader/> : null}
   const onRefresh = () => { getMessages() }
-  const keyExtractor = useCallback( (item) => item.key, []);
+  const keyExtractor = useCallback( (item: any) => item.key, []);
   const listEmptyComponent = () => {return <EmptyList name={'No Posts Nearby'}/>}
 
   return (
