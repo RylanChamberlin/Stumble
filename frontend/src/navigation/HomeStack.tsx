@@ -8,7 +8,6 @@ import NewPostScreen from "../screens/Posts/NewPostScreen";
 
 import React from "react";
 import { RootStackParamList } from "./types";
-import PostScreen from "../screens/Posts/PostScreen";
 import SinglePostScreen from "../screens/Posts/SinglePostScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
