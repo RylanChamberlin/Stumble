@@ -1,5 +1,6 @@
 import Routes from "./navigation/Routes"
 import useCachedResources from './hooks/useCachedResources';
+import React from "react";
 
 const Main = () => {
 

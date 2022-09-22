@@ -5,6 +5,8 @@ import Main from "./frontend/src/Main";
 
 export default function App() {
 
+    
+
     return (
         <Provider store={store}>
             <Main/>

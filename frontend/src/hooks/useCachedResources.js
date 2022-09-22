@@ -18,39 +18,29 @@ export default function useCachedResources() {
     useEffect(() => {
         async function loadResourcesAndDataAsync() {
         try {
+            
             SplashScreen.preventAutoHideAsync();
         
-            console.log('get initla stuff')
+            // console.log('get initla stuff')
             let location = await fetchLocation()
             //get the closet bars from 10 miles radius and its city
-            const code = await searchClosestToPhone(location.coords);
-            const [geocode, city, state, country] = code.split(/[, ]+/);
+            //const code = await searchClosestToPhone(location.coords);
+            //const [geocode, city, state, country] = code.split(/[, ]+/);
             const place = {
-                geocode: geocode,
-                city: city,
-                state: state,
-                country: country
+                geocode: "12",
+                city: "Columbia",
+                state: "MO",
+                country: "USA"
             }
 
             dispatch(storeLocation(location));
             dispatch(storePlace(place));
 
-            // const [geocode, city, state, country] = code.split(/[, ]+/);
-
-            // const place = {
-            //     city: city,
-            //     state: state,
-            //     country: country
-            // }
-            // location.place = place
-
-           
-
-            
+    
         
         } catch (e) {
             // We might want to provide this error information to an error reporting service
-            console.warn(e);
+            console.log(e);
         } finally {
             setLoadingComplete(true);
             SplashScreen.hideAsync();

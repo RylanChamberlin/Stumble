@@ -4,27 +4,27 @@ import HomeStack from './HomeStack';
 import AuthStack from './AuthStack';
 import Loader from '../components/general/Loader';
 import { useAppDispatch } from '../app/hooks';
-import { storeUserFriends, storeUserInfo } from '../features/Location/locationSlice';
+import { storeUserInfo } from '../features/Location/locationSlice';
 import { fetchUserInfo } from '../services/fetchUserInfo';
-import { fetchFriends } from '../services/userFetchData';
 import { auth } from '../firebase';
 import CreateNameScreen from '../screens/auth/AuthScreens/CreateNameScreen';
 import { checkIfUIDExists } from '../services/FirebaseCalls/createUser';
+import AppView from '../components/general/AppView';
 import { Text } from 'react-native';
-
 
 const Routes = () => {
 
-    const [user, setUser ] = useState<any>();
+    const [user, setUser] = useState<any>();
     const [loading, setLoading] = useState(true);
     const [hasUserName, setHasUsername] = useState(true);
     const dispatch = useAppDispatch()
 
    
     useEffect(() => {
+        console.log('route useeffect')
         const subscriber = auth.onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
-    }, []);
+    }, [user]);
 
     useEffect(() => {
         if(user){
@@ -32,7 +32,7 @@ const Routes = () => {
         }
     }, [user, hasUserName])
 
-    // Handle user state changes
+    // // Handle user state changes
     const onAuthStateChanged = async(user: any) => {
        
         setUser(user); 
